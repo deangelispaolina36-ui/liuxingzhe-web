@@ -6,2891 +6,1590 @@
 <title>鎏途 LIUTU · 西夏文化数字IP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   鎏途 LIUTU · 全局样式系统
-   ============================================================ */
+/* ─────────────────────────────────────────
+   鎏途 · 设计系统
+───────────────────────────────────────── */
 :root {
-  --bg-deep: #0A0805;
-  --bg-mid: #12100A;
-  --bg-card: #1A1510;
-  --gold: #D4AF37;
-  --gold-bright: #E8C840;
-  --gold-dark: #8B7320;
-  --gold-muted: #A08530;
-  --sand: #C8A96E;
-  --sand-light: #F5E6C8;
-  --text-primary: #F0E6D0;
-  --text-secondary: #8A7A60;
-  --text-muted: #5A4E3A;
-  --red-xia: #8B3A1E;
-  --border-gold: rgba(212,175,55,0.3);
-  --border-gold-bright: rgba(212,175,55,0.6);
+  --bg:        #080604;
+  --bg-mid:    #0f0d09;
+  --bg-card:   #16130e;
+  --bg-card2:  #1c1810;
+  --gold:      #C8A84B;
+  --gold-hi:   #DFC06A;
+  --gold-lo:   #7A6428;
+  --gold-mute: #9A7E3A;
+  --sand:      #B89A62;
+  --sand-lt:   #EAD8B0;
+  --teal:      #2D7D6F;
+  --teal-lo:   #1a4a40;
+  --red:       #7A2E18;
+  --text:      #E8D8B8;
+  --text-2:    #8A7A5A;
+  --text-3:    #4A4030;
+  --border:    rgba(200,168,75,.18);
+  --border-hi: rgba(200,168,75,.45);
+  --r:         4px;
 }
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; }
-
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+html { scroll-behavior:smooth; font-size:16px }
 body {
-  background: var(--bg-deep);
-  color: var(--text-primary);
-  font-family: 'Inter', -apple-system, 'PingFang SC', sans-serif;
-  line-height: 1.7;
-  overflow-x: hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar { width:3px }
+::-webkit-scrollbar-track { background:var(--bg) }
+::-webkit-scrollbar-thumb { background:var(--gold-lo); border-radius:2px }
+
+img { display:block; max-width:100% }
+a { color:inherit; text-decoration:none }
+button { font-family:inherit; cursor:pointer }
+
+/* 西夏菱形纹 */
+.xia-pattern {
+  background-image:
+    repeating-linear-gradient(45deg,  transparent 0, transparent 18px, rgba(200,168,75,.03) 18px, rgba(200,168,75,.03) 19px),
+    repeating-linear-gradient(-45deg, transparent 0, transparent 18px, rgba(200,168,75,.03) 18px, rgba(200,168,75,.03) 19px);
 }
 
-/* 滚动条 */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+/* 滚入动画 */
+.fade-up { opacity:0; transform:translateY(36px); transition:opacity .8s ease, transform .8s ease }
+.fade-up.in { opacity:1; transform:translateY(0) }
+.fade-up.d1 { transition-delay:.1s }
+.fade-up.d2 { transition-delay:.2s }
+.fade-up.d3 { transition-delay:.3s }
+.fade-up.d4 { transition-delay:.4s }
 
-/* 通用选择区块动画 */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+/* ─── 导航 ─── */
+#nav {
+  position:fixed; inset:0 0 auto; z-index:900;
+  height:64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 52px;
+  background:rgba(8,6,4,.0);
+  border-bottom:1px solid transparent;
+  transition:background .4s, border-color .4s;
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+#nav.scrolled {
+  background:rgba(8,6,4,.92);
+  border-bottom-color:var(--border);
+  backdrop-filter:blur(16px);
 }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+.nav-brand {
+  display:flex; align-items:center; gap:10px;
+}
+.nav-bull {
+  width:32px; height:32px; opacity:.9;
+}
+.nav-name { font-family:'Noto Serif SC',serif; font-size:17px; font-weight:600; color:var(--gold); letter-spacing:.12em }
+.nav-name-en { font-family:'Playfair Display',serif; font-size:10px; font-style:italic; color:var(--gold-mute); letter-spacing:.22em; margin-top:1px }
+.nav-links { display:flex; align-items:center; gap:28px; list-style:none }
+.nav-links a { font-size:12px; letter-spacing:.08em; color:var(--text-2); transition:color .25s }
+.nav-links a:hover { color:var(--gold) }
+.nav-btn {
+  padding:8px 22px;
+  border:1px solid var(--border-hi);
+  background:transparent;
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:.1em;
+  transition:all .3s;
+}
+.nav-btn:hover { background:var(--gold); color:var(--bg) }
 
-/* 金色细线分割 */
-.section-divider {
-  width: 60px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 20px auto;
-}
-
-/* 金色标签 */
-.gold-tag {
-  display: inline-block;
-  padding: 4px 16px;
-  border: 1px solid var(--border-gold-bright);
-  color: var(--gold);
-  font-size: 11px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-family: 'Inter', sans-serif;
-}
-
-/* ============================================================
-   导航栏
-   ============================================================ */
-#navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: 0 48px;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(10,8,5,0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(212,175,55,0.08);
-  transition: background 0.4s ease, border-color 0.4s ease;
-}
-#navbar.scrolled {
-  background: rgba(10,8,5,0.95);
-  border-bottom-color: rgba(212,175,55,0.15);
-}
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-.nav-logo-icon {
-  width: 40px;
-  height: 40px;
-}
-.nav-logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-.nav-logo-cn {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--gold);
-  font-family: serif;
-  letter-spacing: 2px;
-}
-.nav-logo-en {
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: var(--gold-muted);
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  list-style: none;
-}
-.nav-links li {
-  display: flex;
-  align-items: center;
-}
-.nav-links li:not(:last-child)::after {
-  content: '';
-  display: block;
-  width: 1px;
-  height: 14px;
-  background: var(--border-gold);
-  margin: 0 20px;
-}
-.nav-links a {
-  text-decoration: none;
-  color: var(--text-secondary);
-  font-size: 13px;
-  letter-spacing: 1px;
-  transition: color 0.3s;
-}
-.nav-links a:hover { color: var(--gold); }
-
-.nav-cta {
-  padding: 10px 24px;
-  border: 1px solid var(--border-gold-bright);
-  color: var(--gold);
-  background: transparent;
-  font-size: 13px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-.nav-cta::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-  z-index: -1;
-}
-.nav-cta:hover {
-  color: var(--bg-deep);
-}
-.nav-cta:hover::before {
-  transform: scaleX(1);
-}
-
-/* ============================================================
-   Hero 区域
-   ============================================================ */
+/* ─── §1 HERO ─── */
 #hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  padding: 0;
+  min-height:100vh;
+  display:flex; align-items:center;
+  position:relative; overflow:hidden;
+  padding:0 80px;
 }
-
-/* 全屏背景图 */
-.hero-fullbg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-.hero-fullbg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 15%;
-  display: block;
-}
-/* 渐变遮罩：保证文字可读，底部融入页面 */
-.hero-fullbg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to right,
-      rgba(10,8,5,0.82) 0%,
-      rgba(10,8,5,0.55) 45%,
-      rgba(10,8,5,0.15) 70%,
-      rgba(10,8,5,0.0) 100%
-    ),
-    linear-gradient(to bottom,
-      rgba(10,8,5,0.3) 0%,
-      rgba(10,8,5,0.0) 30%,
-      rgba(10,8,5,0.0) 65%,
-      rgba(10,8,5,0.85) 100%
-    );
-}
-
-/* 背景层 */
 .hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+  position:absolute; inset:0; z-index:0;
 }
-.hero-bg-gradient {
-  position: absolute;
-  inset: 0;
+.hero-bg img {
+  width:100%; height:100%;
+  object-fit:cover; object-position:center 20%;
+}
+.hero-bg::after {
+  content:'';
+  position:absolute; inset:0;
   background:
-    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(139,115,32,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 80% at 20% 80%, rgba(139,58,30,0.05) 0%, transparent 50%),
-    linear-gradient(170deg, #0A0805 0%, #100D08 40%, #0E0B06 100%);
+    linear-gradient(to right, rgba(8,6,4,.88) 0%, rgba(8,6,4,.6) 42%, rgba(8,6,4,.1) 75%, rgba(8,6,4,.0) 100%),
+    linear-gradient(to bottom, rgba(8,6,4,.25) 0%, transparent 20%, transparent 72%, rgba(8,6,4,1) 100%);
 }
-/* 古地图纹样 */
-.hero-map-bg {
-  position: absolute;
-  inset: 0;
-  opacity: 0.04;
-  background-image: 
-    repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(212,175,55,0.5) 49px, rgba(212,175,55,0.5) 50px),
-    repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(212,175,55,0.5) 49px, rgba(212,175,55,0.5) 50px);
-}
-
-/* 粒子 */
-.particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: var(--gold);
-  border-radius: 50%;
-  animation: float-particle linear infinite;
-  opacity: 0;
-}
-@keyframes float-particle {
-  0% { opacity: 0; transform: translateY(0) translateX(0); }
-  10% { opacity: 0.6; }
-  90% { opacity: 0.3; }
-  100% { opacity: 0; transform: translateY(-120px) translateX(var(--drift)); }
-}
-
 .hero-content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0 80px;
-  min-height: 100vh;
-  gap: 0;
+  position:relative; z-index:1;
+  max-width:580px;
+  padding-top:64px;
 }
-
-/* 左侧文字区 */
-.hero-left {
-  flex: 0 0 auto;
-  max-width: 580px;
-  padding-top: 0;
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:10px;
+  margin-bottom:28px;
+  font-size:11px; letter-spacing:.22em; color:var(--gold-mute);
+  animation:fadeUp .9s ease .2s both;
 }
-
-.hero-tag {
-  margin-bottom: 32px;
-  animation: fadeInUp 1s ease 0.2s both;
-}
-
-.hero-title {
-  margin-bottom: 12px;
-  animation: fadeInUp 1s ease 0.4s both;
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content:''; flex:1; height:1px; width:28px; background:var(--gold-lo);
 }
 .hero-title-cn {
-  display: block;
-  font-size: clamp(72px, 8vw, 110px);
-  font-weight: 700;
-  font-family: serif;
-  color: var(--text-primary);
-  letter-spacing: 8px;
-  line-height: 1;
-  text-shadow: 0 0 60px rgba(212,175,55,0.15);
+  font-family:'Noto Serif SC',serif;
+  font-size:clamp(68px, 8vw, 108px);
+  font-weight:600;
+  color:var(--sand-lt);
+  letter-spacing:.18em;
+  line-height:1;
+  animation:fadeUp .9s ease .35s both;
 }
 .hero-title-en {
-  display: block;
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 3vw, 42px);
-  font-style: italic;
-  color: var(--gold);
-  letter-spacing: 12px;
-  margin-top: 8px;
-  font-weight: 400;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px, 2.6vw, 36px);
+  font-style:italic;
+  color:var(--gold);
+  letter-spacing:.28em;
+  margin-top:10px;
+  animation:fadeUp .9s ease .45s both;
 }
-
-.hero-subtitle {
-  font-size: 16px;
-  color: var(--sand);
-  letter-spacing: 4px;
-  margin-bottom: 28px;
-  font-family: serif;
-  animation: fadeInUp 1s ease 0.5s both;
+.hero-tagline {
+  font-family:'Noto Serif SC',serif;
+  font-size:15px;
+  color:var(--sand);
+  letter-spacing:.14em;
+  margin:22px 0 12px;
+  animation:fadeUp .9s ease .55s both;
 }
-
 .hero-desc {
-  font-size: 15px;
-  color: rgba(240,230,208,0.85);
-  line-height: 2;
-  max-width: 460px;
-  margin-bottom: 40px;
-  animation: fadeInUp 1s ease 0.6s both;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  font-size:14px;
+  color:rgba(232,216,184,.75);
+  line-height:1.9;
+  max-width:440px;
+  margin-bottom:38px;
+  animation:fadeUp .9s ease .65s both;
 }
-
 .hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 36px;
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
-  color: var(--bg-deep);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-  animation: fadeInUp 1s ease 0.7s both;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:14px 34px;
+  background:var(--gold);
+  color:var(--bg);
+  font-size:13px; font-weight:500; letter-spacing:.12em;
+  border:none;
+  transition:all .3s;
+  animation:fadeUp .9s ease .75s both;
 }
-.hero-cta::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.2);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s;
-}
-.hero-cta:hover::after { transform: scaleX(1); }
-.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(212,175,55,0.3); }
-
+.hero-cta:hover { background:var(--gold-hi); transform:translateY(-2px); box-shadow:0 12px 36px rgba(200,168,75,.25) }
 .hero-cta-note {
-  display: block;
-  margin-top: 16px;
-  font-size: 11px;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-  animation: fadeInUp 1s ease 0.8s both;
+  display:block; margin-top:14px;
+  font-size:11px; color:var(--text-3); letter-spacing:.06em;
+  animation:fadeUp .9s ease .85s both;
+}
+/* 右侧浮标 */
+.hero-dots {
+  position:absolute; right:60px; top:50%; transform:translateY(-50%);
+  z-index:1; display:flex; flex-direction:column; gap:24px; align-items:center;
+  animation:fadeUp .9s ease .9s both;
+}
+.hero-dot-item {
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+}
+.hero-dot-item::before {
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--gold); box-shadow:0 0 10px var(--gold);
+  animation:dotPulse 2.4s ease-in-out infinite;
+}
+.hero-dot-item:nth-child(2)::before { animation-delay:.8s }
+.hero-dot-item:nth-child(3)::before { animation-delay:1.6s }
+.hero-dot-label { font-size:10px; letter-spacing:.1em; color:var(--text-3); writing-mode:horizontal-tb }
+.hero-scroll {
+  position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+  z-index:1; display:flex; flex-direction:column; align-items:center; gap:8px;
+}
+.hero-scroll-line {
+  width:1px; height:48px;
+  background:linear-gradient(to bottom, var(--gold), transparent);
+  animation:scrollLine 2s ease-in-out infinite;
+}
+.hero-scroll-label { font-size:9px; letter-spacing:.2em; color:var(--text-3) }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(28px) } to { opacity:1; transform:translateY(0) } }
+@keyframes dotPulse { 0%,100%{opacity:.4; transform:scale(1)} 50%{opacity:1; transform:scale(1.4)} }
+@keyframes scrollLine { 0%{transform:scaleY(0); transform-origin:top} 50%{transform:scaleY(1); transform-origin:top} 51%{transform-origin:bottom} 100%{transform:scaleY(0); transform-origin:bottom} }
+
+/* ─── 通用 section 样式 ─── */
+section { padding:110px 80px; position:relative }
+.sec-label {
+  display:block; font-size:10px; letter-spacing:.28em;
+  color:var(--gold-mute); text-transform:uppercase; margin-bottom:14px;
+}
+.sec-title {
+  font-family:'Noto Serif SC',serif;
+  font-size:clamp(28px, 3.5vw, 44px);
+  font-weight:500; letter-spacing:.08em;
+  color:var(--sand-lt); margin-bottom:10px;
+}
+.sec-sub {
+  font-size:14px; color:var(--text-2); letter-spacing:.04em; line-height:1.8;
+}
+.gold-line {
+  width:48px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin:18px 0;
 }
 
-/* 右侧视觉区 */
-.hero-right {
-  display: none;  /* 全屏背景模式，右侧独立区域隐藏 */
-}
-
-.hero-glow {
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.03) 40%, transparent 70%);
-  animation: pulse-glow 4s ease-in-out infinite;
-}
-@keyframes pulse-glow {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.7; }
-}
-
-.hero-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid var(--border-gold);
-  animation: rotate-ring linear infinite;
-}
-.hero-ring-1 {
-  width: 380px; height: 380px;
-  animation-duration: 40s;
-  border-color: rgba(212,175,55,0.15);
-}
-.hero-ring-2 {
-  width: 460px; height: 460px;
-  animation-duration: 60s;
-  animation-direction: reverse;
-  border-color: rgba(212,175,55,0.08);
-  border-style: dashed;
-}
-@keyframes rotate-ring {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* 沙漠背景剪影 */
-.hero-desert-scene {
-  position: relative;
-  z-index: 2;
-  width: 580px;
-  height: 360px;
-}
-.hero-real-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
-  border-radius: 2px;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 65%, rgba(0,0,0,0) 100%);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 65%, rgba(0,0,0,0) 100%);
-  filter: brightness(0.92) contrast(1.08) saturate(1.12);
-}
-
-/* 城市标注点 */
-.city-dot {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  animation: float-dot 3s ease-in-out infinite;
-}
-.city-dot::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 8px var(--gold);
-}
-.city-dot span {
-  font-size: 10px;
-  color: var(--gold-muted);
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-.city-dot-1 { top: 20%; right: 5%; animation-delay: 0s; }
-.city-dot-2 { bottom: 25%; right: 10%; animation-delay: 1s; }
-.city-dot-3 { top: 40%; left: 0%; animation-delay: 2s; }
-@keyframes float-dot {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes scroll-line {
-  0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
-  50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
-  100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ============================================================
-   通用 Section 样式
-   ============================================================ */
-section {
-  padding: 120px 48px;
-  position: relative;
-}
-.section-header {
-  text-align: center;
-  margin-bottom: 80px;
-}
-.section-label {
-  font-size: 11px;
-  letter-spacing: 4px;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  display: block;
-}
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(32px, 4vw, 52px);
-  color: var(--text-primary);
-  font-weight: 600;
-  margin-bottom: 16px;
-  letter-spacing: 2px;
-}
-.section-title-cn {
-  font-family: serif;
-  font-size: clamp(28px, 3.5vw, 44px);
-}
-.section-sub {
-  font-size: 14px;
-  color: var(--text-secondary);
-  letter-spacing: 1px;
-}
-
-/* ============================================================
-   AI 旅程生成模块
-   ============================================================ */
+/* ─── §2 AI旅程生成器 ─── */
 #journey {
-  background: var(--bg-deep);
-  position: relative;
-}
-
-/* 背景图 */
-#journey::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('assets/images/hero-bg-ref.png');
-  background-size: cover;
-  background-position: center center;
-  opacity: 0.55;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* 额外叠加遮罩，顶部底部融合 */
-#journey::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom,
-      rgba(10,8,5,0.85) 0%,
-      rgba(10,8,5,0.2) 20%,
-      rgba(10,8,5,0.0) 40%,
-      rgba(10,8,5,0.0) 60%,
-      rgba(10,8,5,0.2) 80%,
-      rgba(10,8,5,0.9) 100%
-    );
-  pointer-events: none;
-  z-index: 1;
-}
-
-.journey-layout {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
-  position: relative;
-  z-index: 2;
-}
-
-/* 输入区 */
-.journey-input-area {
-  padding: 48px;
-  border: 1px solid var(--border-gold);
-  background: rgba(26,21,16,0.8);
-  position: relative;
-}
-.journey-input-area::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
-.input-group {
-  margin-bottom: 28px;
-}
-.input-label {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--gold-muted);
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-.input-field {
-  width: 100%;
-  padding: 14px 18px;
-  background: rgba(10,8,5,0.8);
-  border: 1px solid var(--border-gold);
-  color: var(--text-primary);
-  font-size: 14px;
-  font-family: 'Inter', sans-serif;
-  outline: none;
-  transition: border-color 0.3s;
-}
-.input-field:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 20px rgba(212,175,55,0.1);
-}
-.input-field::placeholder { color: var(--text-muted); }
-
-/* 风格选择标签 */
-.style-tags {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.style-tag {
-  padding: 8px 20px;
-  border: 1px solid var(--border-gold);
-  color: var(--text-secondary);
-  font-size: 12px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s;
-  background: transparent;
-  font-family: 'Inter', sans-serif;
-}
-.style-tag:hover, .style-tag.active {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: rgba(212,175,55,0.06);
-}
-
-.generate-btn {
-  width: 100%;
-  padding: 18px;
-  background: linear-gradient(135deg, var(--gold) 0%, #C49B2A 100%);
-  color: var(--bg-deep);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  border: none;
-  cursor: pointer;
-  margin-top: 32px;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-.generate-btn::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 0; height: 0;
-  background: rgba(255,255,255,0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-.generate-btn:hover::after {
-  width: 300px; height: 300px;
-}
-.generate-btn:hover {
-  box-shadow: 0 8px 30px rgba(212,175,55,0.4);
-  transform: translateY(-1px);
-}
-.generate-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.gen-note {
-  text-align: center;
-  margin-top: 16px;
-  font-size: 11px;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-}
-
-/* 旅程卡片 */
-.journey-card-area {
-  position: sticky;
-  top: 100px;
-}
-
-.journey-card {
-  border: 1px solid var(--border-gold);
-  background: rgba(18,16,10,0.95);
-  position: relative;
-  overflow: hidden;
-  min-height: 480px;
-  transition: all 0.4s;
-}
-.journey-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--red-xia), var(--gold), var(--red-xia));
-}
-.journey-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.04) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-.card-header {
-  padding: 32px 32px 24px;
-  border-bottom: 1px solid var(--border-gold);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.card-badge-icon {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-}
-.card-header-text {}
-.card-title-label {
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: var(--gold-muted);
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.card-title-main {
-  font-family: serif;
-  font-size: 20px;
-  color: var(--gold);
-  letter-spacing: 2px;
-}
-
-.card-body {
-  padding: 28px 32px;
-}
-.card-field {
-  margin-bottom: 22px;
-  padding-bottom: 22px;
-  border-bottom: 1px solid rgba(212,175,55,0.08);
-}
-.card-field:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-}
-.card-field-label {
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.card-field-label::before {
-  content: '';
-  width: 16px;
-  height: 1px;
-  background: var(--gold-dark);
-}
-.card-field-value {
-  font-size: 14px;
-  color: var(--text-primary);
-  line-height: 1.8;
-  font-family: serif;
-}
-.card-field-value.gold { color: var(--gold); font-size: 16px; font-weight: 600; }
-
-.card-loading {
-  display: none;
-  position: absolute;
-  inset: 0;
-  background: rgba(10,8,5,0.9);
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 20px;
-}
-.card-loading.show { display: flex; }
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(212,175,55,0.2);
-  border-top-color: var(--gold);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text {
-  font-size: 12px;
-  letter-spacing: 3px;
-  color: var(--gold-muted);
-}
-
-/* ============================================================
-   丝路地图模块 · 文明探索系统
-   ============================================================ */
-#silkroad {
-  background: var(--bg-deep);
-  overflow: hidden;
-  padding: 100px 0 80px;
-  position: relative;
-}
-
-/* 背景底图 */
-#silkroad .map-bg-img {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-#silkroad .map-bg-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  opacity: 0.55;
-}
-/* 顶底渐变融合 */
-#silkroad .map-bg-img::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom,
-      rgba(6,5,4,0.9) 0%,
-      rgba(6,5,4,0.35) 15%,
-      rgba(6,5,4,0.0) 30%,
-      rgba(6,5,4,0.0) 70%,
-      rgba(6,5,4,0.35) 85%,
-      rgba(6,5,4,0.92) 100%
-    );
-}
-
-.map-container {
-  max-width: 100%;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-/* 顶部标题区 */
-.map-header {
-  text-align: center;
-  margin-bottom: 48px;
-  padding: 0 48px;
-}
-
-/* 地图主体全宽 */
-.silkroad-map-svg {
-  width: 100%;
-  display: block;
-  margin: 0 auto;
-}
-
-.map-caption {
-  text-align: center;
-  margin-top: 40px;
-  font-family: serif;
-  font-size: 16px;
-  color: rgba(200,169,110,0.5);
-  letter-spacing: 6px;
-  padding: 0 48px;
-}
-
-/* 路线粒子流动 */
-@keyframes route-flow {
-  0% { stroke-dashoffset: 200; opacity: 0.3; }
-  50% { opacity: 1; }
-  100% { stroke-dashoffset: 0; opacity: 0.3; }
-}
-@keyframes route-glow-flow {
-  0% { stroke-dashoffset: 300; }
-  100% { stroke-dashoffset: -300; }
-}
-
-/* 城市节点呼吸 */
-@keyframes city-breathe {
-  0%, 100% { r: 5; opacity: 0.9; }
-  50% { r: 7; opacity: 1; }
-}
-@keyframes city-ring-expand {
-  0% { r: 8; opacity: 0.7; stroke-width: 1.5; }
-  100% { r: 22; opacity: 0; stroke-width: 0.5; }
-}
-@keyframes city-ring2-expand {
-  0% { r: 12; opacity: 0.5; stroke-width: 1; }
-  100% { r: 28; opacity: 0; stroke-width: 0.3; }
-}
-
-/* 粒子点流动 */
-@keyframes particle-travel {
-  0% { offset-distance: 0%; opacity: 0; }
-  5% { opacity: 1; }
-  95% { opacity: 1; }
-  100% { offset-distance: 100%; opacity: 0; }
-}
-
-/* 整体氛围光 */
-.map-ambient {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-.map-ambient::before {
-  content: '';
-  position: absolute;
-  left: 20%;
-  top: 30%;
-  width: 400px;
-  height: 200px;
-  background: radial-gradient(ellipse, rgba(212,175,55,0.04) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: ambient-pulse 6s ease-in-out infinite;
-}
-.map-ambient::after {
-  content: '';
-  position: absolute;
-  right: 15%;
-  top: 40%;
-  width: 300px;
-  height: 150px;
-  background: radial-gradient(ellipse, rgba(139,115,32,0.05) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: ambient-pulse 8s ease-in-out infinite reverse;
-}
-@keyframes ambient-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.15); }
-}
-
-/* ============================================================
-   文物原型模块
-   ============================================================ */
-#artifact {
-  background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
-}
-
-.artifact-layout {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  align-items: center;
-}
-
-/* 展柜 */
-.artifact-showcase {
-  position: relative;
-  border: 1px solid var(--border-gold);
-  padding: 60px;
-  background: linear-gradient(145deg, rgba(26,21,16,0.9), rgba(10,8,5,0.95));
-  text-align: center;
-}
-.artifact-showcase::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.artifact-showcase::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
-}
-
-.artifact-glow {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.artifact-caption {
-  margin-top: 28px;
-  font-size: 12px;
-  letter-spacing: 2px;
-  color: var(--gold-muted);
-}
-.artifact-desc-small {
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--text-muted);
-  line-height: 1.8;
-}
-
-/* 演化时间线 */
-.evolution-timeline {
-  position: relative;
-  padding-left: 30px;
-}
-.evolution-timeline::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 20px;
-  bottom: 20px;
-  width: 1px;
-  background: linear-gradient(180deg, var(--gold), rgba(212,175,55,0.2));
-}
-
-.evo-step {
-  position: relative;
-  margin-bottom: 44px;
-  padding-left: 30px;
-}
-.evo-step::before {
-  content: '';
-  position: absolute;
-  left: -34px;
-  top: 8px;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 10px rgba(212,175,55,0.5);
-}
-.evo-step-num {
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: var(--gold-dark);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
-.evo-step-title {
-  font-family: serif;
-  font-size: 20px;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  letter-spacing: 2px;
-}
-.evo-step-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.8;
-}
-
-/* ============================================================
-   文创展示模块
-   ============================================================ */
-#merchandise {
-  background: var(--bg-deep);
-}
-
-.merch-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-}
-
-.merch-card {
-  border: 1px solid var(--border-gold);
-  background: var(--bg-card);
-  overflow: hidden;
-  transition: all 0.4s ease;
-  position: relative;
-}
-.merch-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-muted), transparent);
-  transform: scaleX(0);
-  transition: transform 0.4s;
-}
-.merch-card:hover::before { transform: scaleX(1); }
-.merch-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--border-gold-bright);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(212,175,55,0.08);
-}
-
-.merch-visual {
-  height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(145deg, rgba(20,17,12,0.9), rgba(12,10,6,0.95));
-  position: relative;
-  overflow: hidden;
-}
-.merch-visual::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 60px;
-  background: linear-gradient(transparent, var(--bg-card));
-}
-
-.merch-info {
-  padding: 28px;
-}
-.merch-series {
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: var(--gold-muted);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.merch-name {
-  font-family: serif;
-  font-size: 22px;
-  color: var(--text-primary);
-  letter-spacing: 2px;
-  margin-bottom: 10px;
-}
-.merch-desc {
-  font-size: 12px;
-  color: var(--text-secondary);
-  line-height: 1.8;
-  margin-bottom: 24px;
-}
-.merch-btn {
-  display: inline-block;
-  padding: 9px 24px;
-  border: 1px solid var(--border-gold-bright);
-  color: var(--gold);
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-decoration: none;
-  cursor: pointer;
-  background: transparent;
-  font-family: 'Inter', sans-serif;
-  transition: all 0.3s;
-}
-.merch-btn:hover {
-  background: var(--gold);
-  color: var(--bg-deep);
-}
-
-/* ============================================================
-   Ending 区域
-   ============================================================ */
-#ending {
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  padding: 120px 48px;
-}
-
-.ending-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 100% 60% at 50% 100%, rgba(139,58,30,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 80% 50% at 50% 50%, rgba(139,115,32,0.05) 0%, transparent 60%),
-    linear-gradient(180deg, var(--bg-deep) 0%, #0D0A05 100%);
-}
-
-/* 沙漠地平线 SVG */
-.ending-desert {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  opacity: 0.3;
-}
-
-.ending-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-}
-
-.ending-quote {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(24px, 3.5vw, 42px);
-  color: var(--text-primary);
-  font-style: italic;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  font-weight: 400;
-}
-.ending-quote-cn {
-  font-family: serif;
-  font-style: normal;
-}
-
-.ending-sub {
-  font-size: 14px;
-  color: var(--text-secondary);
-  letter-spacing: 2px;
-  margin-bottom: 48px;
-}
-
-.ending-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 18px 48px;
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
-  color: var(--bg-deep);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  transition: all 0.3s;
-  font-family: 'Inter', sans-serif;
-}
-.ending-cta:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 50px rgba(212,175,55,0.35);
-}
-
-/* 底部版权 */
-footer {
-  padding: 32px 48px;
-  border-top: 1px solid rgba(212,175,55,0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.footer-copy {
-  font-size: 12px;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-}
-.footer-line {
-  width: 80px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
-}
-
-/* ============================================================
-   响应式
-   ============================================================ */
-@media (max-width: 1024px) {
-  #navbar { padding: 0 24px; }
-  .nav-links { display: none; }
-  section { padding: 80px 24px; }
-  #hero { padding: 100px 24px 60px; }
-  .hero-content { flex-direction: column; gap: 60px; }
-  .hero-left { max-width: 100%; }
-  .hero-right { min-height: 360px; }
-  .journey-layout { grid-template-columns: 1fr; gap: 48px; }
-  .artifact-layout { grid-template-columns: 1fr; gap: 60px; }
-  .merch-grid { grid-template-columns: 1fr; gap: 24px; }
-  footer { flex-direction: column; gap: 16px; text-align: center; }
-}
-@media (max-width: 640px) {
-  .hero-title-cn { font-size: 56px; }
-  .hero-title-en { font-size: 22px; }
-  .hero-ring-1 { width: 260px; height: 260px; }
-  .hero-ring-2 { width: 320px; height: 320px; }
-  .hero-glow { width: 280px; height: 280px; }
-}
-
-
-/* ═══════════════════════════════════════
-   数字文明藏馆 v2 · 参考图对齐
-   ═══════════════════════════════════════ */
-
-#artifact { position:relative; overflow:hidden; padding:80px 0 40px; background:var(--bg-deep); }
-.museum-stardust { position:absolute; inset:0; pointer-events:none; z-index:0; }
-
-/* 展廊横排 */
-.museum-gallery {
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  gap:0;
-  padding:32px 60px 40px;
-  position:relative;
-  z-index:1;
-}
-
-/* 左右切换箭头 */
-.gallery-arrow {
-  position:absolute;
-  top:50%; transform:translateY(-50%);
-  width:40px; height:40px;
-  border:0.5px solid rgba(212,175,55,0.2);
-  background:rgba(212,175,55,0.03);
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer;
-  transition:all 0.3s ease;
-  z-index:4;
-}
-.gallery-arrow:hover { border-color:rgba(212,175,55,0.45); background:rgba(212,175,55,0.07); }
-.gallery-arrow svg { width:18px; height:18px; }
-.gallery-arrow--left  { left:20px; }
-.gallery-arrow--right { right:20px; }
-
-/* 侧展柜 */
-.gallery-case--side {
-  flex:0 0 260px;
-  transform:translateY(24px) scale(0.86);
-  opacity:0.72;
-  transition:all 0.4s ease;
-  z-index:1;
-}
-.gallery-case--side:hover { opacity:0.88; transform:translateY(20px) scale(0.87); }
-
-/* 中央主展柜 */
-.gallery-case--center {
-  flex:0 0 380px;
-  z-index:2;
-  position:relative;
-  margin:0 -10px;
-}
-
-/* 展柜内框 */
-.gallery-case-inner {
-  display:flex; flex-direction:column; align-items:center;
-  gap:0;
-  border:0.5px solid rgba(212,175,55,0.16);
-  background:rgba(212,175,55,0.018);
-  backdrop-filter:blur(6px);
-  padding:20px 20px 24px;
-  position:relative;
+  background:var(--bg-mid);
   overflow:hidden;
 }
-.gallery-case-inner::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:0.8px;
-  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);
-  animation:sweepLine 4s ease-in-out infinite;
+#journey::before {
+  content:''; position:absolute; inset:0; z-index:0;
+  background-image:url('assets/images/第二页背景图.png');
+  background-size:cover; background-position:center;
+  opacity:.28;
 }
-.gallery-case-inner--center {
-  border-color:rgba(212,175,55,0.28);
-  background:rgba(212,175,55,0.03);
+#journey::after {
+  content:''; position:absolute; inset:0; z-index:1;
+  background:
+    linear-gradient(to bottom, rgba(15,13,9,.95) 0%, rgba(15,13,9,.55) 18%, rgba(15,13,9,.4) 50%, rgba(15,13,9,.6) 82%, rgba(15,13,9,.98) 100%);
 }
-.gallery-case-inner--center::before {
-  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.75),transparent);
+.journey-inner {
+  position:relative; z-index:2;
+  max-width:1160px; margin:0 auto;
 }
-@keyframes sweepLine { 0%,100%{opacity:0.4} 50%{opacity:1} }
-
-/* 标签 */
-.case-badge {
-  font-size:8px; letter-spacing:3px;
-  color:rgba(212,175,55,0.45);
-  border:0.5px solid rgba(212,175,55,0.2);
-  padding:3px 10px; margin-bottom:16px;
-  align-self:flex-start;
-}
-.case-badge--gold {
-  color:rgba(212,175,55,0.7);
-  border-color:rgba(212,175,55,0.35);
-  background:rgba(212,175,55,0.05);
-}
-
-/* 展品区域 */
-.case-artifact-wrap {
-  position:relative;
-  display:flex; align-items:center; justify-content:center;
-  width:100%; padding:12px 0;
-}
-.case-artifact-wrap--center { padding:16px 0; }
-.case-svg { width:160px; height:176px; position:relative; z-index:1; }
-.case-svg--center { width:240px; height:240px; }
-
-/* 底座光晕 */
-.case-base-glow {
-  position:absolute; bottom:0; left:50%; transform:translateX(-50%);
-  width:120px; height:30px;
-  background:radial-gradient(ellipse at center,rgba(212,175,55,0.14) 0%,transparent 70%);
-}
-.case-base-glow--strong {
-  width:180px; height:40px;
-  background:radial-gradient(ellipse at center,rgba(212,175,55,0.22) 0%,transparent 70%);
-}
-
-/* 地面倒影线 */
-.gallery-case-inner::after {
-  content:''; position:absolute; bottom:0; left:8px; right:8px; height:0.8px;
-  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.25),transparent);
-}
-
-/* 信息区 */
-.case-info {
-  width:100%; padding-top:16px;
-  border-top:0.4px solid rgba(212,175,55,0.1);
-  display:flex; flex-direction:column; gap:8px;
-}
-.case-info--center { align-items:center; text-align:center; }
-.case-series {
-  font-family:serif; font-size:14px;
-  color:rgba(212,175,55,0.82); letter-spacing:2px; margin:0;
-}
-.case-series--center { font-size:17px; letter-spacing:3px; filter:drop-shadow(0 0 6px rgba(212,175,55,0.3)); }
-.case-desc {
-  font-size:11px; color:rgba(200,169,110,0.55);
-  line-height:1.7; margin:0; letter-spacing:0.3px;
-}
-.case-desc--center { font-size:12px; color:rgba(200,169,110,0.62); }
-.case-cta {
-  font-size:10px; letter-spacing:2px;
-  color:rgba(212,175,55,0.5);
-  text-decoration:none;
-  transition:color 0.3s;
-  margin-top:4px;
-  display:inline-block;
-}
-.case-cta:hover { color:rgba(212,175,55,0.9); }
-.case-cta--gold { color:rgba(212,175,55,0.7); font-size:11px; }
-.case-cta--gold:hover { color:#D4AF37; }
-
-/* 能量环（中央展柜专用） */
-.energy-rings { position:absolute; top:42%; left:50%; transform:translate(-50%,-50%); pointer-events:none; z-index:0; }
-.energy-ring { position:absolute; border-radius:50%; border:0.6px solid rgba(212,175,55,0.12); transform:translate(-50%,-50%); animation:ringPulse 4s ease-in-out infinite; }
-.energy-ring--1 { width:280px; height:280px; animation-delay:0s; }
-.energy-ring--2 { width:360px; height:360px; animation-delay:1.3s; border-width:0.4px; border-color:rgba(212,175,55,0.07); }
-.energy-ring--3 { width:210px; height:210px; animation-delay:2.6s; border-style:dashed; border-color:rgba(212,175,55,0.15); }
-@keyframes ringPulse { 0%,100%{opacity:0.35;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.04)} }
-
-/* 漂浮粒子 */
-.float-particles { position:absolute; inset:0; pointer-events:none; z-index:0; }
-.particle { position:absolute; width:2.5px; height:2.5px; border-radius:50%; background:rgba(212,175,55,0.55); animation:floatUp 6s ease-in-out infinite; }
-.p1{left:18%;top:72%;animation-delay:0s;width:2px;height:2px;}
-.p2{left:78%;top:68%;animation-delay:1.1s;}
-.p3{left:38%;top:82%;animation-delay:2.2s;background:rgba(212,175,55,0.38);}
-.p4{left:62%;top:78%;animation-delay:3.3s;width:2px;height:2px;}
-@keyframes floatUp { 0%{transform:translateY(0) scale(1);opacity:0} 20%{opacity:0.75} 80%{opacity:0.4} 100%{transform:translateY(-70px) scale(0.4);opacity:0} }
-
-/* ── 底部文明系统入口 ── */
-.civ-system-bar {
-  padding:0 60px 32px;
-  position:relative; z-index:1;
-}
-.civ-system-divider {
-  display:flex; align-items:center; gap:16px;
-  margin-bottom:24px;
-  padding-top:12px;
-  border-top:0.4px solid rgba(212,175,55,0.1);
-}
-.civ-system-label {
-  font-size:8.5px; letter-spacing:4px;
-  color:rgba(212,175,55,0.3);
-  white-space:nowrap;
-}
-.civ-system-grid {
-  display:flex; gap:8px; justify-content:center; flex-wrap:wrap;
-}
-.civ-sys-item {
-  flex:1; min-width:130px; max-width:180px;
-  display:flex; flex-direction:column; align-items:center; gap:8px;
-  padding:18px 14px 16px;
-  border:0.4px solid rgba(212,175,55,0.12);
-  background:rgba(212,175,55,0.016);
-  cursor:pointer; transition:all 0.35s ease;
-  position:relative;
-}
-.civ-sys-item::after {
-  content:''; position:absolute; top:0; left:0; right:0; height:0.6px;
-  background:rgba(212,175,55,0.35);
-  transform:scaleX(0); transition:transform 0.35s ease;
-}
-.civ-sys-item:hover::after, .civ-sys-item--active::after { transform:scaleX(1); }
-.civ-sys-item:hover { border-color:rgba(212,175,55,0.25); background:rgba(212,175,55,0.04); }
-.civ-sys-item--active { border-color:rgba(212,175,55,0.22); background:rgba(212,175,55,0.035); }
-.civ-sys-icon { width:40px; height:40px; }
-.civ-sys-name { font-size:12px; font-family:serif; color:rgba(212,175,55,0.72); letter-spacing:1.5px; text-align:center; }
-.civ-sys-sub { font-size:9.5px; color:rgba(212,175,55,0.3); letter-spacing:0.5px; text-align:center; line-height:1.5; }
-.civ-system-footer {
-  text-align:center; margin-top:24px;
-  font-size:11px; letter-spacing:4px;
-  color:rgba(212,175,55,0.28);
-}
-
-/* 旧CSS清理：覆盖旧的museum-hall等（如存在）*/
-.museum-hall { display:none; }
-.museum-cabinet { display:none; }
-.museum-centerpiece { display:none; }
-.civilization-entries { display:none; }
-
-
-
-/* ═══════════════════════════════════════
-   Journey v2 · 两步骤冒险生成器
-   ═══════════════════════════════════════ */
-
+.journey-header { margin-bottom:56px }
 /* 步骤指示器 */
-.journey-steps {
+.step-nav {
+  display:flex; align-items:center; gap:0;
+  margin-bottom:48px;
+}
+.step-item {
+  display:flex; align-items:center; gap:10px;
+  font-size:12px; letter-spacing:.08em; color:var(--text-3);
+  transition:color .3s;
+}
+.step-item.is-active { color:var(--gold) }
+.step-item.is-done { color:var(--teal) }
+.step-num {
+  width:28px; height:28px; border-radius:50%;
+  border:1px solid currentColor;
   display:flex; align-items:center; justify-content:center;
-  gap:0; margin:0 auto 40px; max-width:400px;
+  font-size:11px; flex-shrink:0;
 }
-.jstep {
-  display:flex; align-items:center; gap:8px;
-  padding:8px 18px;
-  border:0.5px solid rgba(212,175,55,0.15);
-  cursor:default; transition:all 0.4s;
+.step-item.is-active .step-num { background:var(--gold); color:var(--bg); border-color:var(--gold) }
+.step-item.is-done .step-num { background:var(--teal); color:#fff; border-color:var(--teal) }
+.step-line {
+  flex:1; height:1px; background:var(--text-3); margin:0 14px;
+  transition:background .3s;
 }
-.jstep--active {
-  border-color:rgba(212,175,55,0.4);
-  background:rgba(212,175,55,0.04);
-}
-.jstep-num {
-  font-size:9px; letter-spacing:2px;
-  color:rgba(212,175,55,0.35);
-}
-.jstep--active .jstep-num { color:rgba(212,175,55,0.7); }
-.jstep-label { font-size:11px; letter-spacing:1.5px; color:rgba(212,175,55,0.35); }
-.jstep--active .jstep-label { color:rgba(212,175,55,0.8); }
-.jstep-line {
-  flex:0 0 48px; height:0.5px;
-  background:rgba(212,175,55,0.15);
-}
+.step-line.is-done { background:var(--teal) }
 
-/* ── Step 1 输入面板 ── */
-.journey-input-panel { max-width:680px; margin:0 auto; padding:0 24px; }
-.jip-inner {
-  border:0.5px solid rgba(212,175,55,0.2);
-  background:rgba(212,175,55,0.02);
-  padding:40px 48px;
-  position:relative;
-}
-.jip-inner::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:1px;
-  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);
-}
-.jip-field { margin-bottom:28px; }
-.jip-label {
-  display:block; font-size:10px; letter-spacing:3px;
-  color:rgba(212,175,55,0.55); margin-bottom:10px;
-}
-.jip-required { color:rgba(212,175,55,0.6); }
-.jip-input {
-  width:100%; padding:12px 16px;
-  background:rgba(212,175,55,0.03);
-  border:0.5px solid rgba(212,175,55,0.2);
-  color:rgba(212,175,55,0.85);
-  font-size:14px; letter-spacing:1px;
-  outline:none; transition:border-color 0.3s;
-  font-family:inherit;
-  box-sizing:border-box;
-}
-.jip-input::placeholder { color:rgba(212,175,55,0.25); }
-.jip-input:focus { border-color:rgba(212,175,55,0.5); background:rgba(212,175,55,0.05); }
-.jip-hint { display:block; font-size:10px; color:rgba(212,175,55,0.25); margin-top:6px; letter-spacing:0.5px; }
+/* 面板 */
+.step-panel { display:none }
+.step-panel.is-active { display:block }
 
-/* 标签选择 */
-.jip-tags { display:flex; flex-wrap:wrap; gap:8px; }
-.jip-tag {
-  padding:7px 16px;
-  border:0.5px solid rgba(212,175,55,0.2);
-  background:transparent;
-  color:rgba(212,175,55,0.45);
-  font-size:12px; letter-spacing:1px;
-  cursor:pointer; transition:all 0.25s;
-  font-family:inherit;
+.panel-title {
+  font-family:'Noto Serif SC',serif;
+  font-size:18px; font-weight:500; letter-spacing:.1em;
+  color:var(--sand-lt); margin-bottom:8px;
 }
-.jip-tag:hover { border-color:rgba(212,175,55,0.4); color:rgba(212,175,55,0.7); }
-.jip-tag.selected {
-  border-color:rgba(212,175,55,0.65);
-  background:rgba(212,175,55,0.08);
-  color:rgba(212,175,55,0.95);
-}
+.panel-hint { font-size:13px; color:var(--text-2); margin-bottom:28px }
 
-/* 提交按钮 */
-.jip-submit {
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  width:100%; padding:14px 24px; margin-top:8px;
-  background:rgba(212,175,55,0.08);
-  border:0.6px solid rgba(212,175,55,0.45);
-  color:rgba(212,175,55,0.9);
-  font-size:14px; letter-spacing:4px;
-  cursor:pointer; transition:all 0.35s;
-  font-family:inherit;
-  position:relative; overflow:hidden;
+/* 城市卡片网格 */
+.route-section { margin-bottom:32px }
+.route-label {
+  font-size:10px; letter-spacing:.22em; color:var(--gold-mute);
+  text-transform:uppercase; margin-bottom:14px;
 }
-.jip-submit::before {
-  content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
-  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.1),transparent);
-  transition:left 0.5s;
+.chip-row {
+  display:grid; grid-template-columns:repeat(5,1fr); gap:8px;
 }
-.jip-submit:hover { background:rgba(212,175,55,0.12); border-color:rgba(212,175,55,0.7); }
-.jip-submit:hover::before { left:100%; }
-.jip-submit svg { width:18px; height:18px; }
-.jip-submit:disabled { opacity:0.35; cursor:not-allowed; }
-.jip-note { text-align:center; font-size:10px; color:rgba(212,175,55,0.22); letter-spacing:2px; margin-top:14px; }
+.chip {
+  padding:10px 6px;
+  border:1px solid var(--border);
+  background:rgba(22,19,14,.7);
+  text-align:center;
+  transition:all .25s; cursor:pointer;
+}
+.chip:hover { border-color:var(--gold-mute); background:rgba(200,168,75,.06) }
+.chip.is-selected { border-color:var(--gold); background:rgba(200,168,75,.1); }
+.chip-name { font-size:13px; color:var(--text); font-family:'Noto Serif SC',serif; margin-bottom:2px }
+.chip.is-selected .chip-name { color:var(--gold) }
+.chip-sub { font-size:10px; color:var(--text-3) }
 
-/* ── Step 2 生成结果 ── */
-.journey-result-panel { max-width:980px; margin:0 auto; padding:0 24px; }
+/* 身份 / 心境卡片 */
+.mini-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+}
+.mini-card {
+  padding:18px 12px;
+  border:1px solid var(--border);
+  background:rgba(22,19,14,.7);
+  text-align:center; cursor:pointer;
+  transition:all .25s;
+}
+.mini-card:hover { border-color:var(--gold-mute) }
+.mini-card.is-selected { border-color:var(--gold); background:rgba(200,168,75,.08) }
+.mini-card-icon { font-size:22px; margin-bottom:8px }
+.mini-card-name { font-size:13px; color:var(--text); font-family:'Noto Serif SC',serif; margin-bottom:4px }
+.mini-card.is-selected .mini-card-name { color:var(--gold) }
+.mini-card-desc { font-size:10px; color:var(--text-3); line-height:1.5 }
+
+/* 旅者姓名输入 */
+.name-row {
+  display:flex; align-items:center; gap:16px;
+  margin-bottom:28px;
+}
+.name-input {
+  flex:1; max-width:320px;
+  padding:12px 18px;
+  background:rgba(10,8,4,.8);
+  border:1px solid var(--border);
+  color:var(--text); font-size:14px;
+  outline:none; transition:border-color .3s;
+}
+.name-input:focus { border-color:var(--gold) }
+.name-input::placeholder { color:var(--text-3) }
+
+/* 步骤按钮 */
+.step-actions { display:flex; align-items:center; gap:14px; margin-top:32px }
+.btn-next, .btn-generate {
+  padding:12px 32px;
+  background:var(--gold); color:var(--bg);
+  border:none; font-size:13px; font-weight:500; letter-spacing:.1em;
+  transition:all .3s;
+}
+.btn-next:hover, .btn-generate:hover { background:var(--gold-hi); transform:translateY(-1px) }
+.btn-next:disabled, .btn-generate:disabled { opacity:.35; cursor:not-allowed; transform:none }
+.btn-back {
+  padding:12px 24px;
+  background:transparent; color:var(--text-2);
+  border:1px solid var(--border);
+  font-size:13px; letter-spacing:.08em; transition:all .25s;
+}
+.btn-back:hover { border-color:var(--gold-mute); color:var(--gold) }
 
 /* 加载 */
-.jr-loading {
-  display:flex; align-items:center; justify-content:center;
-  min-height:360px;
+#loading {
+  text-align:center; padding:60px 0;
 }
-.jr-loading-inner { text-align:center; }
-.jr-spinner {
+.loading-ring {
   width:48px; height:48px; margin:0 auto 20px;
-  border:1px solid rgba(212,175,55,0.15);
-  border-top-color:rgba(212,175,55,0.7);
+  border:2px solid rgba(200,168,75,.15);
+  border-top-color:var(--gold);
   border-radius:50%;
-  animation:jrSpin 1.2s linear infinite;
+  animation:spin 1s linear infinite;
 }
-@keyframes jrSpin { to { transform:rotate(360deg); } }
-.jr-loading-text { font-size:14px; color:rgba(212,175,55,0.6); letter-spacing:2px; margin-bottom:6px; }
-.jr-loading-sub { font-size:10px; color:rgba(212,175,55,0.28); letter-spacing:1.5px; }
+.loading-text { font-size:12px; letter-spacing:.18em; color:var(--gold-mute) }
+@keyframes spin { to { transform:rotate(360deg) } }
 
-/* 结果内容双栏 */
-.jr-content {
-  display:flex; gap:40px; align-items:flex-start;
+/* 旅程结果卡片 */
+#journey-card {
+  margin-top:48px;
+  border:1px solid var(--border);
+  background:rgba(22,19,14,.95);
+  position:relative; overflow:hidden;
 }
+#journey-card::before {
+  content:''; position:absolute; inset:0 0 auto 0;
+  height:2px;
+  background:linear-gradient(90deg, var(--red), var(--gold), var(--red));
+}
+.jcard-header {
+  padding:28px 32px 22px;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:flex-start; justify-content:space-between; gap:20px;
+}
+.jcard-badge {
+  font-size:9px; letter-spacing:.2em; color:var(--gold-mute); text-transform:uppercase; margin-bottom:6px;
+}
+#jc-title {
+  font-family:'Noto Serif SC',serif;
+  font-size:20px; font-weight:500; color:var(--gold);
+  letter-spacing:.08em; line-height:1.4;
+  min-height:28px;
+}
+.jcard-meta {
+  display:flex; flex-direction:column; gap:4px; text-align:right; flex-shrink:0;
+}
+.jcard-meta-item { font-size:11px; color:var(--text-2) }
+.jcard-meta-item span { color:var(--sand) }
+.jcard-body { padding:28px 32px }
+#jc-narrative {
+  font-family:'Noto Serif SC',serif;
+  font-size:14px; line-height:2; color:var(--text);
+  margin-bottom:22px; min-height:60px;
+}
+.jcard-egg {
+  padding:18px 20px;
+  background:rgba(45,125,111,.08);
+  border-left:2px solid var(--teal);
+}
+.jcard-egg-label {
+  font-size:9px; letter-spacing:.22em; color:var(--teal); text-transform:uppercase; margin-bottom:8px;
+}
+#jc-egg {
+  font-size:13px; color:var(--text-2); line-height:1.85; min-height:40px;
+}
+.jcard-footer {
+  padding:18px 32px;
+  border-top:1px solid var(--border);
+  display:flex; align-items:center; gap:12px;
+}
+.btn-card {
+  padding:9px 20px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text-2); font-size:12px; letter-spacing:.06em;
+  transition:all .25s;
+}
+.btn-card:hover { border-color:var(--gold-mute); color:var(--gold) }
+.btn-card.primary { background:var(--teal); border-color:var(--teal); color:#fff }
+.btn-card.primary:hover { background:#3a9688 }
+#toast {
+  position:fixed; bottom:28px; right:28px; z-index:999;
+  padding:10px 22px;
+  background:var(--bg-card2); border:1px solid var(--border);
+  font-size:12px; color:var(--gold); letter-spacing:.06em;
+  transition:opacity .3s; opacity:1;
+}
+#toast[hidden] { display:none }
 
-/* 故事卡片 */
-.jr-card {
-  flex:0 0 480px;
-  border:0.6px solid rgba(212,175,55,0.28);
-  background:rgba(5,4,2,0.85);
-  padding:32px;
-  position:relative;
+/* ─── §3 丝路地图 ─── */
+#silkroad {
+  padding:80px 0 60px;
+  overflow:hidden;
+  min-height:700px;
+}
+.map-bg {
+  position:absolute; inset:0; z-index:0;
+}
+.map-bg img {
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  opacity:.72;
+}
+.map-bg::after {
+  content:''; position:absolute; inset:0;
+  background:
+    linear-gradient(to bottom, rgba(8,6,4,.88) 0%, rgba(8,6,4,.15) 12%, rgba(8,6,4,.0) 30%, rgba(8,6,4,.0) 70%, rgba(8,6,4,.15) 88%, rgba(8,6,4,.92) 100%);
+}
+.map-inner {
+  position:relative; z-index:1;
+  padding:0 80px;
+}
+.map-header { text-align:center; margin-bottom:44px }
+.map-stats {
+  display:flex; justify-content:center; gap:48px;
+  margin-top:16px;
+}
+.map-stat { text-align:center }
+.map-stat-num { font-family:'Noto Serif SC',serif; font-size:22px; color:var(--gold); letter-spacing:.06em }
+.map-stat-lbl { font-size:10px; letter-spacing:.14em; color:var(--text-3); margin-top:3px }
+
+/* SVG地图 */
+.map-svg-wrap {
+  width:100%; overflow-x:auto;
+}
+.silk-map {
+  width:100%; display:block;
+}
+/* 路线动画 */
+@keyframes routeFlow {
+  0%   { stroke-dashoffset:600; opacity:.3 }
+  50%  { opacity:.9 }
+  100% { stroke-dashoffset:0;   opacity:.3 }
+}
+@keyframes nodeBreath {
+  0%,100% { r:5; opacity:.85 }
+  50%      { r:7; opacity:1   }
+}
+@keyframes ringExpand {
+  0%   { r:8;  opacity:.6; stroke-width:1.5 }
+  100% { r:24; opacity:0;  stroke-width:.5  }
+}
+.route-main { animation:routeFlow 7s linear infinite }
+.route-sea  { animation:routeFlow 9s linear infinite 2s }
+.node-core  { animation:nodeBreath 2.5s ease-in-out infinite }
+.node-ring  { animation:ringExpand 2.5s ease-out infinite }
+
+.map-img-wrap {
+  width:100%;
+  border-radius:2px;
   overflow:hidden;
 }
-.jr-card::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:1.5px;
-  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.7),transparent);
-  animation:sweepLine 4s ease-in-out infinite;
+.map-img-wrap img {
+  width:100%; display:block;
 }
-.jr-card-header {
-  display:flex; align-items:center; gap:14px;
-  margin-bottom:20px; padding-bottom:16px;
-  border-bottom:0.4px solid rgba(212,175,55,0.12);
-}
-.jr-card-badge svg { width:40px; height:40px; }
-.jr-card-eyebrow { font-size:8px; letter-spacing:3px; color:rgba(212,175,55,0.35); margin:0 0 4px; }
-.jr-card-title { font-family:serif; font-size:18px; color:rgba(212,175,55,0.9); letter-spacing:3px; margin:0; }
-
-/* 故事正文 */
-.jr-story-wrap {
-  margin-bottom:20px; padding-bottom:16px;
-  border-bottom:0.4px solid rgba(212,175,55,0.1);
-  min-height:160px;
-}
-.jr-story-text {
-  font-size:13.5px; line-height:2;
-  color:rgba(200,169,110,0.75);
-  letter-spacing:0.3px; margin:0;
-  white-space:pre-line;
+.map-caption {
+  text-align:center; margin-top:32px;
+  font-family:'Noto Serif SC',serif; font-size:13px;
+  color:rgba(184,154,98,.4); letter-spacing:.22em;
 }
 
-/* 底部元数据 */
-.jr-card-meta { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
-.jr-meta-row { display:flex; gap:12px; align-items:baseline; }
-.jr-meta-label { font-size:9px; letter-spacing:2px; color:rgba(212,175,55,0.3); min-width:56px; }
-.jr-meta-val { font-size:12px; color:rgba(200,169,110,0.65); letter-spacing:1px; }
-.jr-meta-val.gold { color:rgba(212,175,55,0.82); }
-.jr-card-watermark {
-  font-size:8.5px; letter-spacing:3px; color:rgba(212,175,55,0.12);
-  text-align:right; margin-top:8px;
+/* ─── §4 文物与IP ─── */
+#artifact {
+  background:var(--bg-mid);
+}
+.artifact-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:80px;
+  max-width:1120px; margin:0 auto;
+  align-items:center;
+}
+/* 展柜 */
+.showcase {
+  border:1px solid var(--border);
+  background:linear-gradient(145deg, var(--bg-card), var(--bg));
+  padding:52px; text-align:center; position:relative;
+}
+.showcase::before {
+  content:''; position:absolute; inset:0 0 auto;
+  height:2px; background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.showcase-img-wrap {
+  width:100%; aspect-ratio:4/3;
+  background:#0a0805;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:24px; overflow:hidden; position:relative;
+}
+.showcase-img-wrap img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .5s ease;
+}
+.showcase:hover .showcase-img-wrap img { transform:scale(1.04) }
+/* 浅色背景三视图 — 用深色底+混合模式处理 */
+.merch-img-bg-light {
+  background:#f5edd6 !important;
+}
+.merch-img-bg-light img {
+  mix-blend-mode:multiply;
+}
+.showcase-img-wrap.empty {
+  flex-direction:column; gap:10px;
+}
+.showcase-img-wrap.empty .placeholder-bull { width:80px; opacity:.25 }
+.showcase-img-wrap.empty span { font-size:11px; color:var(--text-3); letter-spacing:.1em }
+.showcase-caption {
+  font-family:'Noto Serif SC',serif; font-size:13px;
+  color:var(--text-2); letter-spacing:.1em; margin-top:10px;
+}
+/* IP介绍文字 */
+.artifact-text .sec-label { margin-bottom:10px }
+.artifact-text .sec-title { margin-bottom:8px }
+.artifact-body {
+  font-size:14px; color:var(--text-2); line-height:1.95; margin-bottom:22px;
+}
+.artifact-tags {
+  display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;
+}
+.artifact-tag {
+  padding:4px 14px;
+  border:1px solid var(--border);
+  font-size:11px; color:var(--sand); letter-spacing:.08em;
+}
+.artifact-detail-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+}
+.artifact-detail {
+  padding:14px 16px;
+  background:var(--bg-card);
+  border-left:2px solid var(--gold-lo);
+}
+.artifact-detail-lbl { font-size:10px; letter-spacing:.14em; color:var(--text-3); margin-bottom:4px }
+.artifact-detail-val { font-family:'Noto Serif SC',serif; font-size:13px; color:var(--sand) }
+
+/* ─── §5 西夏文化 ─── */
+#culture {
+  background:var(--bg);
+}
+.culture-header { text-align:center; margin-bottom:56px }
+/* 三栏知识卡片 */
+.culture-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  max-width:1120px; margin:0 auto 60px;
+}
+.culture-card {
+  border:1px solid var(--border);
+  background:var(--bg-card);
+  padding:28px; transition:all .3s; position:relative;
+  overflow:hidden;
+}
+.culture-card::before {
+  content:''; position:absolute; inset:0 0 auto;
+  height:1px; background:linear-gradient(90deg, transparent, var(--gold-lo), transparent);
+}
+.culture-card:hover {
+  border-color:var(--border-hi);
+  transform:translateY(-4px);
+}
+.culture-card-icon {
+  width:38px; height:38px; margin-bottom:16px;
+  background:rgba(200,168,75,.08);
+  display:flex; align-items:center; justify-content:center;
+}
+.culture-card-icon svg { width:20px; height:20px; stroke:var(--gold); fill:none; stroke-width:1.5 }
+.culture-card-title {
+  font-family:'Noto Serif SC',serif; font-size:15px; font-weight:500;
+  color:var(--sand-lt); margin-bottom:10px; letter-spacing:.06em;
+}
+.culture-card-body { font-size:13px; color:var(--text-2); line-height:1.85 }
+.culture-card-tag {
+  display:inline-block; margin-top:14px;
+  font-size:10px; letter-spacing:.14em; color:var(--gold-mute);
+  border-bottom:1px solid var(--gold-lo); padding-bottom:2px;
 }
 
-/* 操作区 */
-.jr-actions { flex:1; padding-top:8px; }
-.jr-actions-title {
-  font-family:serif; font-size:16px;
-  color:rgba(212,175,55,0.75); letter-spacing:3px;
-  margin-bottom:12px; padding-bottom:12px;
-  border-bottom:0.4px solid rgba(212,175,55,0.1);
+/* AIGC 流程时间线 */
+.aigc-timeline {
+  max-width:900px; margin:0 auto;
+  border:1px solid var(--border);
+  background:var(--bg-card); padding:40px 48px;
+  position:relative;
 }
-.jr-actions-sub {
-  font-size:12px; color:rgba(200,169,110,0.45);
-  line-height:1.9; letter-spacing:0.5px; margin-bottom:28px;
+.aigc-timeline::before {
+  content:''; position:absolute; inset:0 0 auto;
+  height:2px; background:linear-gradient(90deg, var(--red), var(--gold), var(--teal));
 }
-.jr-btn-group { display:flex; flex-direction:column; gap:10px; }
-.jr-btn {
-  display:flex; align-items:center; gap:10px;
-  padding:12px 20px;
-  font-size:12px; letter-spacing:2.5px;
-  cursor:pointer; transition:all 0.3s;
-  font-family:inherit; border-radius:0;
+.aigc-title {
+  font-family:'Noto Serif SC',serif; font-size:16px; font-weight:500;
+  color:var(--sand-lt); margin-bottom:28px; text-align:center; letter-spacing:.1em;
 }
-.jr-btn svg { width:16px; height:16px; flex-shrink:0; }
-.jr-btn--primary {
-  background:rgba(212,175,55,0.1);
-  border:0.6px solid rgba(212,175,55,0.5);
-  color:rgba(212,175,55,0.9);
+.timeline-row {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0;
 }
-.jr-btn--primary:hover { background:rgba(212,175,55,0.18); border-color:rgba(212,175,55,0.8); }
-.jr-btn--secondary {
-  background:rgba(212,175,55,0.04);
-  border:0.5px solid rgba(212,175,55,0.22);
-  color:rgba(212,175,55,0.6);
+.tl-item {
+  padding:0 20px; position:relative; text-align:center;
 }
-.jr-btn--secondary:hover { background:rgba(212,175,55,0.08); border-color:rgba(212,175,55,0.4); }
-.jr-btn--ghost {
-  background:transparent;
-  border:0.5px solid rgba(212,175,55,0.15);
-  color:rgba(212,175,55,0.4);
+.tl-item:not(:last-child)::after {
+  content:'→';
+  position:absolute; right:-10px; top:14px;
+  font-size:14px; color:var(--gold-lo);
 }
-.jr-btn--ghost:hover { border-color:rgba(212,175,55,0.3); color:rgba(212,175,55,0.6); }
-.jr-share-hint { display:flex; align-items:center; gap:8px; margin-top:20px; }
-.jr-share-dot {
-  width:5px; height:5px; border-radius:50%;
-  background:rgba(212,175,55,0.5);
-  animation:dotBlink 2s ease-in-out infinite;
+.tl-num {
+  width:30px; height:30px; border-radius:50%;
+  border:1px solid var(--gold-lo);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; color:var(--gold-mute); margin:0 auto 10px;
 }
-@keyframes dotBlink { 0%,100%{opacity:0.3} 50%{opacity:1} }
-#jr-copy-toast { font-size:10px; color:rgba(212,175,55,0.3); letter-spacing:1px; }
+.tl-name { font-family:'Noto Serif SC',serif; font-size:13px; color:var(--sand); margin-bottom:5px }
+.tl-detail { font-size:11px; color:var(--text-3); line-height:1.5 }
 
+/* ─── §6 文创产品 ─── */
+#merchandise {
+  background:var(--bg-mid);
+}
+.merch-header { margin-bottom:52px }
+.merch-grid {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:16px;
+  max-width:1120px; margin:0 auto;
+}
+/* 挂件宽卡跨两列 */
+.merch-card--wide {
+  grid-column: 1 / -1;
+}
+.merch-img--wide {
+  aspect-ratio:auto;
+  max-height:480px;
+}
+.merch-img--wide img {
+  width:100%; height:100%; object-fit:contain;
+  background:var(--bg-card2);
+}
+.merch-card {
+  border:1px solid var(--border);
+  background:var(--bg-card);
+  overflow:hidden; transition:all .35s;
+  position:relative;
+}
+.merch-card:hover {
+  border-color:var(--border-hi);
+  transform:translateY(-6px);
+  box-shadow:0 20px 48px rgba(0,0,0,.4);
+}
+.merch-img {
+  width:100%; aspect-ratio:auto;
+  background:var(--bg-card2);
+  overflow:hidden; position:relative;
+  display:flex; align-items:center; justify-content:center;
+}
+.merch-img img {
+  width:100%; object-fit:contain;
+  transition:transform .5s ease;
+}
+.merch-card:hover .merch-img img { transform:scale(1.03) }
+.merch-img.empty { flex-direction:column; gap:8px }
+.merch-img.empty .ph-icon { width:44px; opacity:.2 }
+.merch-img.empty span { font-size:10px; color:var(--text-3) }
+.merch-badge {
+  position:absolute; top:12px; left:12px;
+  padding:3px 10px;
+  background:rgba(200,168,75,.15); border:1px solid var(--border-hi);
+  font-size:9px; letter-spacing:.14em; color:var(--gold);
+}
+.merch-info { padding:18px 16px }
+.merch-name {
+  font-family:'Noto Serif SC',serif; font-size:15px; font-weight:500;
+  color:var(--sand-lt); margin-bottom:6px; letter-spacing:.06em;
+}
+.merch-craft { font-size:12px; color:var(--text-2); line-height:1.6; margin-bottom:10px }
+.merch-specs {
+  display:flex; flex-wrap:wrap; gap:5px;
+}
+.merch-spec {
+  padding:2px 8px; border:1px solid var(--border);
+  font-size:10px; color:var(--text-3);
+}
+
+/* ─── §7 结尾 ─── */
+#ending {
+  min-height:60vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding:100px 80px;
+  background:var(--bg);
+  position:relative; overflow:hidden;
+}
+.ending-bg-pattern {
+  position:absolute; inset:0; opacity:.03;
+}
+.ending-quote {
+  font-family:'Noto Serif SC',serif;
+  font-size:clamp(16px, 2vw, 22px);
+  color:var(--sand);
+  letter-spacing:.22em; line-height:2;
+  margin-bottom:10px;
+}
+.ending-quote-en {
+  font-family:'Playfair Display',serif; font-style:italic;
+  font-size:14px; color:var(--text-3); letter-spacing:.14em; margin-bottom:40px;
+}
+.ending-cta {
+  padding:14px 40px;
+  border:1px solid var(--border-hi);
+  background:transparent; color:var(--gold);
+  font-size:13px; letter-spacing:.14em;
+  transition:all .3s; margin-bottom:60px;
+}
+.ending-cta:hover { background:var(--gold); color:var(--bg) }
+
+/* 毕设信息 */
+.ending-info {
+  width:100%; max-width:640px;
+  padding:28px 36px;
+  border:1px solid var(--border);
+  background:var(--bg-card); margin-bottom:36px;
+}
+.ending-info-title {
+  font-family:'Noto Serif SC',serif; font-size:12px;
+  color:var(--gold-mute); letter-spacing:.2em; margin-bottom:16px;
+}
+.ending-info-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; text-align:left;
+}
+.ending-info-row { font-size:12px; color:var(--text-2) }
+.ending-info-row span { color:var(--text-3); margin-right:8px }
+
+/* 页脚 */
+footer {
+  padding:24px 80px;
+  border-top:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.footer-copy { font-size:11px; color:var(--text-3); letter-spacing:.06em }
+.footer-note { font-size:11px; color:var(--text-3); letter-spacing:.04em }
+
+/* ─── 响应式 ─── */
+@media (max-width: 1024px) {
+  section { padding:80px 40px }
+  #hero { padding:0 40px }
+  .artifact-grid { gap:48px }
+  .merch-grid { grid-template-columns:repeat(2,1fr) }
+  .chip-row { grid-template-columns:repeat(3,1fr) }
+  .mini-grid { grid-template-columns:repeat(2,1fr) }
+}
+@media (max-width: 768px) {
+  #nav { padding:0 24px }
+  .nav-links { display:none }
+  section { padding:64px 24px }
+  #hero { padding:0 24px }
+  .artifact-grid { grid-template-columns:1fr; gap:40px }
+  .culture-grid { grid-template-columns:1fr }
+  .merch-grid { grid-template-columns:repeat(2,1fr) }
+  .timeline-row { grid-template-columns:1fr 1fr; gap:20px }
+  .tl-item:not(:last-child)::after { display:none }
+  .ending-info-grid { grid-template-columns:1fr }
+  footer { flex-direction:column; gap:8px; text-align:center }
+  .hero-dots { display:none }
+}
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     导航栏
-     ============================================================ -->
-<nav id="navbar">
-  <a class="nav-logo" href="#">
-    <!-- 牛头图腾 SVG -->
-    <svg class="nav-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- 牛角 -->
-      <path d="M8 10 Q2 4 4 14" stroke="#D4AF37" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <path d="M32 10 Q38 4 36 14" stroke="#D4AF37" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <!-- 牛头轮廓 -->
-      <path d="M8 14 Q8 8 20 8 Q32 8 32 14 L32 22 Q32 30 20 32 Q8 30 8 22 Z" stroke="#D4AF37" stroke-width="1.2" fill="none"/>
-      <!-- 眼睛 -->
-      <circle cx="14" cy="18" r="2" stroke="#D4AF37" stroke-width="1" fill="rgba(212,175,55,0.2)"/>
-      <circle cx="26" cy="18" r="2" stroke="#D4AF37" stroke-width="1" fill="rgba(212,175,55,0.2)"/>
-      <!-- 鼻环 -->
-      <ellipse cx="20" cy="26" rx="4" ry="2" stroke="#D4AF37" stroke-width="1" fill="none"/>
-      <!-- 装饰菱形 -->
-      <path d="M20 12 L22 14 L20 16 L18 14 Z" stroke="#D4AF37" stroke-width="0.8" fill="rgba(212,175,55,0.15)"/>
+<!-- ═══ 导航 ═══ -->
+<nav id="nav">
+  <a href="#hero" class="nav-brand">
+    <svg class="nav-bull" viewBox="0 0 32 32" fill="none">
+      <ellipse cx="16" cy="18" rx="10" ry="8" stroke="var(--gold)" stroke-width="1.2"/>
+      <path d="M8 14 Q6 10 4 8" stroke="var(--gold)" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M24 14 Q26 10 28 8" stroke="var(--gold)" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="12" cy="17" r="1.2" fill="var(--gold)" opacity=".7"/>
+      <circle cx="20" cy="17" r="1.2" fill="var(--gold)" opacity=".7"/>
+      <rect x="13" y="13" width="6" height="4" rx="1" stroke="var(--gold)" stroke-width=".8" opacity=".5"/>
     </svg>
-    <div class="nav-logo-text">
-      <span class="nav-logo-cn">鎏途</span>
-      <span class="nav-logo-en">LIUTU</span>
+    <div>
+      <div class="nav-name">鎏途</div>
+      <div class="nav-name-en">LIUTU</div>
     </div>
   </a>
-
   <ul class="nav-links">
-    <li><a href="#">首页</a></li>
     <li><a href="#artifact">IP介绍</a></li>
-    <li><a href="#journey">数字旅程</a></li>
-    <li><a href="#silkroad">丝路地图</a></li>
-    <li><a href="#merchandise">文创馆</a></li>
+    <li><a href="#journey">丝路旅程</a></li>
+    <li><a href="#silkroad">文明地图</a></li>
+    <li><a href="#culture">西夏文化</a></li>
+    <li><a href="#merchandise">文创系列</a></li>
   </ul>
-
-  <a class="nav-cta" href="#journey">开启旅程</a>
+  <button class="nav-btn" onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'})">开启旅程</button>
 </nav>
 
-
-<!-- ============================================================
-     Hero 主KV区域
-     ============================================================ -->
+<!-- ═══ §1 HERO ═══ -->
 <section id="hero">
-  <!-- 全屏背景图 -->
-  <div class="hero-fullbg">
-    <img src="assets/images/hero-liutu.png" alt="鎏途LIUTU场景">
+  <div class="hero-bg">
+    <img src="assets/images/封面一背景图.png" alt="鎏行者·丝路场景">
   </div>
-
-  <!-- 漂浮粒子 -->
-  <div class="particles" id="particles"></div>
-
   <div class="hero-content">
-    <!-- 左侧文字 -->
-    <div class="hero-left">
-      <div class="hero-tag">
-        <span class="gold-tag">西夏 · 鎏金铜牛 · 丝路守护</span>
-      </div>
-
-      <h1 class="hero-title">
-        <span class="hero-title-cn">鎏途</span>
-        <span class="hero-title-en">LIUTU</span>
-      </h1>
-
-      <p class="hero-subtitle">鎏金铜牛 · 丝路守护者</p>
-
-      <p class="hero-desc">
-        源自西夏王朝的鎏金铜牛，跨越千年文明的守护者。<br>
-        在数字时代重生，成为丝绸之路的灵魂向导。<br>
-        每一段旅程，都是文明深处的回响。
-      </p>
-
-      <a class="hero-cta" href="#journey">
-        开启我的丝路旅程
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      <span class="hero-cta-note">由 DeepSeek AI 驱动 · 每段旅程独一无二</span>
-    </div>
-
-    <!-- 右侧视觉 -->
-    <div class="hero-right">
-      <div class="hero-glow"></div>
-      <div class="hero-ring hero-ring-1"></div>
-      <div class="hero-ring hero-ring-2"></div>
-
-      <!-- 主视觉：真实立绘 -->
-      <div class="hero-desert-scene">
-        <!-- 底部光晕 -->
-        <div style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:85%;height:30px;background:radial-gradient(ellipse,rgba(212,175,55,0.12) 0%,transparent 70%);pointer-events:none;z-index:3;"></div>
-        <!-- 真实立绘图片 -->
-        <img src="assets/images/hero-liutu.png" alt="鎏途 LIUTU" class="hero-real-img">
-        <!-- 金色底部描边 -->
-        <div style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);z-index:4;"></div>
-        <!-- 覆盖装饰层 -->
-        <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" viewBox="0 0 580 360" fill="none">
-          <!-- 左侧渐变遮罩，融合背景 -->
-          <defs>
-            <linearGradient id="imgFadeLeft" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#0A0805" stop-opacity="0.8"/>
-              <stop offset="25%" stop-color="#0A0805" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <rect width="160" height="360" fill="url(#imgFadeLeft)"/>
-          <!-- 右下角信息框 -->
-          <rect x="430" y="280" width="130" height="58" stroke="rgba(212,175,55,0.3)" stroke-width="0.8" fill="rgba(10,8,5,0.55)"/>
-          <text x="495" y="302" text-anchor="middle" fill="rgba(212,175,55,0.8)" font-size="9" font-family="serif" letter-spacing="2">鎏途守护</text>
-          <text x="495" y="318" text-anchor="middle" fill="rgba(200,169,110,0.55)" font-size="7.5" letter-spacing="1.5">SILK ROAD GUARDIAN</text>
-          <text x="495" y="330" text-anchor="middle" fill="rgba(200,169,110,0.4)" font-size="7" letter-spacing="1">西夏 · 丝路文创IP</text>
-          <!-- 路线装饰 -->
-          <path d="M20 340 Q150 330 300 336 Q420 342 560 330" stroke="rgba(212,175,55,0.1)" stroke-width="1" fill="none" stroke-dasharray="3,6"/>
-        </svg>
-                <!-- 城市标注 -->
-        <div class="city-dot city-dot-1"><span>敦煌</span></div>
-        <div class="city-dot city-dot-2"><span>西域</span></div>
-        <div class="city-dot city-dot-3"><span>长安</span></div>
-      </div>
-    </div><!-- /hero-right -->
-  </div><!-- /hero-content -->
-
-  <!-- 滚动提示 -->
-  <div style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeIn 2s ease 1.5s both;">
-    <span style="font-size:10px;letter-spacing:4px;color:rgba(212,175,55,0.6);text-transform:uppercase;">Scroll</span>
-    <div style="width:1px;height:40px;background:linear-gradient(to bottom,rgba(212,175,55,0.6),transparent);animation:scroll-line 1.8s ease-in-out infinite;">
-    </div>
+    <div class="hero-eyebrow">西夏王朝 · 1038—1227 · 丝绸之路</div>
+    <h1>
+      <span class="hero-title-cn">鎏途</span>
+      <span class="hero-title-en">LIUTU</span>
+    </h1>
+    <p class="hero-tagline">西夏鎏金铜牛 · 丝路守护者</p>
+    <p class="hero-desc">
+      源自宁夏博物馆藏西夏鎏金铜牛的数字文创IP。<br>
+      他踏遍长安至巴格达的千年丝路，<br>
+      在AIGC与三维建模的交汇处重获生命。
+    </p>
+    <button class="hero-cta" onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'})">
+      ✦ &nbsp;开启我的丝路旅程
+    </button>
+    <span class="hero-cta-note">由 DeepSeek AI 驱动 · 每段旅程独一无二</span>
+  </div>
+  <div class="hero-dots">
+    <div class="hero-dot-item"><div class="hero-dot-label">长安</div></div>
+    <div class="hero-dot-item"><div class="hero-dot-label">敦煌</div></div>
+    <div class="hero-dot-item"><div class="hero-dot-label">西域</div></div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <div class="hero-scroll-label">SCROLL</div>
   </div>
 </section>
 
-
-<!-- ============================================================
-     AI 旅程生成模块
-     ============================================================ -->
+<!-- ═══ §2 AI 旅程生成器 ═══ -->
 <section id="journey">
-  <!-- 标题 -->
-  <div class="section-header reveal" style="position:relative;z-index:2;">
-    <span class="section-label">AI · JOURNEY GENERATOR</span>
-    <h2 class="section-title-cn section-title">AI生成 · 你的丝路冒险</h2>
-    <div class="section-divider"></div>
-    <p class="section-sub">与鎏途同行，踏上专属于你的丝路传奇</p>
-  </div>
-
-  <!-- 步骤指示器 -->
-  <div class="journey-steps reveal">
-    <div class="jstep jstep--active" id="jstep-1">
-      <span class="jstep-num">01</span>
-      <span class="jstep-label">填写旅者信息</span>
+  <div class="journey-inner">
+    <div class="journey-header fade-up">
+      <span class="sec-label">AI Journey Generator</span>
+      <h2 class="sec-title">生成你的丝路旅程</h2>
+      <div class="gold-line"></div>
+      <p class="sec-sub">三步选择，由鎏行者带你走一段只属于你的丝路故事</p>
     </div>
-    <div class="jstep-line"></div>
-    <div class="jstep" id="jstep-2">
-      <span class="jstep-num">02</span>
-      <span class="jstep-label">生成专属旅程</span>
-    </div>
-  </div>
 
-  <!-- ── Step 1：输入面板 ── -->
-  <div class="journey-input-panel reveal" id="journey-step1">
-    <div class="jip-inner">
-
-      <div class="jip-field">
-        <label class="jip-label">旅者昵称 <span class="jip-required">*</span></label>
-        <input type="text" id="j-name" class="jip-input" placeholder="你希望鎏途如何称呼你？" maxlength="20">
-        <span class="jip-hint">例如：月行者、沙漠旅人、大漠孤烟…</span>
+    <!-- 步骤指示 -->
+    <div class="step-nav fade-up d1">
+      <div class="step-item is-active" data-step="1">
+        <div class="step-num">1</div>
+        <span>选择路线</span>
       </div>
-
-      <div class="jip-field">
-        <label class="jip-label">旅者身份 <span class="jip-required">*</span></label>
-        <div class="jip-tags" id="identity-tags">
-          <button class="jip-tag" data-val="探险家">⚔ 探险家</button>
-          <button class="jip-tag" data-val="学者">📜 学者</button>
-          <button class="jip-tag" data-val="商旅">💰 商旅</button>
-          <button class="jip-tag" data-val="诗人">✍ 诗人</button>
-          <button class="jip-tag" data-val="使节">🏛 使节</button>
-          <button class="jip-tag" data-val="僧侣">☯ 僧侣</button>
-        </div>
+      <div class="step-line"></div>
+      <div class="step-item" data-step="2">
+        <div class="step-num">2</div>
+        <span>旅行身份</span>
       </div>
-
-      <div class="jip-field">
-        <label class="jip-label">旅程风格 <span class="jip-required">*</span></label>
-        <div class="jip-tags" id="style-tags">
-          <button class="jip-tag" data-val="浪漫史诗">✨ 浪漫史诗</button>
-          <button class="jip-tag" data-val="惊险冒险">🗡 惊险冒险</button>
-          <button class="jip-tag" data-val="文化探索">🏺 文化探索</button>
-          <button class="jip-tag" data-val="神秘志怪">🌙 神秘志怪</button>
-        </div>
-      </div>
-
-      <button class="jip-submit" id="jip-submit" onclick="journeyStep1Submit()">
-        <span>开启旅程</span>
-        <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <p class="jip-note">由 DeepSeek AI 实时生成 · 每段旅程独一无二</p>
-    </div>
-  </div>
-
-  <!-- ── Step 2：生成结果展示 ── -->
-  <div class="journey-result-panel" id="journey-step2" style="display:none;">
-
-    <!-- 加载状态 -->
-    <div class="jr-loading" id="jr-loading">
-      <div class="jr-loading-inner">
-        <div class="jr-spinner"></div>
-        <p class="jr-loading-text">鎏途正在为你铺开丝路…</p>
-        <p class="jr-loading-sub">穿越千年，生成专属冒险故事</p>
+      <div class="step-line"></div>
+      <div class="step-item" data-step="3">
+        <div class="step-num">3</div>
+        <span>旅者信息</span>
       </div>
     </div>
 
-    <!-- 结果内容（生成后显示） -->
-    <div class="jr-content" id="jr-content" style="display:none;">
+    <!-- Step 1：路线 -->
+    <div class="step-panel is-active fade-up d2" data-panel="1">
+      <div class="panel-title">选择你的起点与终点</div>
+      <p class="panel-hint">点击选择起点城市，再选择你此行的目的地</p>
 
-      <!-- 左：故事卡片 -->
-      <div class="jr-card" id="jr-card">
-        <!-- 卡片头部 -->
-        <div class="jr-card-header">
-          <div class="jr-card-badge">
-            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#D4AF37" stroke-width="0.8" opacity="0.5"/><path d="M24 8L26.5 18H37L28.5 24L31.5 34L24 28L16.5 34L19.5 24L11 18H21.5Z" stroke="#D4AF37" stroke-width="1" fill="rgba(212,175,55,0.12)"/></svg>
-          </div>
-          <div>
-            <p class="jr-card-eyebrow">YOUR SILK ROAD JOURNEY</p>
-            <h3 class="jr-card-title" id="jr-title">鎏途 · 专属旅程</h3>
-          </div>
-        </div>
-        <!-- 故事正文 -->
-        <div class="jr-story-wrap">
-          <p class="jr-story-text" id="jr-story">故事生成中…</p>
-        </div>
-        <!-- 卡片底部信息 -->
-        <div class="jr-card-meta">
-          <div class="jr-meta-row">
-            <span class="jr-meta-label">旅者</span>
-            <span class="jr-meta-val gold" id="jr-meta-name">—</span>
-          </div>
-          <div class="jr-meta-row">
-            <span class="jr-meta-label">身份</span>
-            <span class="jr-meta-val" id="jr-meta-identity">—</span>
-          </div>
-          <div class="jr-meta-row">
-            <span class="jr-meta-label">路线</span>
-            <span class="jr-meta-val" id="jr-meta-route">—</span>
-          </div>
-          <div class="jr-meta-row">
-            <span class="jr-meta-label">旅程印记</span>
-            <span class="jr-meta-val gold" id="jr-meta-badge">—</span>
-          </div>
-        </div>
-        <!-- 卡片水印 -->
-        <div class="jr-card-watermark">鎏途 LIUTU · SILK ROAD DIGITAL</div>
-      </div>
-
-      <!-- 右：操作区 -->
-      <div class="jr-actions">
-        <div class="jr-actions-title">
-          <span>你的专属旅程已生成</span>
-        </div>
-        <p class="jr-actions-sub">与鎏途共同踏上这段跨越千年的旅程，<br>每一步都是独一无二的文明印记。</p>
-
-        <div class="jr-btn-group">
-          <button class="jr-btn jr-btn--primary" onclick="downloadJourney()">
-            <svg viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 9l4 4 4-4M4 15h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            下载旅程故事
-          </button>
-          <button class="jr-btn jr-btn--secondary" onclick="copyJourney()">
-            <svg viewBox="0 0 20 20" fill="none"><rect x="7" y="7" width="10" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M13 7V5a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-            复制故事文本
-          </button>
-          <button class="jr-btn jr-btn--ghost" onclick="journeyReset()">
-            <svg viewBox="0 0 20 20" fill="none"><path d="M4 10a6 6 0 1 0 1.5-4M4 6v4h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            重新生成
-          </button>
-        </div>
-
-        <!-- 分享提示 -->
-        <div class="jr-share-hint">
-          <span class="jr-share-dot"></span>
-          <span id="jr-copy-toast">旅程故事可分享给朋友，一同踏上丝路</span>
+      <div class="route-section">
+        <div class="route-label">起点 · Origin</div>
+        <div class="chip-row" data-field="start">
+          <div class="chip" data-value="长安"><div class="chip-name">长安</div><div class="chip-sub">唐都重镇</div></div>
+          <div class="chip" data-value="敦煌"><div class="chip-name">敦煌</div><div class="chip-sub">佛窟圣地</div></div>
+          <div class="chip" data-value="玉门关"><div class="chip-name">玉门关</div><div class="chip-sub">出关要塞</div></div>
+          <div class="chip" data-value="龟兹"><div class="chip-name">龟兹</div><div class="chip-sub">音乐之城</div></div>
+          <div class="chip" data-value="兴庆府"><div class="chip-name">兴庆府</div><div class="chip-sub">西夏都城</div></div>
         </div>
       </div>
 
-    </div><!-- end jr-content -->
-  </div><!-- end journey-step2 -->
+      <div class="route-section">
+        <div class="route-label">终点 · Destination</div>
+        <div class="chip-row" data-field="end">
+          <div class="chip" data-value="撒马尔罕"><div class="chip-name">撒马尔罕</div><div class="chip-sub">粟特商都</div></div>
+          <div class="chip" data-value="巴格达"><div class="chip-name">巴格达</div><div class="chip-sub">阿拔斯京城</div></div>
+          <div class="chip" data-value="木鹿"><div class="chip-name">木鹿</div><div class="chip-sub">丝路要冲</div></div>
+          <div class="chip" data-value="疏勒"><div class="chip-name">疏勒</div><div class="chip-sub">西域重镇</div></div>
+          <div class="chip" data-value="于阗"><div class="chip-name">于阗</div><div class="chip-sub">玉石之地</div></div>
+        </div>
+      </div>
 
+      <div class="step-actions">
+        <button class="btn-next" data-next="2" disabled>下一步 →</button>
+      </div>
+    </div>
+
+    <!-- Step 2：身份 -->
+    <div class="step-panel" data-panel="2">
+      <div class="panel-title">选择你的旅行身份</div>
+      <p class="panel-hint">你以何种身份踏上这段旅程，将决定沿途的遭遇与见闻</p>
+      <div class="mini-grid" data-field="identity">
+        <div class="mini-card" data-value="商旅行者">
+          <div class="mini-card-icon">🐪</div>
+          <div class="mini-card-name">商旅行者</div>
+          <div class="mini-card-desc">以丝绸、茶叶换取西域香料与宝石，精打细算，嗅觉灵敏</div>
+        </div>
+        <div class="mini-card" data-value="文化使者">
+          <div class="mini-card-icon">📜</div>
+          <div class="mini-card-name">文化使者</div>
+          <div class="mini-card-desc">负笈携经，沿途寻访学者与寺院，以文字记录文明的流动</div>
+        </div>
+        <div class="mini-card" data-value="边境护卫">
+          <div class="mini-card-icon">🏹</div>
+          <div class="mini-card-name">边境护卫</div>
+          <div class="mini-card-desc">护送商队穿越戈壁匪患，剑在鞘中，目光永远比路更远</div>
+        </div>
+        <div class="mini-card" data-value="医药行商">
+          <div class="mini-card-icon">🌿</div>
+          <div class="mini-card-name">医药行商</div>
+          <div class="mini-card-desc">收集西域珍稀草药，每座城市都是一间露天药铺</div>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button class="btn-back" data-prev="1">← 返回</button>
+        <button class="btn-next" data-next="3" disabled>下一步 →</button>
+      </div>
+    </div>
+
+    <!-- Step 3：旅者名称 + 心境 -->
+    <div class="step-panel" data-panel="3">
+      <div class="panel-title">为这段旅程命名</div>
+      <p class="panel-hint">给自己一个旅者称号，再选择此行的心境</p>
+
+      <div class="name-row">
+        <input class="name-input" id="traveler-name" type="text" placeholder="旅者昵称（选填，如：月行者、大漠孤烟）" maxlength="12">
+      </div>
+
+      <div class="route-label" style="margin-bottom:14px">此行心境 · Mood</div>
+      <div class="mini-grid" data-field="mood">
+        <div class="mini-card" data-value="探险求知">
+          <div class="mini-card-icon">🔭</div>
+          <div class="mini-card-name">探险求知</div>
+          <div class="mini-card-desc">未知之地皆是目的地，好奇心比地图更可靠</div>
+        </div>
+        <div class="mini-card" data-value="思乡归途">
+          <div class="mini-card-icon">🌙</div>
+          <div class="mini-card-name">思乡归途</div>
+          <div class="mini-card-desc">每一步都踩着故乡的影子，越走越想回头</div>
+        </div>
+        <div class="mini-card" data-value="初次出发">
+          <div class="mini-card-icon">🌅</div>
+          <div class="mini-card-name">初次出发</div>
+          <div class="mini-card-desc">第一次出关，连脚底的水泡都觉得值得</div>
+        </div>
+        <div class="mini-card" data-value="历经沧桑">
+          <div class="mini-card-icon">⏳</div>
+          <div class="mini-card-name">历经沧桑</div>
+          <div class="mini-card-desc">这条路走过太多次，风沙已经磨白了鬓角</div>
+        </div>
+      </div>
+
+      <div class="step-actions">
+        <button class="btn-back" data-prev="2">← 返回</button>
+        <button class="btn-generate" id="btn-generate" disabled>✦ 开启旅程</button>
+      </div>
+    </div>
+
+    <!-- 加载中 -->
+    <div id="loading" hidden>
+      <div class="loading-ring"></div>
+      <div class="loading-text">鎏行者正在为你铺开丝路…</div>
+    </div>
+
+    <!-- 旅程结果卡片 -->
+    <div id="journey-card" hidden>
+      <div class="jcard-header">
+        <div>
+          <div class="jcard-badge">Your Silk Road Journey</div>
+          <div id="jc-title"></div>
+        </div>
+        <div class="jcard-meta">
+          <div class="jcard-meta-item">旅者 <span id="jc-name">—</span></div>
+          <div class="jcard-meta-item">路线 <span id="jc-start">—</span> → <span id="jc-end">—</span></div>
+          <div class="jcard-meta-item">历时 <span id="jc-days">—</span></div>
+          <div class="jcard-meta-item">同行 <span id="jc-partner">—</span></div>
+        </div>
+      </div>
+      <div class="jcard-body">
+        <div id="jc-narrative"></div>
+        <div class="jcard-egg">
+          <div class="jcard-egg-label">行者手记 · 文化注释</div>
+          <div id="jc-egg"></div>
+        </div>
+      </div>
+      <div class="jcard-footer">
+        <button class="btn-card" id="btn-restart">再启旅程</button>
+        <button class="btn-card" id="btn-save">复制故事</button>
+        <button class="btn-card primary" id="btn-share">分享旅程</button>
+      </div>
+    </div>
+
+  </div><!-- /journey-inner -->
 </section>
 
-
-<!-- ============================================================
-     丝路地图模块 · 文明探索系统
-     ============================================================ -->
+<!-- ═══ §3 丝路地图 ═══ -->
 <section id="silkroad">
-  <!-- 背景底图 -->
-  <div class="map-bg-img">
-    <img src="assets/images/silkroad-bg-v2.jpg" alt="丝路背景">
+  <div class="map-bg">
+    <img src="assets/images/第三页背景图.png" alt="">
   </div>
-
-  <div class="map-container">
-    <!-- 标题 -->
-    <div class="map-header reveal">
-      <span class="section-label" style="font-size:9px;letter-spacing:3px;opacity:0.55;">SILK ROAD CIVILIZATION</span>
-      <h2 class="section-title-cn section-title" style="font-size:clamp(20px,3vw,28px);margin:6px 0 4px;">丝路文明图谱</h2>
-      <div class="section-divider" style="width:60px;opacity:0.3;"></div>
-      <p class="section-sub" style="letter-spacing:3px;opacity:0.35;font-size:11px;margin-top:4px;">七大文明坐标 · 动态航线追踪</p>
+  <div class="map-inner">
+    <div class="map-header fade-up">
+      <span class="sec-label">Silk Road Civilization</span>
+      <h2 class="sec-title">丝路文明图谱</h2>
+      <div class="gold-line" style="margin:16px auto"></div>
+      <p class="sec-sub">七大文明坐标 · 横跨欧亚大陆 · 11世纪西夏商队的行走路线</p>
+      <div class="map-stats" style="margin-top:24px">
+        <div class="map-stat"><div class="map-stat-num">7,000+</div><div class="map-stat-lbl">全程公里</div></div>
+        <div class="map-stat"><div class="map-stat-num">189</div><div class="map-stat-lbl">西夏存续年数</div></div>
+        <div class="map-stat"><div class="map-stat-num">7</div><div class="map-stat-lbl">主要文明节点</div></div>
+      </div>
     </div>
 
-    <!-- 全宽地图 SVG · 文明导航系统 v5 · 纯UI叠加层，不画节点 -->
-    <svg class="silkroad-map-svg reveal reveal-delay-1" viewBox="0 0 1400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="gB" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="3" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="gT" x="-5%" y="-20%" width="110%" height="140%">
-          <feGaussianBlur stdDeviation="1.2" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <!-- 极细网格 -->
-        <pattern id="grid80" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-          <path d="M80 0L0 0 0 80" fill="none" stroke="rgba(212,175,55,0.025)" stroke-width="0.3"/>
-        </pattern>
-        <pattern id="grid16" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
-          <path d="M16 0L0 0 0 16" fill="none" stroke="rgba(212,175,55,0.012)" stroke-width="0.18"/>
-        </pattern>
-        <pattern id="scan" x="0" y="0" width="1" height="5" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="1400" y2="0" stroke="rgba(212,175,55,0.012)" stroke-width="0.25"/>
-        </pattern>
-        <linearGradient id="fadeTop" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#060504" stop-opacity="0.75"/>
-          <stop offset="100%" stop-color="#060504" stop-opacity="0"/>
-        </linearGradient>
-        <linearGradient id="fadeBot" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#060504" stop-opacity="0"/>
-          <stop offset="100%" stop-color="#060504" stop-opacity="0.68"/>
-        </linearGradient>
-        <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="#D4AF37" stop-opacity="0.05"/>
-          <stop offset="10%"  stop-color="#E8C840" stop-opacity="0.65"/>
-          <stop offset="50%"  stop-color="#FFE566" stop-opacity="0.88"/>
-          <stop offset="90%"  stop-color="#D4AF37" stop-opacity="0.62"/>
-          <stop offset="100%" stop-color="#C8A96E" stop-opacity="0.05"/>
-        </linearGradient>
-      </defs>
+    <!-- 地图主图 -->
+    <div class="map-img-wrap fade-up d1" style="position:relative;z-index:1;max-width:1200px;margin:0 auto;">
+      <!-- 地图背景图通过CSS已展示，此处留空占位保持section高度 -->
+      <div style="min-height:520px"></div>
+    </div>
 
-      <!-- 底层网格+扫描线 -->
-      <rect width="1400" height="600" fill="url(#grid16)"/>
-      <rect width="1400" height="600" fill="url(#grid80)"/>
-      <rect width="1400" height="600" fill="url(#scan)"/>
-      <!-- 顶底渐变融合 -->
-      <rect width="1400" height="80" fill="url(#fadeTop)"/>
-      <rect y="520" width="1400" height="80" fill="url(#fadeBot)"/>
-
-      <!-- 星轨（右上） -->
-      <g transform="translate(1310, 82)">
-        <circle cx="0" cy="0" r="58" stroke="rgba(212,175,55,0.06)" stroke-width="0.4" fill="none" stroke-dasharray="3,9">
-          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="75s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="0" cy="0" r="40" stroke="rgba(212,175,55,0.09)" stroke-width="0.35" fill="none" stroke-dasharray="2,10">
-          <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="55s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="0" cy="0" r="24" stroke="rgba(212,175,55,0.07)" stroke-width="0.3" fill="none"/>
-        <circle cx="0" cy="-58" r="1.1" fill="rgba(212,175,55,0.4)"/>
-        <circle cx="58" cy="0" r="0.9" fill="rgba(212,175,55,0.3)"/>
-        <line x1="-7" y1="0" x2="7" y2="0" stroke="rgba(212,175,55,0.2)" stroke-width="0.4"/>
-        <line x1="0" y1="-7" x2="0" y2="7" stroke="rgba(212,175,55,0.2)" stroke-width="0.4"/>
-        <circle cx="0" cy="0" r="1.8" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.3)" stroke-width="0.35"/>
-        <text x="0" y="-66" text-anchor="middle" fill="rgba(212,175,55,0.2)" font-size="5.5" letter-spacing="2">NAV</text>
-      </g>
-
-      <!-- 顶部系统标题 -->
-      <text x="700" y="44" text-anchor="middle" fill="rgba(212,175,55,0.3)" font-size="7.5"
-            font-family="'Playfair Display',serif" letter-spacing="8" font-style="italic">SILK ROAD CIVILIZATION</text>
-      <line x1="660" y1="50" x2="740" y2="50" stroke="rgba(212,175,55,0.08)" stroke-width="0.3"/>
-      <text x="700" y="60" text-anchor="middle" fill="rgba(212,175,55,0.1)" font-size="5.5" letter-spacing="4">NAV · AI GENERATED</text>
-
-      <!-- 流光层（仅动画，不画静态路线）-->
-      <!-- 流光1（快，亮） -->
-      <path d="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
-            stroke="rgba(255,245,120,0.85)" stroke-width="0.9" fill="none" stroke-dasharray="18,250">
-        <animate attributeName="stroke-dashoffset" from="268" to="-1400" dur="4s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.15;1;0.15" dur="4s" repeatCount="indefinite"/>
-      </path>
-      <!-- 流光2（中速） -->
-      <path d="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
-            stroke="rgba(255,228,70,0.55)" stroke-width="0.6" fill="none" stroke-dasharray="10,320">
-        <animate attributeName="stroke-dashoffset" from="0" to="-1600" dur="6.5s" begin="2s" repeatCount="indefinite"/>
-      </path>
-      <!-- 流光3（慢，极淡） -->
-      <path d="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
-            stroke="rgba(212,175,55,0.35)" stroke-width="0.4" fill="none" stroke-dasharray="5,400">
-        <animate attributeName="stroke-dashoffset" from="80" to="-1800" dur="10s" begin="4.5s" repeatCount="indefinite"/>
-      </path>
-
-      <!-- 粒子流（沿路线运动） -->
-      <circle r="2.4" fill="rgba(255,242,100,0.88)" filter="url(#gB)">
-        <animateMotion path="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
-          dur="7s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.07;0.93;1" dur="7s" repeatCount="indefinite"/>
-      </circle>
-      <circle r="1.7" fill="rgba(255,250,160,0.7)" filter="url(#gB)">
-        <animateMotion path="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
-          dur="7s" begin="2.6s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.07;0.93;1" dur="7s" begin="2.6s" repeatCount="indefinite"/>
-      </circle>
-      <circle r="1.1" fill="rgba(212,175,55,0.55)">
-        <animateMotion path="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
-          dur="7s" begin="5.1s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0;0.55;0.55;0" keyTimes="0;0.09;0.91;1" dur="7s" begin="5.1s" repeatCount="indefinite"/>
-      </circle>
-
-      <!-- 指南针（左下） -->
-      <g transform="translate(65, 518)">
-        <circle cx="0" cy="0" r="32" stroke="rgba(212,175,55,0.09)" stroke-width="0.55" fill="rgba(4,3,2,0.35)"/>
-        <circle cx="0" cy="0" r="25" stroke="rgba(212,175,55,0.055)" stroke-width="0.35" fill="none" stroke-dasharray="2,5"/>
-        <circle cx="0" cy="0" r="16" stroke="rgba(212,175,55,0.04)" stroke-width="0.3" fill="none"/>
-        <line x1="0" y1="-32" x2="0" y2="-25" stroke="rgba(212,175,55,0.35)" stroke-width="0.85"/>
-        <line x1="0" y1="32" x2="0" y2="25" stroke="rgba(212,175,55,0.14)" stroke-width="0.55"/>
-        <line x1="-32" y1="0" x2="-25" y2="0" stroke="rgba(212,175,55,0.14)" stroke-width="0.55"/>
-        <line x1="32" y1="0" x2="25" y2="0" stroke="rgba(212,175,55,0.14)" stroke-width="0.55"/>
-        <line x1="22" y1="-22" x2="18" y2="-18" stroke="rgba(212,175,55,0.08)" stroke-width="0.28"/>
-        <line x1="-22" y1="-22" x2="-18" y2="-18" stroke="rgba(212,175,55,0.08)" stroke-width="0.28"/>
-        <path d="M0 -26 L4 -7 L0 0 L-4 -7 Z" fill="#D4AF37" opacity="0.82" filter="url(#gB)"/>
-        <path d="M0 26 L3 7 L0 0 L-3 7 Z" fill="rgba(212,175,55,0.2)"/>
-        <path d="M26 0 L7 -2.5 L0 0 L7 2.5 Z" fill="rgba(212,175,55,0.15)"/>
-        <path d="M-26 0 L-7 -2.5 L0 0 L-7 2.5 Z" fill="rgba(212,175,55,0.15)"/>
-        <circle cx="0" cy="0" r="3" fill="rgba(4,3,2,1)" stroke="rgba(212,175,55,0.42)" stroke-width="0.65"/>
-        <circle cx="0" cy="0" r="1.2" fill="#D4AF37" opacity="0.6"/>
-        <text x="0" y="-36" text-anchor="middle" fill="rgba(212,175,55,0.58)" font-size="8.5" font-family="serif">北</text>
-        <text x="35" y="4" text-anchor="start" fill="rgba(212,175,55,0.3)" font-size="7" font-family="serif">东</text>
-        <text x="-35" y="4" text-anchor="end" fill="rgba(212,175,55,0.3)" font-size="7" font-family="serif">西</text>
-      </g>
-
-      <!-- 帆船剪影（右下） -->
-      <g transform="translate(1178, 465)" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.18)" stroke-width="0.55">
-        <path d="M0 46 Q38 52 76 46 Q66 56 38 58 Q10 56 0 46 Z"/>
-        <path d="M38 46 L38 12 L66 46 Z"/>
-        <path d="M38 46 L38 22 L16 46 Z"/>
-        <line x1="38" y1="46" x2="38" y2="5" stroke-width="0.9"/>
-        <path d="M24 24 Q38 18 52 24" fill="none"/>
-        <path d="M38 5 L50 10 L38 16 Z" fill="rgba(212,175,55,0.25)"/>
-      </g>
-      <text x="1218" y="540" text-anchor="middle" fill="rgba(212,175,55,0.15)" font-size="6.5" letter-spacing="2">海上丝路</text>
-
-      <!-- 信息面板（右下） -->
-      <rect x="1050" y="446" width="280" height="124" fill="rgba(4,3,2,0.84)" stroke="rgba(212,175,55,0.18)" stroke-width="0.55"/>
-      <rect x="1050" y="446" width="280" height="1.8" fill="rgba(212,175,55,0.4)"/>
-      <text x="1064" y="462" fill="rgba(212,175,55,0.58)" font-size="7.5" letter-spacing="3">SILK ROAD · NAV SYSTEM</text>
-      <line x1="1064" y1="467" x2="1318" y2="467" stroke="rgba(212,175,55,0.07)" stroke-width="0.35"/>
-      <text x="1064" y="480" fill="rgba(200,169,110,0.5)" font-size="7.5">▸  主航线  长安 ——→ 君士坦丁堡</text>
-      <text x="1064" y="492" fill="rgba(200,169,110,0.46)" font-size="7.5">▸  文明节点  7处 · 横跨欧亚</text>
-      <text x="1064" y="504" fill="rgba(200,169,110,0.44)" font-size="7.5">▸  全程跨度  约 7,000 公里</text>
-      <text x="1064" y="516" fill="rgba(200,169,110,0.44)" font-size="7.5">▸  历史跨度  汉 · 唐 · 西夏 · 元</text>
-      <line x1="1064" y1="522" x2="1318" y2="522" stroke="rgba(212,175,55,0.06)" stroke-width="0.35"/>
-      <text x="1064" y="534" fill="rgba(212,175,55,0.26)" font-size="7" letter-spacing="2">鎏途 · LIUTU 文明探索系统</text>
-      <text x="1064" y="545" fill="rgba(212,175,55,0.12)" font-size="6.5" letter-spacing="1">DIGITAL SILK ROAD · v2.0</text>
-      <circle cx="1310" cy="534" r="2.5" fill="rgba(212,175,55,0.4)">
-        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" repeatCount="indefinite"/>
-      </circle>
-      <text x="1304" y="538" text-anchor="end" fill="rgba(212,175,55,0.18)" font-size="5.5" letter-spacing="1">LIVE</text>
-
-      <!-- 边框+四角装饰 -->
-      <rect x="10" y="10" width="1380" height="580" stroke="rgba(212,175,55,0.07)" stroke-width="0.55" fill="none"/>
-      <path d="M10 10 L10 46 M10 10 L46 10" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
-      <path d="M1390 10 L1390 46 M1390 10 L1354 10" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
-      <path d="M10 590 L10 554 M10 590 L46 590" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
-      <path d="M1390 590 L1390 554 M1390 590 L1354 590" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
-      <path d="M18 18 L18 34 M18 18 L34 18" stroke="rgba(212,175,55,0.14)" stroke-width="0.35"/>
-      <path d="M1382 18 L1382 34 M1382 18 L1366 18" stroke="rgba(212,175,55,0.14)" stroke-width="0.35"/>
-    </svg>
-
-    <p class="map-caption reveal reveal-delay-2">跟随鎏途，穿越七大文明坐标 · 在数字丝路上启程</p>
-    <p class="map-caption reveal reveal-delay-2">跟随鎏途，穿越七大文明坐标 · 在数字丝路上启程</p>
+    <p class="map-caption fade-up d2">跟随鎏行者 · 穿越七大文明坐标</p>
   </div>
 </section>
 
-
-<!-- ============================================================
-     文物原型模块
-     ============================================================ -->
+<!-- ═══ §4 文物与IP ═══ -->
 <section id="artifact">
+  <div class="artifact-grid">
+    <!-- 展柜 -->
+    <div class="showcase fade-up">
+      <div class="showcase-img-wrap">
+        <img src="assets/images/鎏金铜牛1鎏金铜牛2.jpg" alt="西夏鎏金铜牛">
+      </div>
+      <div class="showcase-caption">西夏鎏金铜牛 · 宁夏博物馆藏</div>
+    </div>
 
-  <!-- 星尘背景 -->
-  <div class="museum-stardust" aria-hidden="true">
-    <svg width="100%" height="100%" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"
-         style="position:absolute;inset:0;pointer-events:none;">
-      <defs>
-        <radialGradient id="fogC" cx="50%" cy="50%" r="55%">
-          <stop offset="0%" stop-color="rgba(212,175,55,0.06)"/>
-          <stop offset="100%" stop-color="rgba(212,175,55,0)"/>
-        </radialGradient>
-      </defs>
-      <rect width="1400" height="900" fill="url(#fogC)"/>
-      <circle cx="120" cy="80" r="0.8" fill="rgba(212,175,55,0.3)"/><circle cx="340" cy="45" r="0.5" fill="rgba(212,175,55,0.22)"/>
-      <circle cx="580" cy="110" r="0.7" fill="rgba(212,175,55,0.28)"/><circle cx="820" cy="55" r="0.9" fill="rgba(212,175,55,0.18)"/>
-      <circle cx="1060" cy="90" r="0.6" fill="rgba(212,175,55,0.26)"/><circle cx="1280" cy="50" r="0.8" fill="rgba(212,175,55,0.22)"/>
-      <circle cx="200" cy="200" r="0.5" fill="rgba(212,175,55,0.14)"/><circle cx="460" cy="170" r="0.7" fill="rgba(212,175,55,0.18)"/>
-      <circle cx="700" cy="140" r="0.4" fill="rgba(212,175,55,0.16)"/><circle cx="950" cy="180" r="0.6" fill="rgba(212,175,55,0.14)"/>
-      <circle cx="1150" cy="130" r="0.5" fill="rgba(212,175,55,0.2)"/> <circle cx="80"  cy="350" r="0.6" fill="rgba(212,175,55,0.1)"/>
-      <circle cx="1350" cy="280" r="0.7" fill="rgba(212,175,55,0.16)"/><circle cx="1370" cy="450" r="0.5" fill="rgba(212,175,55,0.1)"/>
-      <circle cx="650" cy="820" r="0.5" fill="rgba(212,175,55,0.1)"/> <circle cx="900" cy="780" r="0.7" fill="rgba(212,175,55,0.09)"/>
-      <!-- 地平线极光 -->
-      <line x1="0" y1="860" x2="1400" y2="860" stroke="rgba(212,175,55,0.05)" stroke-width="0.5"/>
-    </svg>
+    <!-- 文字 -->
+    <div class="artifact-text fade-up d2">
+      <span class="sec-label">IP Origin · 文物溯源</span>
+      <h2 class="sec-title">鎏行者的前世今生</h2>
+      <div class="gold-line"></div>
+      <p class="artifact-body">
+        西夏鎏金铜牛出土于宁夏，现藏宁夏博物馆，是西夏时期（1038—1227）工艺美术的代表性文物。铜牛通体鎏金，体态浑厚，背部有一矩形铸造空腔，推测原用于固定某种装饰物。
+      </p>
+      <p class="artifact-body">
+        这个空腔成了IP设计的关键连接点——鎏行者背上的挎包就挂在这个位置。卷轴代表文化传播，挎包代表商贸往来，腰间金币代表丝路财富流通。他是11世纪西夏商队的一员，头戴西域头巾，额饰鎏金纹样，行走在整条丝绸之路上。
+      </p>
+      <div class="artifact-tags">
+        <span class="artifact-tag">孔雀绿 × 沙色 × 陶土红</span>
+        <span class="artifact-tag">西夏几何纹样</span>
+        <span class="artifact-tag">丝路商旅形象</span>
+        <span class="artifact-tag">AIGC + 3D建模</span>
+      </div>
+      <div class="artifact-detail-grid">
+        <div class="artifact-detail">
+          <div class="artifact-detail-lbl">文物年代</div>
+          <div class="artifact-detail-val">西夏王朝 · 11世纪</div>
+        </div>
+        <div class="artifact-detail">
+          <div class="artifact-detail-lbl">收藏地点</div>
+          <div class="artifact-detail-val">宁夏博物馆</div>
+        </div>
+        <div class="artifact-detail">
+          <div class="artifact-detail-lbl">工艺特征</div>
+          <div class="artifact-detail-val">铸造鎏金 · 背部空腔</div>
+        </div>
+        <div class="artifact-detail">
+          <div class="artifact-detail-lbl">IP配色</div>
+          <div class="artifact-detail-val">孔雀绿 #2D7D6F</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ §5 西夏文化 ═══ -->
+<section id="culture" class="xia-pattern">
+  <div class="culture-header fade-up">
+    <span class="sec-label">Western Xia Culture</span>
+    <h2 class="sec-title">西夏文化注释</h2>
+    <div class="gold-line" style="margin:16px auto"></div>
+    <p class="sec-sub">一个存续189年、被遗忘了800年的王朝</p>
   </div>
 
-  <!-- ── 标题区 ── -->
-  <div class="section-header reveal" style="padding-top:16px;">
-    <span class="section-label" style="font-size:9px;letter-spacing:4px;opacity:0.45;">CULTURAL COLLECTION</span>
-    <h2 class="section-title-cn section-title" style="font-size:clamp(22px,3vw,30px);margin:8px 0 6px;letter-spacing:6px;">数字文明藏馆</h2>
-    <div class="section-divider" style="width:50px;opacity:0.22;"></div>
-    <p class="section-sub" style="opacity:0.28;font-size:11px;letter-spacing:2.5px;margin-top:6px;">文明因交流而多彩 · 创意因共鸣而永恒</p>
+  <div class="culture-grid">
+    <div class="culture-card fade-up">
+      <div class="culture-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="culture-card-title">西夏王朝 · 1038—1227</div>
+      <div class="culture-card-body">
+        党项族建立，定都兴庆府（今银川），存续189年。有独立的文字系统，结构复杂程度不亚于汉字。佛教文化繁盛，壁画、法典、佛经大量留存。1227年被蒙古铁骑彻底摧毁，史料几近断绝。
+      </div>
+      <span class="culture-card-tag">189年 · 党项族 · 独立文字</span>
+    </div>
+
+    <div class="culture-card fade-up d1">
+      <div class="culture-card-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+      </div>
+      <div class="culture-card-title">西夏与丝绸之路</div>
+      <div class="culture-card-body">
+        西夏地处丝路要冲，控制河西走廊，是中原王朝与西域贸易的关键中间商。西夏商队以茶叶、丝绸换取大食的香料、玻璃与马匹，鎏金铜牛正是这一贸易文明的实物见证。
+      </div>
+      <span class="culture-card-tag">河西走廊 · 茶马互市 · 粟特商人</span>
+    </div>
+
+    <div class="culture-card fade-up d2">
+      <div class="culture-card-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      </div>
+      <div class="culture-card-title">鎏金铜牛 · 文物细节</div>
+      <div class="culture-card-body">
+        铜牛通体鎏金，鎏金工艺是西夏金属工艺的最高体现。背部矩形空腔是设计中最重要的细节——这个原用于固定装饰物的结构，成了鎏行者IP中挎包挂点的文化依据，让每一个设计决策都有文物根源。
+      </div>
+      <span class="culture-card-tag">鎏金工艺 · 背部空腔 · IP连接点</span>
+    </div>
   </div>
 
-  <!-- ── 三展柜横排 ── -->
-  <div class="museum-gallery">
-
-    <!-- 左右切换箭头 -->
-    <button class="gallery-arrow gallery-arrow--left" aria-label="上一件">
-      <svg viewBox="0 0 24 24" fill="none"><polyline points="15 18 9 12 15 6" stroke="rgba(212,175,55,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <button class="gallery-arrow gallery-arrow--right" aria-label="下一件">
-      <svg viewBox="0 0 24 24" fill="none"><polyline points="9 18 15 12 9 6" stroke="rgba(212,175,55,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-
-    <!-- 展柜1：旅行家系列（左，次要） -->
-    <div class="gallery-case gallery-case--side reveal reveal-delay-1">
-      <div class="gallery-case-inner">
-        <!-- 顶部标签 -->
-        <div class="case-badge">LIMITED EDITION</div>
-        <!-- 展品SVG -->
-        <div class="case-artifact-wrap">
-          <div class="case-base-glow"></div>
-          <svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="case-svg">
-            <defs>
-              <radialGradient id="rabG1" cx="45%" cy="35%" r="60%">
-                <stop offset="0%" stop-color="#E8C840"/><stop offset="55%" stop-color="#B8921E"/><stop offset="100%" stop-color="#6B4E0A"/>
-              </radialGradient>
-              <filter id="rabGlow1"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            </defs>
-            <!-- 底台 -->
-            <ellipse cx="100" cy="192" rx="55" ry="7" fill="rgba(212,175,55,0.1)"/>
-            <rect x="52" y="184" width="96" height="10" rx="2" fill="rgba(212,175,55,0.14)" stroke="rgba(212,175,55,0.3)" stroke-width="0.6"/>
-            <!-- 身体（旅行者潮玩形象：圆润体型） -->
-            <ellipse cx="100" cy="130" rx="46" ry="52" fill="url(#rabG1)" filter="url(#rabGlow1)" opacity="0.9"/>
-            <!-- 头部 -->
-            <ellipse cx="100" cy="72" rx="38" ry="36" fill="url(#rabG1)" opacity="0.92"/>
-            <!-- 耳朵 -->
-            <path d="M76 44 Q70 12 78 4 Q86 0 90 10 Q92 26 88 44 Z" fill="rgba(220,178,40,0.82)"/>
-            <path d="M124 44 Q130 12 122 4 Q114 0 110 10 Q108 26 112 44 Z" fill="rgba(220,178,40,0.82)"/>
-            <!-- 耳内 -->
-            <path d="M79 40 Q76 18 81 10 Q85 6 87 14 Q88 28 86 40 Z" fill="rgba(200,100,80,0.3)"/>
-            <path d="M121 40 Q124 18 119 10 Q115 6 113 14 Q112 28 114 40 Z" fill="rgba(200,100,80,0.3)"/>
-            <!-- 眼睛 -->
-            <circle cx="87" cy="68" r="6.5" fill="rgba(8,6,3,0.9)"/><circle cx="87" cy="68" r="2.8" fill="rgba(232,200,64,0.85)"/><circle cx="88" cy="67" r="1" fill="white" opacity="0.6"/>
-            <circle cx="113" cy="68" r="6.5" fill="rgba(8,6,3,0.9)"/><circle cx="113" cy="68" r="2.8" fill="rgba(232,200,64,0.85)"/><circle cx="114" cy="67" r="1" fill="white" opacity="0.6"/>
-            <!-- 鼻子+嘴 -->
-            <ellipse cx="100" cy="80" rx="4" ry="2.5" fill="rgba(180,130,30,0.7)"/>
-            <path d="M97 83 Q100 87 103 83" stroke="rgba(180,130,30,0.5)" stroke-width="1" fill="none"/>
-            <!-- 背包（旅行者标志） -->
-            <rect x="118" y="100" width="28" height="36" rx="4" fill="rgba(180,140,35,0.65)" stroke="rgba(212,175,55,0.4)" stroke-width="0.8"/>
-            <rect x="122" y="108" width="20" height="12" rx="2" fill="rgba(140,105,25,0.5)"/>
-            <path d="M126 100 Q132 92 138 100" stroke="rgba(212,175,55,0.5)" stroke-width="1.2" fill="none"/>
-            <!-- 手臂 -->
-            <path d="M54 118 Q40 125 38 140 Q44 148 54 142 Q58 132 60 120 Z" fill="rgba(200,162,42,0.75)"/>
-            <path d="M146 118 Q160 125 162 140 Q156 148 146 142 Q142 132 140 120 Z" fill="rgba(200,162,42,0.75)"/>
-            <!-- 腿 -->
-            <rect x="78" y="174" width="18" height="14" rx="4" fill="rgba(180,142,35,0.8)"/>
-            <rect x="104" y="174" width="18" height="14" rx="4" fill="rgba(175,138,32,0.8)"/>
-            <!-- 丝路徽章 -->
-            <circle cx="100" cy="130" r="14" fill="rgba(212,175,55,0.1)" stroke="rgba(212,175,55,0.4)" stroke-width="0.8"/>
-            <path d="M94 130 L106 130 M100 124 L100 136" stroke="rgba(212,175,55,0.6)" stroke-width="1" stroke-linecap="round"/>
-            <!-- 装饰西夏纹 -->
-            <path d="M68 115 Q100 108 132 115" stroke="rgba(255,220,80,0.3)" stroke-width="1" fill="none"/>
-            <path d="M72 150 Q100 143 128 150" stroke="rgba(255,220,80,0.25)" stroke-width="0.8" fill="none"/>
-          </svg>
-        </div>
-        <!-- 信息 -->
-        <div class="case-info">
-          <h3 class="case-series">丝路行者 · 旅行家系列</h3>
-          <p class="case-desc">以丝路旅行为灵感的数字艺术形象，传承游牧文化与探索精神</p>
-          <a class="case-cta" href="#">探索更多 →</a>
-        </div>
+  <!-- AIGC创作流程 -->
+  <div class="aigc-timeline fade-up d1" style="max-width:1120px;margin:0 auto">
+    <div class="aigc-title">AIGC × 三维建模 · 创作流程</div>
+    <div class="timeline-row">
+      <div class="tl-item">
+        <div class="tl-num">01</div>
+        <div class="tl-name">文化研究</div>
+        <div class="tl-detail">实地调研宁夏博物馆，查阅西夏文物文献，提炼核心视觉符号</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">02</div>
+        <div class="tl-name">LoRA训练</div>
+        <div class="tl-detail">400张西夏文物图像，Kohya_ss两轮迭代，生成3000+创意图像</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">03</div>
+        <div class="tl-name">三维建模</div>
+        <div class="tl-detail">Blender基础建模 + ZBrush高精度雕刻，几何纹样逐层压印</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">04</div>
+        <div class="tl-name">实体制作</div>
+        <div class="tl-detail">光敏树脂3D打印，层高0.05mm，手工上色与鎏金效果处理</div>
       </div>
     </div>
-
-    <!-- 展柜2：文明臻藏（中央主展，更大） -->
-    <div class="gallery-case gallery-case--center reveal">
-      <!-- 能量环 -->
-      <div class="energy-rings" aria-hidden="true">
-        <div class="energy-ring energy-ring--1"></div>
-        <div class="energy-ring energy-ring--2"></div>
-        <div class="energy-ring energy-ring--3"></div>
-      </div>
-      <!-- 粒子 -->
-      <div class="float-particles" aria-hidden="true">
-        <span class="particle p1"></span><span class="particle p2"></span>
-        <span class="particle p3"></span><span class="particle p4"></span>
-      </div>
-      <div class="gallery-case-inner gallery-case-inner--center">
-        <div class="case-badge case-badge--gold">MASTERPIECE</div>
-        <div class="case-artifact-wrap case-artifact-wrap--center">
-          <div class="case-base-glow case-base-glow--strong"></div>
-          <!-- 铜牛SVG（主展品，最大） -->
-          <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="case-svg case-svg--center">
-            <defs>
-              <radialGradient id="bronzeCenter" cx="42%" cy="32%" r="62%">
-                <stop offset="0%" stop-color="#F0D060"/><stop offset="35%" stop-color="#D4AF37"/>
-                <stop offset="75%" stop-color="#A08530"/><stop offset="100%" stop-color="#6B5520"/>
-              </radialGradient>
-              <radialGradient id="baseGC" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="rgba(212,175,55,0.4)"/><stop offset="100%" stop-color="rgba(212,175,55,0)"/>
-              </radialGradient>
-              <filter id="mainGlowC" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="5" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            <ellipse cx="150" cy="276" rx="115" ry="13" fill="url(#baseGC)"/>
-            <ellipse cx="150" cy="280" rx="82" ry="7" fill="rgba(212,175,55,0.14)"/>
-            <rect x="60" y="257" width="180" height="14" rx="3" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.38)" stroke-width="0.7"/>
-            <rect x="72" y="252" width="156" height="8" rx="2" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.28)" stroke-width="0.6"/>
-            <path d="M82 198 Q76 156 90 128 Q107 100 150 95 Q193 90 212 118 Q232 142 230 186 Q228 210 218 224 L188 234 L150 238 L108 235 Z" fill="url(#bronzeCenter)" filter="url(#mainGlowC)" opacity="0.94"/>
-            <path d="M90 128 Q78 108 70 90 Q78 72 94 68 Q113 65 124 82 Q130 96 130 114 Q110 122 90 128 Z" fill="url(#bronzeCenter)" opacity="0.9"/>
-            <path d="M76 84 Q52 62 48 40 Q66 34 76 52 Q82 68 82 82 Z" fill="rgba(240,208,64,0.78)"/>
-            <path d="M106 72 Q102 46 118 28 Q132 38 128 60 Q122 74 112 82 Z" fill="rgba(240,208,64,0.78)"/>
-            <rect x="108" y="230" width="17" height="24" rx="4" fill="rgba(200,162,48,0.86)"/>
-            <rect x="133" y="232" width="17" height="22" rx="4" fill="rgba(196,158,45,0.82)"/>
-            <rect x="160" y="228" width="17" height="26" rx="4" fill="rgba(190,152,42,0.86)"/>
-            <rect x="184" y="226" width="15" height="28" rx="4" fill="rgba(178,142,38,0.82)"/>
-            <path d="M222 184 Q246 168 254 150 Q246 140 238 150 Q227 164 220 188" stroke="rgba(212,175,55,0.78)" stroke-width="7" fill="none" stroke-linecap="round"/>
-            <path d="M110 142 Q132 136 152 140 Q172 144 192 138" stroke="rgba(255,228,100,0.45)" stroke-width="1.6" fill="none"/>
-            <path d="M106 162 Q130 156 154 160 Q178 164 198 158" stroke="rgba(255,228,100,0.38)" stroke-width="1.3" fill="none"/>
-            <path d="M108 184 Q132 178 156 182 Q182 186 202 180" stroke="rgba(255,228,100,0.3)" stroke-width="1" fill="none"/>
-            <path d="M146 115 L155 108 L164 115 L155 122 Z" stroke="rgba(255,228,100,0.6)" stroke-width="0.8" fill="rgba(255,228,100,0.12)"/>
-            <circle cx="84" cy="95" r="5.5" fill="rgba(8,6,4,0.92)"/><circle cx="84" cy="95" r="2.2" fill="rgba(240,208,64,0.92)"/><circle cx="85" cy="94" r="0.9" fill="rgba(255,255,255,0.45)"/>
-            <ellipse cx="95" cy="114" rx="9" ry="4" stroke="rgba(240,208,64,0.92)" stroke-width="2.2" fill="none"/>
-            <path d="M110 114 Q130 106 154 108" stroke="rgba(255,255,255,0.14)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="case-info case-info--center">
-          <h3 class="case-series case-series--center">丝路文明 · 文创臻藏</h3>
-          <p class="case-desc case-desc--center">甄选丝路文明元素，以西夏鎏金铜牛为原型<br>致敬历史，启迪未来</p>
-          <a class="case-cta case-cta--gold" href="#">探索更多 →</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- 展柜3：原创IP系列（右，次要） -->
-    <div class="gallery-case gallery-case--side reveal reveal-delay-2">
-      <div class="gallery-case-inner">
-        <div class="case-badge">CULTURAL IP</div>
-        <div class="case-artifact-wrap">
-          <div class="case-base-glow"></div>
-          <svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="case-svg">
-            <defs>
-              <radialGradient id="rabG2" cx="48%" cy="32%" r="62%">
-                <stop offset="0%" stop-color="#DCA830"/><stop offset="50%" stop-color="#A07828"/><stop offset="100%" stop-color="#5A4010"/>
-              </radialGradient>
-              <filter id="rabGlow2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            </defs>
-            <ellipse cx="100" cy="192" rx="52" ry="7" fill="rgba(212,175,55,0.1)"/>
-            <rect x="54" y="184" width="92" height="10" rx="2" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.28)" stroke-width="0.6"/>
-            <!-- 身体（更修长，IP风格） -->
-            <ellipse cx="100" cy="132" rx="42" ry="50" fill="url(#rabG2)" filter="url(#rabGlow2)" opacity="0.88"/>
-            <!-- 头 -->
-            <ellipse cx="100" cy="72" rx="36" ry="34" fill="url(#rabG2)" opacity="0.9"/>
-            <!-- 耳（细长，IP感） -->
-            <path d="M80 42 Q76 8 84 2 Q90 -2 92 8 Q93 24 90 42 Z" fill="rgba(200,160,36,0.8)"/>
-            <path d="M120 42 Q124 8 116 2 Q110 -2 108 8 Q107 24 110 42 Z" fill="rgba(200,160,36,0.8)"/>
-            <!-- 耳内 -->
-            <path d="M82 38 Q80 14 83 8 Q86 4 87 12 Q88 26 87 38 Z" fill="rgba(190,90,70,0.28)"/>
-            <path d="M118 38 Q120 14 117 8 Q114 4 113 12 Q112 26 113 38 Z" fill="rgba(190,90,70,0.28)"/>
-            <!-- 眼（更大，IP感） -->
-            <circle cx="86" cy="67" r="7.5" fill="rgba(6,5,3,0.92)"/><circle cx="86" cy="67" r="3.5" fill="rgba(225,185,55,0.88)"/><circle cx="87.5" cy="65.5" r="1.2" fill="white" opacity="0.7"/>
-            <circle cx="114" cy="67" r="7.5" fill="rgba(6,5,3,0.92)"/><circle cx="114" cy="67" r="3.5" fill="rgba(225,185,55,0.88)"/><circle cx="115.5" cy="65.5" r="1.2" fill="white" opacity="0.7"/>
-            <!-- 表情 -->
-            <ellipse cx="100" cy="79" rx="3.5" ry="2" fill="rgba(170,120,25,0.65)"/>
-            <path d="M96 82 Q100 86 104 82" stroke="rgba(170,120,25,0.5)" stroke-width="1.2" fill="none"/>
-            <!-- 手 -->
-            <path d="M58 118 Q44 126 42 142 Q48 150 58 143 Q62 132 62 118 Z" fill="rgba(188,148,38,0.72)"/>
-            <path d="M142 118 Q156 126 158 142 Q152 150 142 143 Q138 132 138 118 Z" fill="rgba(188,148,38,0.72)"/>
-            <!-- 腿 -->
-            <rect x="80" y="174" width="16" height="14" rx="4" fill="rgba(172,134,32,0.78)"/>
-            <rect x="104" y="174" width="16" height="14" rx="4" fill="rgba(168,130,30,0.78)"/>
-            <!-- 西夏徽印（胸口） -->
-            <path d="M90 118 L100 110 L110 118 L106 130 L94 130 Z" stroke="rgba(212,175,55,0.55)" stroke-width="0.8" fill="rgba(212,175,55,0.12)"/>
-            <circle cx="100" cy="120" r="3" fill="rgba(212,175,55,0.25)"/>
-            <!-- 纹饰 -->
-            <path d="M66 110 Q100 104 134 110" stroke="rgba(255,215,75,0.28)" stroke-width="0.9" fill="none"/>
-            <path d="M70 148 Q100 142 130 148" stroke="rgba(255,215,75,0.22)" stroke-width="0.8" fill="none"/>
-          </svg>
-        </div>
-        <div class="case-info">
-          <h3 class="case-series">丝路奇遇 · 原创IP系列</h3>
-          <p class="case-desc">用现代视角重塑丝路文明符号，传承与创新的数字守护者</p>
-          <a class="case-cta" href="#">探索更多 →</a>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- end museum-gallery -->
-
-  <!-- ── 底部文明系统入口（6模块）── -->
-  <div class="civ-system-bar reveal">
-    <div class="civ-system-divider">
-      <span class="civ-system-label">文明系统入口</span>
-    </div>
-    <div class="civ-system-grid">
-
-      <div class="civ-sys-item">
-        <div class="civ-sys-icon">
-          <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="rgba(212,175,55,0.45)" stroke-width="0.7"/><path d="M10 20 Q20 8 30 20 Q20 32 10 20 Z" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="rgba(212,175,55,0.06)"/><circle cx="20" cy="20" r="3" fill="rgba(212,175,55,0.2)" stroke="rgba(212,175,55,0.45)" stroke-width="0.6"/></svg>
-        </div>
-        <span class="civ-sys-name">丝路数字地图</span>
-        <span class="civ-sys-sub">探索历史路径 体验文明脉络</span>
-      </div>
-
-      <div class="civ-sys-item">
-        <div class="civ-sys-icon">
-          <svg viewBox="0 0 40 40" fill="none"><rect x="10" y="12" width="20" height="16" rx="1.5" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="rgba(212,175,55,0.04)"/><line x1="14" y1="18" x2="26" y2="18" stroke="rgba(212,175,55,0.4)" stroke-width="0.6"/><line x1="14" y1="22" x2="22" y2="22" stroke="rgba(212,175,55,0.3)" stroke-width="0.5"/><circle cx="28" cy="28" r="6" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="rgba(212,175,55,0.08)"/><path d="M26 28 Q28 24 30 28" stroke="rgba(212,175,55,0.5)" stroke-width="0.7" fill="none"/></svg>
-        </div>
-        <span class="civ-sys-name">AI 故事典藏</span>
-        <span class="civ-sys-sub">AI生成丝路传奇 文明叙事空间</span>
-      </div>
-
-      <div class="civ-sys-item civ-sys-item--active">
-        <div class="civ-sys-icon">
-          <svg viewBox="0 0 40 40" fill="none"><rect x="12" y="10" width="16" height="20" rx="1" stroke="rgba(212,175,55,0.55)" stroke-width="0.7" fill="rgba(212,175,55,0.06)"/><line x1="15" y1="16" x2="25" y2="16" stroke="rgba(212,175,55,0.4)" stroke-width="0.5"/><line x1="15" y1="20" x2="23" y2="20" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><circle cx="20" cy="27" r="3.5" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.5)" stroke-width="0.6"/></svg>
-        </div>
-        <span class="civ-sys-name">数字藏品</span>
-        <span class="civ-sys-sub">文明器物的数字化存续</span>
-      </div>
-
-      <div class="civ-sys-item">
-        <div class="civ-sys-icon">
-          <svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="20" rx="12" ry="8" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="none"/><line x1="20" y1="12" x2="20" y2="28" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><line x1="8" y1="20" x2="32" y2="20" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><circle cx="20" cy="20" r="2.5" fill="rgba(212,175,55,0.2)" stroke="rgba(212,175,55,0.45)" stroke-width="0.5"/></svg>
-        </div>
-        <span class="civ-sys-name">文明数据库</span>
-        <span class="civ-sys-sub">丝路文明知识图谱索引</span>
-      </div>
-
-      <div class="civ-sys-item">
-        <div class="civ-sys-icon">
-          <svg viewBox="0 0 40 40" fill="none"><path d="M20 10 L24 17 L32 17 L26 22 L28 30 L20 25 L12 30 L14 22 L8 17 L16 17 Z" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="rgba(212,175,55,0.06)"/></svg>
-        </div>
-        <span class="civ-sys-name">共创计划</span>
-        <span class="civ-sys-sub">参与文明的数字再创造</span>
-      </div>
-
-      <div class="civ-sys-item">
-        <div class="civ-sys-icon">
-          <svg viewBox="0 0 40 40" fill="none"><path d="M12 28 Q20 12 28 28" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="none"/><path d="M16 22 Q20 16 24 22" stroke="rgba(212,175,55,0.35)" stroke-width="0.6" fill="rgba(212,175,55,0.06)"/><line x1="12" y1="30" x2="28" y2="30" stroke="rgba(212,175,55,0.3)" stroke-width="0.5"/></svg>
-        </div>
-        <span class="civ-sys-name">文明档案</span>
-        <span class="civ-sys-sub">记录每一段文明的印记</span>
-      </div>
-
-    </div>
-    <p class="civ-system-footer">让丝路文明在数字时代焕发新生</p>
   </div>
+</section>
 
-</section></section>
-
-
-<!-- ============================================================
-     文创展示模块
-     ============================================================ -->
+<!-- ═══ §6 文创产品 ═══ -->
 <section id="merchandise">
-  <div class="section-header reveal">
-    <span class="section-label">CULTURAL COLLECTION</span>
-    <h2 class="section-title-cn section-title">鎏途 · 文创系列</h2>
-    <div class="section-divider"></div>
-    <p class="section-sub">数字文明 · 实体传承</p>
+  <div class="merch-header fade-up">
+    <span class="sec-label">Cultural Creative Products</span>
+    <h2 class="sec-title">从数字到实体</h2>
+    <div class="gold-line"></div>
+    <p class="sec-sub">四件文创产品，从ZBrush模型到手工上色成品，每一件都扎根于文物研究</p>
   </div>
 
   <div class="merch-grid">
-    <!-- 手办 -->
-    <div class="merch-card reveal reveal-delay-1">
-      <div class="merch-visual">
-        <svg viewBox="0 0 200 220" fill="none" style="width:140px;height:154px;position:relative;z-index:1;">
-          <defs>
-            <radialGradient id="figureGrad" cx="40%" cy="30%" r="60%">
-              <stop offset="0%" stop-color="#E8C840" stop-opacity="0.9"/>
-              <stop offset="70%" stop-color="#D4AF37" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#8B7320" stop-opacity="0.7"/>
-            </radialGradient>
-          </defs>
-          <!-- 台座 -->
-          <ellipse cx="100" cy="210" rx="55" ry="8" fill="rgba(212,175,55,0.1)" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
-          <rect x="65" y="200" width="70" height="12" rx="3" fill="rgba(26,21,16,0.9)" stroke="rgba(212,175,55,0.3)" stroke-width="0.8"/>
-          <!-- 简化牛身 -->
-          <path d="M62 165 Q58 135 68 112 Q80 90 100 86 Q120 82 133 100 Q147 118 146 152 Q144 168 136 175 L118 182 L100 184 L82 182 Z"
-                fill="url(#figureGrad)" opacity="0.9"/>
-          <path d="M68 112 Q60 96 55 82 Q62 70 72 68 Q83 66 89 78 Q94 90 93 104 Z" fill="url(#figureGrad)" opacity="0.85"/>
-          <!-- 角 -->
-          <path d="M58 80 Q44 64 42 48 Q54 44 60 56 L64 78 Z" fill="rgba(232,200,64,0.7)"/>
-          <path d="M76 70 Q72 50 83 36 Q92 44 89 60 L84 73 Z" fill="rgba(232,200,64,0.7)"/>
-          <!-- 腿 -->
-          <rect x="73" y="178" width="10" height="18" rx="3" fill="rgba(200,165,50,0.85)"/>
-          <rect x="88" y="180" width="10" height="16" rx="3" fill="rgba(200,165,50,0.80)"/>
-          <rect x="108" y="176" width="10" height="20" rx="3" fill="rgba(188,155,45,0.85)"/>
-          <rect x="122" y="174" width="9" height="22" rx="3" fill="rgba(175,140,40,0.80)"/>
-          <!-- 眼睛 -->
-          <circle cx="64" cy="86" r="3.5" fill="rgba(10,8,5,0.9)"/>
-          <circle cx="64" cy="86" r="1.5" fill="rgba(232,200,64,0.9)"/>
-          <!-- 装饰线 -->
-          <path d="M76 118 Q90 114 103 116 Q116 118 126 114" stroke="rgba(255,220,100,0.4)" stroke-width="1.2" fill="none"/>
-          <path d="M73 134 Q90 130 104 132 Q118 134 130 129" stroke="rgba(255,220,100,0.35)" stroke-width="1" fill="none"/>
-          <!-- 高光 -->
-          <path d="M76 98 Q90 93 108 95" stroke="rgba(255,255,255,0.12)" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <!-- 底部光 -->
-          <ellipse cx="100" cy="198" rx="40" ry="5" fill="rgba(212,175,55,0.05)"/>
-        </svg>
+    <!-- 鎏小守 -->
+    <div class="merch-card fade-up">
+      <div class="merch-img merch-img-bg-light">
+        <img src="assets/images/鎏光第五版.png" alt="鎏小守疗愈玩偶三视图">
       </div>
+      <div class="merch-badge">情绪陪伴</div>
       <div class="merch-info">
-        <p class="merch-series">LIMITED EDITION · 2025</p>
-        <h3 class="merch-name">鎏途手办</h3>
-        <p class="merch-desc">以西夏鎏金铜牛为原型，采用高精度树脂铸造，表面电镀鎏金处理，还原古典金属质感。限量发行。</p>
-        <button class="merch-btn">预约收藏</button>
+        <div class="merch-name">鎏小守</div>
+        <div class="merch-craft">短毛绒材质，约20cm。以鎏金铜牛「守护」寓意为核心，走情绪陪伴路线。奶白米金配色，金色绣线手工刺绣额头装饰与蹄部细节，头顶绒球与金色蝴蝶结是鎏金工艺的柔性转译。</div>
+        <div class="merch-specs">
+          <span class="merch-spec">短毛绒</span>
+          <span class="merch-spec">约20cm</span>
+          <span class="merch-spec">奶白米金</span>
+          <span class="merch-spec">手工刺绣</span>
+        </div>
       </div>
     </div>
 
-    <!-- 挂件 -->
-    <div class="merch-card reveal reveal-delay-2">
-      <div class="merch-visual">
-        <svg viewBox="0 0 200 220" fill="none" style="width:140px;height:154px;position:relative;z-index:1;">
-          <!-- 挂绳 -->
-          <path d="M100 15 L100 45" stroke="rgba(200,169,110,0.6)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M92 12 Q100 8 108 12 Q104 16 100 15 Q96 16 92 12 Z" fill="rgba(200,169,110,0.5)"/>
-          <!-- 外框 -->
-          <path d="M60 55 L100 45 L140 55 L148 115 L100 135 L52 115 Z"
-                stroke="rgba(212,175,55,0.6)" stroke-width="1.5" fill="rgba(26,21,16,0.9)"/>
-          <path d="M64 58 L100 49 L136 58 L143 112 L100 130 L57 112 Z"
-                stroke="rgba(212,175,55,0.3)" stroke-width="0.8" fill="none"/>
-          <!-- 内部牛头图腾 -->
-          <path d="M78 72 Q74 62 72 54 Q80 50 84 58 Q86 66 85 72 Z" fill="rgba(212,175,55,0.65)"/>
-          <path d="M122 72 Q126 62 128 54 Q120 50 116 58 Q114 66 115 72 Z" fill="rgba(212,175,55,0.65)"/>
-          <path d="M78 72 Q77 60 100 56 Q123 60 122 72 L120 88 Q118 100 100 104 Q82 100 80 88 Z"
-                fill="rgba(212,175,55,0.5)" stroke="rgba(212,175,55,0.8)" stroke-width="1"/>
-          <circle cx="88" cy="78" r="3" stroke="rgba(232,200,64,0.8)" stroke-width="1" fill="rgba(10,8,5,0.8)"/>
-          <circle cx="112" cy="78" r="3" stroke="rgba(232,200,64,0.8)" stroke-width="1" fill="rgba(10,8,5,0.8)"/>
-          <ellipse cx="100" cy="94" rx="6" ry="2.5" stroke="rgba(232,200,64,0.7)" stroke-width="1.2" fill="none"/>
-          <path d="M92 68 L96 64 L100 68 L96 72 Z" stroke="rgba(232,200,64,0.7)" stroke-width="0.8" fill="rgba(232,200,64,0.2)"/>
-          <!-- 边框装饰纹 -->
-          <path d="M64 70 L64 100" stroke="rgba(212,175,55,0.3)" stroke-width="0.8" stroke-dasharray="3,3"/>
-          <path d="M136 70 L136 100" stroke="rgba(212,175,55,0.3)" stroke-width="0.8" stroke-dasharray="3,3"/>
-          <!-- 底部文字 -->
-          <text x="100" y="122" text-anchor="middle" fill="rgba(212,175,55,0.6)" font-size="8" font-family="serif" letter-spacing="2">鎏途</text>
-        </svg>
+    <!-- 鎏行者手办 -->
+    <div class="merch-card fade-up d1">
+      <div class="merch-img merch-img-bg-light">
+        <img src="assets/images/鎏途.png" alt="鎏行者手办三视图">
       </div>
+      <div class="merch-badge">文化叙事</div>
       <div class="merch-info">
-        <p class="merch-series">HERITAGE SERIES · 丝路系列</p>
-        <h3 class="merch-name">鎏金挂件</h3>
-        <p class="merch-desc">925银镀金工艺，内嵌西夏牛头图腾。背面镌刻丝路经文，随附收藏证书。旅途中的护身信物。</p>
-        <button class="merch-btn">预约收藏</button>
+        <div class="merch-name">鎏行者手办</div>
+        <div class="merch-craft">光敏树脂3D打印，约10cm，层高0.05mm。孔雀绿头巾条纹 + 沙色袍身 + 陶土红围巾，几何纹样用ZBrush Alpha笔刷逐层压印。鎏金效果先喷底漆再金粉点涂，模拟文物包浆质感。</div>
+        <div class="merch-specs">
+          <span class="merch-spec">光敏树脂</span>
+          <span class="merch-spec">约10cm</span>
+          <span class="merch-spec">孔雀绿配色</span>
+          <span class="merch-spec">手工上色</span>
+        </div>
       </div>
     </div>
 
-    <!-- 场景雕塑 -->
-    <div class="merch-card reveal reveal-delay-3">
-      <div class="merch-visual">
-        <svg viewBox="0 0 200 220" fill="none" style="width:160px;height:176px;position:relative;z-index:1;">
-          <!-- 底座 -->
-          <ellipse cx="100" cy="210" rx="72" ry="10" fill="rgba(212,175,55,0.06)" stroke="rgba(212,175,55,0.2)" stroke-width="0.8"/>
-          <path d="M30 205 Q100 195 170 205 L168 212 Q100 218 32 212 Z" fill="rgba(26,21,16,0.95)" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
-
-          <!-- 沙漠地面 -->
-          <path d="M20 190 Q60 183 100 187 Q140 191 180 184 L182 205 Q100 212 18 205 Z" fill="rgba(200,169,110,0.08)"/>
-
-          <!-- 远处古城 -->
-          <g opacity="0.3" stroke="rgba(212,175,55,0.6)" stroke-width="0.8" fill="none">
-            <rect x="20" y="158" width="25" height="25"/>
-            <rect x="25" y="148" width="5" height="12"/>
-            <rect x="33" y="144" width="6" height="16"/>
-            <rect x="155" y="155" width="22" height="28"/>
-            <path d="M155 155 L166 144 L177 155"/>
-          </g>
-
-          <!-- 骆驼队 -->
-          <g fill="rgba(200,169,110,0.25)">
-            <ellipse cx="45" cy="186" rx="10" ry="6"/>
-            <ellipse cx="43" cy="180" rx="6" ry="5"/>
-            <ellipse cx="38" cy="177" rx="3" ry="2.5"/>
-            <ellipse cx="42" cy="175" rx="2" ry="3"/>
-            <ellipse cx="47" cy="176" rx="1.8" ry="2.8"/>
-
-            <ellipse cx="75" cy="188" rx="8" ry="5"/>
-            <ellipse cx="73" cy="183" rx="5" ry="4"/>
-            <ellipse cx="69" cy="180" rx="2.5" ry="2"/>
-            <ellipse cx="72" cy="178" rx="1.8" ry="2.5"/>
-            <ellipse cx="76" cy="179" rx="1.5" ry="2.3"/>
-          </g>
-
-          <!-- 主体铜牛 (小) 站在沙漠上 -->
-          <path d="M100 150 Q97 128 102 112 Q110 98 122 96 Q134 94 140 106 Q147 118 145 140 Q143 150 138 155 L128 160 L115 162 Z"
-                fill="rgba(212,175,55,0.7)" stroke="rgba(232,200,64,0.5)" stroke-width="0.8"/>
-          <path d="M102 112 Q97 100 93 88 Q99 80 106 79 Q113 78 117 88 Q120 98 119 108 Z"
-                fill="rgba(212,175,55,0.68)"/>
-          <path d="M93 88 Q84 76 82 64 Q90 60 95 68 L97 86 Z" fill="rgba(232,200,64,0.6)"/>
-          <path d="M108 82 Q104 66 112 54 Q120 60 117 72 L114 82 Z" fill="rgba(232,200,64,0.6)"/>
-          <rect x="106" y="156" width="7" height="16" rx="2" fill="rgba(200,165,50,0.75)"/>
-          <rect x="117" y="157" width="7" height="15" rx="2" fill="rgba(200,165,50,0.70)"/>
-          <rect x="129" y="153" width="7" height="17" rx="2" fill="rgba(188,155,45,0.75)"/>
-          <rect x="138" y="152" width="6" height="18" rx="2" fill="rgba(175,140,40,0.70)"/>
-          <circle cx="97" cy="92" r="2.5" fill="rgba(10,8,5,0.9)"/>
-          <circle cx="97" cy="92" r="1" fill="rgba(232,200,64,0.9)"/>
-
-          <!-- 流沙粒子 -->
-          <circle cx="155" cy="170" r="1" fill="rgba(200,169,110,0.3)"/>
-          <circle cx="162" cy="176" r="0.8" fill="rgba(200,169,110,0.25)"/>
-          <circle cx="150" cy="180" r="1.2" fill="rgba(200,169,110,0.2)"/>
-          <circle cx="168" cy="165" r="0.7" fill="rgba(200,169,110,0.3)"/>
-          <circle cx="140" cy="168" r="0.9" fill="rgba(200,169,110,0.2)"/>
-        </svg>
+    <!-- 挂件系列（两款共图） -->
+    <div class="merch-card merch-card--wide fade-up d2">
+      <div class="merch-img merch-img--wide merch-img-bg-light">
+        <img src="assets/images/挂件.png" alt="鎏行者本体挂件与丝路主题组合挂件">
       </div>
       <div class="merch-info">
-        <p class="merch-series">SCENE SCULPTURE · 场景系列</p>
-        <h3 class="merch-name">丝路场景雕塑</h3>
-        <p class="merch-desc">鎏途守护丝路场景雕塑，融合沙漠、驼队、古城全景。高精度树脂材质，手工上色，桌面艺术摆件。</p>
-        <button class="merch-btn">预约收藏</button>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div class="merch-badge" style="position:static;display:inline-block;margin-bottom:8px">随行挂件</div>
+            <div class="merch-name">本体挂件</div>
+            <div class="merch-craft">在手办基础上缩比，层高降至0.03mm保证细节精度，金属开口环连接。约6.5cm，可作钥匙扣或包饰。</div>
+            <div class="merch-specs" style="margin-top:8px">
+              <span class="merch-spec">0.03mm层高</span>
+              <span class="merch-spec">约6.5cm</span>
+            </div>
+          </div>
+          <div>
+            <div class="merch-badge" style="position:static;display:inline-block;margin-bottom:8px">丝路主题</div>
+            <div class="merch-name">丝路组合挂件</div>
+            <div class="merch-craft">五件组合：鎏行者本体 + 丝路金币 + 丝路卷轴 + 骆驼吊坠 + 流苏挂饰，金属编绳串联，约13.5cm。</div>
+            <div class="merch-specs" style="margin-top:8px">
+              <span class="merch-spec">五件组合</span>
+              <span class="merch-spec">约13.5cm</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-
-<!-- ============================================================
-     Ending 区域
-     ============================================================ -->
+<!-- ═══ §7 结尾 ═══ -->
 <section id="ending">
-  <div class="ending-bg"></div>
-
-  <!-- 沙漠地平线 -->
-  <svg class="ending-desert" viewBox="0 0 1440 200" preserveAspectRatio="none" fill="none">
-    <path d="M0 120 Q180 90 360 105 Q540 120 720 100 Q900 80 1080 95 Q1260 110 1440 90 L1440 200 L0 200 Z"
-          fill="rgba(200,169,110,0.04)"/>
-    <path d="M0 150 Q240 130 480 145 Q720 160 960 140 Q1200 120 1440 135 L1440 200 L0 200 Z"
-          fill="rgba(200,169,110,0.03)"/>
-    <!-- 驼队剪影 -->
-    <g fill="rgba(200,169,110,0.06)">
-      <ellipse cx="240" cy="148" rx="20" ry="11"/>
-      <ellipse cx="237" cy="137" rx="11" ry="9"/>
-      <ellipse cx="228" cy="132" rx="5" ry="4"/>
-      <ellipse cx="235" cy="128" rx="4" ry="6"/>
-      <ellipse cx="243" cy="129" rx="3.5" ry="5.5"/>
-
-      <ellipse cx="310" cy="150" rx="16" ry="9"/>
-      <ellipse cx="307" cy="141" rx="9" ry="7.5"/>
-      <ellipse cx="300" cy="137" rx="4" ry="3.5"/>
-      <ellipse cx="306" cy="134" rx="3" ry="5"/>
-      <ellipse cx="312" cy="135" rx="2.8" ry="4.5"/>
-
-      <ellipse cx="1100" cy="145" rx="18" ry="10"/>
-      <ellipse cx="1097" cy="135" rx="10" ry="8"/>
-      <ellipse cx="1089" cy="130" rx="4.5" ry="3.8"/>
-      <ellipse cx="1095" cy="127" rx="3.5" ry="5.5"/>
-      <ellipse cx="1102" cy="128" rx="3" ry="5"/>
-    </g>
+  <svg class="ending-bg-pattern" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="endpat" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+        <rect x="5" y="5" width="10" height="10" fill="none" stroke="var(--gold)" stroke-width=".5" transform="rotate(45 10 10)"/>
+      </pattern>
+    </defs>
+    <rect width="100" height="100" fill="url(#endpat)"/>
   </svg>
 
-  <div class="ending-content reveal">
-    <p class="ending-quote ending-quote-cn">每一段旅程，<br>都在文明之间留下痕迹。</p>
-    <p class="ending-sub">加入鎏途，探索你的丝路故事</p>
-    <a class="ending-cta" href="#journey">
-      进入数字旅程
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <path d="M3 9h12M11 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
+  <p class="ending-quote fade-up">丝路上，每个行者都有一段只属于自己的旅程</p>
+  <p class="ending-quote-en fade-up d1">On the Silk Road, every traveler carries a story uniquely their own.</p>
+
+  <button class="ending-cta fade-up d2"
+    onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'})">
+    ✦ &nbsp;开启我的丝路旅程
+  </button>
+
+  <!-- 毕设信息 -->
+  <div class="ending-info fade-up d3">
+    <div class="ending-info-title">GRADUATION PROJECT · 毕业设计信息</div>
+    <div class="ending-info-grid">
+      <div class="ending-info-row"><span>题目</span>西夏文物数字化文创开发</div>
+      <div class="ending-info-row"><span>学院</span>宁夏大学新闻传播学院</div>
+      <div class="ending-info-row"><span>专业</span>广告学 · 2022级</div>
+      <div class="ending-info-row"><span>指导</span>赵雅洁老师</div>
+      <div class="ending-info-row"><span>学生</span>王泰然</div>
+      <div class="ending-info-row"><span>年份</span>2026届</div>
+    </div>
   </div>
+
+  <p class="fade-up" style="font-size:12px;color:var(--text-3);letter-spacing:.1em;line-height:2">
+    西夏鎏金铜牛藏于宁夏博物馆 · 致谢宁夏文化遗产<br>
+    本网页 Demo 由 DeepSeek AI 提供内容生成支持
+  </p>
 </section>
 
-
-<!-- 底部版权 -->
+<!-- ═══ 页脚 ═══ -->
 <footer>
-  <div class="footer-line"></div>
-  <p class="footer-copy">© 2025 鎏途 LIUTU · 西夏文化数字IP · 保留所有权利</p>
-  <div class="footer-line"></div>
+  <div class="footer-copy">© 2026 鎏途 LIUTU · 西夏文化数字IP · 宁夏大学毕业设计</div>
+  <div class="footer-note">西夏鎏金铜牛 · 宁夏博物馆藏 · AIGC + 3D建模 + 实体制作</div>
 </footer>
 
+<div id="toast" hidden></div>
 
-<!-- ============================================================
+<!-- ═══════════════════════════════════════
      JavaScript
-     ============================================================ -->
+════════════════════════════════════════ -->
 <script>
-/* --- 导航栏滚动效果 --- */
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-}, { passive: true });
+/* ── DeepSeek API 配置 ── */
+const CONFIG = {
+  DEEPSEEK_API_KEY: "sk-6bd36f89159a444d8a673a6b38bc6175",
+  API_URL: "https://api.deepseek.com/v1/chat/completions",
+  MODEL: "deepseek-chat",
+};
 
-/* --- 粒子系统 --- */
-function createParticles() {
-  const container = document.getElementById('particles');
-  const count = 35;
-  for (let i = 0; i < count; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const size = Math.random() * 2.5 + 0.5;
-    const x = Math.random() * 100;
-    const duration = Math.random() * 8 + 5;
-    const delay = Math.random() * 8;
-    const drift = (Math.random() - 0.5) * 60;
-    p.style.cssText = `
-      left: ${x}%;
-      bottom: ${Math.random() * 60}%;
-      width: ${size}px;
-      height: ${size}px;
-      --drift: ${drift}px;
-      animation-duration: ${duration}s;
-      animation-delay: -${delay}s;
-    `;
-    container.appendChild(p);
-  }
-}
-createParticles();
+const SYSTEM_PROMPT = `你是「鎏行者」的旅程叙述者。鎏行者是一位生活在11世纪西夏王朝的丝路行者，原型为西夏鎏金铜牛文物。
 
-/* --- IntersectionObserver 滚动动画 --- */
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+【角色设定】
+- 鎏行者是西夏人，熟悉党项族文化，懂汉语、藏语和粟特语
+- 他体态浑厚，头戴西域头巾，额饰鎏金纹样，手持卷轴，背挎行囊，腰间悬金币
+- 性格沉稳而好奇，见过很多，但仍对世界保持敬畏
 
-document.querySelectorAll('.reveal').forEach(el => {
-  revealObserver.observe(el);
-});
+【丝路历史背景知识库】
+- 西夏王朝：1038-1227年，党项族建立，都城兴庆府（今银川）
+- 主要丝路城市：长安、敦煌、玉门关、楼兰、龟兹、疏勒、于阗、撒马尔罕、木鹿、巴格达
+- 常见货物：丝绸、茶叶、瓷器（东行）；香料、玻璃、宝石、马匹（西来）
+- 常见人物：粟特商人、取经僧、色目人、回鹘商队
 
-// ═══════════════════════════════════════
-// Journey v2 · 两步骤冒险生成器
-// ═══════════════════════════════════════
+【叙事风格要求】
+- 具体有细节，带游历感和历史感
+- 不空泛说教，像一个真正走过这段路的人在讲
+- 文字有温度，偶尔带一点疲惫和惊喜交织的旅人情绪
+- 每次生成必须不同，体现「千人千面」
 
-let journeyState = { name: '', identity: '', style: '' };
+【输出格式】
+必须严格按照以下JSON格式输出，不要有任何其他内容：
+{
+  "title": "旅程标题（10字以内，有诗意，可作卡片引言）",
+  "narrative": "核心叙事（200-300字，具体经历，沿途城市、遇到的人、发生的事）",
+  "cultural_egg": "文化彩蛋（80-120字，揭示旅程中某个细节背后的历史文化知识，用「行者手记」的口吻）",
+  "days": "旅程天数（纯数字字符串，如 27）",
+  "partner": "同行伙伴（不超过8字，如：骆驼商队、粟特商人）",
+  "treasure": "收获（不超过12字，如：西域香料 × 3）"
+}`;
 
-document.querySelectorAll('#identity-tags .jip-tag').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#identity-tags .jip-tag').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    journeyState.identity = btn.dataset.val;
-  });
-});
-document.querySelectorAll('#style-tags .jip-tag').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#style-tags .jip-tag').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    journeyState.style = btn.dataset.val;
-  });
-});
+/* ── 状态 ── */
+const state = { step:1, start:null, end:null, identity:null, mood:null, result:null };
 
-function journeyStep1Submit() {
-  const nameVal = document.getElementById('j-name').value.trim();
-  if (!nameVal) { alert('请输入旅者昵称'); return; }
-  if (!journeyState.identity) { alert('请选择旅者身份'); return; }
-  if (!journeyState.style) { alert('请选择旅程风格'); return; }
-  journeyState.name = nameVal;
-  document.getElementById('jstep-1').classList.remove('jstep--active');
-  document.getElementById('jstep-2').classList.add('jstep--active');
-  document.getElementById('journey-step1').style.display = 'none';
-  document.getElementById('journey-step2').style.display = 'block';
-  document.getElementById('jr-loading').style.display = 'flex';
-  document.getElementById('jr-content').style.display = 'none';
-  generateJourney();
+/* ── 工具 ── */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+
+function showToast(msg) {
+  const t = $('#toast');
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(t._t);
+  t._t = setTimeout(() => { t.hidden = true }, 2600);
 }
 
-async function generateJourney() {
-  const { name, identity, style } = journeyState;
-  const prompt = `你是鎏途（LIUTU），一个西夏鎏金铜牛化身的丝路精灵IP，现在要为旅者"${name}"生成一段专属的丝路冒险故事。
+/* ── 导航滚动效果 ── */
+const nav = $('#nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50), { passive:true });
 
-旅者信息：
-- 昵称：${name}
-- 身份：${identity}
-- 风格偏好：${style}
+/* ── 滚入动画 ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in') });
+}, { threshold:.12, rootMargin:'0px 0px -48px 0px' });
+$$('.fade-up').forEach(el => io.observe(el));
 
-请生成200-280字的第一人称丝路冒险故事，要求：
-1. 以鎏途的视角，与旅者"${name}"一同踏上丝路
-2. 根据"${identity}"身份设计旅途遭遇
-3. 风格为"${style}"
-4. 包含1-2个具体丝路地点（长安、敦煌、楼兰、龟兹、撒马尔罕等）
-5. 语言优美有画面感，充满丝路文明气息
-6. 结尾一句专属守护语（格式：「守护语」）
+/* ── 步骤切换 ── */
+function goStep(n) {
+  state.step = n;
+  $$('.step-panel').forEach(p => p.classList.toggle('is-active', +p.dataset.panel === n));
+  $$('.step-item').forEach(item => {
+    const s = +item.dataset.step;
+    item.classList.toggle('is-active', s === n);
+    item.classList.toggle('is-done', s < n);
+  });
+  $$('.step-line').forEach((l,i) => l.classList.toggle('is-done', i+1 < n));
+}
 
-故事后另起一行输出：
----META---
-路线：[3-5城市，用→连接]
-印记：[4-8字称号]`;
+/* ── 卡片选择 ── */
+$$('.chip-row').forEach(grid => {
+  const field = grid.dataset.field;
+  grid.addEventListener('click', e => {
+    const btn = e.target.closest('.chip'); if (!btn) return;
+    grid.querySelectorAll('.chip').forEach(c => c.classList.remove('is-selected'));
+    btn.classList.add('is-selected');
+    state[field] = btn.dataset.value;
+    updateBtn(1);
+  });
+});
+
+$$('.mini-grid').forEach(grid => {
+  const field = grid.dataset.field;
+  grid.addEventListener('click', e => {
+    const btn = e.target.closest('.mini-card'); if (!btn) return;
+    grid.querySelectorAll('.mini-card').forEach(c => c.classList.remove('is-selected'));
+    btn.classList.add('is-selected');
+    state[field] = btn.dataset.value;
+    if (field === 'identity') updateBtn(2);
+    if (field === 'mood') updateBtn(3);
+  });
+});
+
+function updateBtn(step) {
+  if (step === 1) $('[data-next="2"]').disabled = !(state.start && state.end);
+  if (step === 2) $('[data-next="3"]').disabled = !state.identity;
+  if (step === 3) $('#btn-generate').disabled = !state.mood;
+}
+
+/* ── 步骤导航按钮 ── */
+$$('[data-next]').forEach(btn => btn.addEventListener('click', () => {
+  if (!btn.disabled) goStep(+btn.dataset.next);
+}));
+$$('[data-prev]').forEach(btn => btn.addEventListener('click', () => goStep(+btn.dataset.prev)));
+
+/* ── DeepSeek API 调用 ── */
+async function generateJourney({ name, start, end, identity, mood }) {
+  const userPrompt = `请为旅行者「${name || '行者'}」生成一段丝路旅程：
+起点：${start}
+终点：${end}
+旅行身份：${identity}
+旅程心境：${mood}
+请生成真实可信、细节丰富的旅程故事，严格按JSON格式输出全部字段。`;
+
+  const res = await fetch(CONFIG.API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+CONFIG.DEEPSEEK_API_KEY },
+    body: JSON.stringify({
+      model: CONFIG.MODEL,
+      messages: [{ role:'system', content:SYSTEM_PROMPT }, { role:'user', content:userPrompt }],
+      max_tokens: 1200, temperature: 0.9
+    })
+  });
+  if (!res.ok) throw new Error(`API ${res.status}`);
+  const data = await res.json();
+  const text = data.choices?.[0]?.message?.content || '';
+  const clean = text.replace(/```json|```/g,'').trim();
+  const m = clean.match(/\{[\s\S]*\}/);
+  try { return JSON.parse(m ? m[0] : clean) }
+  catch { throw new Error('JSON解析失败：' + text) }
+}
+
+/* ── Mock 备用 ── */
+function mockJourney(s) {
+  const titles = { '探险求知':'风沙中的初见', '思乡归途':'归途万里月', '初次出发':'第一步出关', '历经沧桑':'白鬓又一程' };
+  return {
+    title: titles[s.mood] || '丝路一程',
+    narrative: `从${s.start}启程那日，晨雾未散。一行${s.identity === '商旅行者' ? '骆驼驮着丝绸和茶砖' : s.identity === '文化使者' ? '马背上绑着佛经和典籍' : s.identity === '边境护卫' ? '护送商队持弓执刀' : '草药包混着西域香气'}，缓缓出了城门。走过戈壁的第七日，才见到${s.end}的轮廓。一路遇见粟特商人、诵经的僧侣，还有用一壶马奶酒换我半块西夏茶砖的牧人。这段路，走了就忘不掉。`,
+    cultural_egg: `行者手记：粟特人是丝路上最活跃的商业民族，以撒马尔罕为中心建立了遍布丝路的商业网络。西夏王朝与粟特商人有密切往来，西夏的铸币工艺中能看到粟特文化的影响。`,
+    days: String(15 + Math.floor(Math.random()*25)),
+    partner: s.identity === '商旅行者' ? '骆驼商队' : s.identity === '文化使者' ? '粟特向导' : s.identity === '边境护卫' ? '西夏兵士' : '胡僧同伴',
+    treasure: s.identity === '商旅行者' ? '西域香料 × 3' : s.identity === '文化使者' ? '佛经卷轴 × 2' : '粟特银币 × 5'
+  };
+}
+
+/* ── 打字机效果 ── */
+function typewriter(el, text, speed=25) {
+  return new Promise(resolve => {
+    el.textContent = '';
+    let i = 0;
+    const tick = () => {
+      if (i >= text.length) { resolve(); return }
+      el.textContent += text[i++];
+      setTimeout(tick, speed);
+    };
+    tick();
+  });
+}
+
+/* ── 渲染结果 ── */
+async function renderResult(r) {
+  const card = $('#journey-card');
+  card.hidden = false;
+  $('#jc-name').textContent = state.name || '行者';
+  $('#jc-start').textContent = state.start;
+  $('#jc-end').textContent = state.end;
+  $('#jc-days').textContent = (r.days || '—') + '天';
+  $('#jc-partner').textContent = r.partner || '骆驼商队';
+  card.scrollIntoView({ behavior:'smooth', block:'center' });
+  await typewriter($('#jc-title'), `「${r.title}」`, 70);
+  await typewriter($('#jc-narrative'), r.narrative || '', 20);
+  await typewriter($('#jc-egg'), r.cultural_egg || '', 24);
+}
+
+/* ── 主生成流程 ── */
+async function handleGenerate() {
+  // 补默认值
+  if (!state.start)    state.start    = '敦煌';
+  if (!state.end)      state.end      = '撒马尔罕';
+  if (!state.identity) state.identity = '商旅行者';
+  if (!state.mood)     state.mood     = '探险求知';
+  state.name = ($('#traveler-name').value || '').trim() || '行者';
+
+  const keyEmpty = !CONFIG.DEEPSEEK_API_KEY || CONFIG.DEEPSEEK_API_KEY.includes('xxxxxx') || CONFIG.DEEPSEEK_API_KEY.length < 10;
+  $('#btn-generate').disabled = true;
+  $('#loading').hidden = false;
+  $('#journey-card').hidden = true;
 
   try {
-    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + CONFIG.deepseekKey },
-      body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'user', content: prompt }], max_tokens: 650, temperature: 0.88 })
-    });
-    const data = await resp.json();
-    const raw = data.choices[0].message.content;
-    const parts = raw.split('---META---');
-    const storyPart = parts[0].trim();
-    const metaPart  = parts[1] ? parts[1].trim() : '';
-    let route = '长安 → 敦煌 → 龟兹 → 撒马尔罕 → 君士坦丁堡';
-    let badge = '✦ 丝路旅者 ✦';
-    if (metaPart) {
-      const rm = metaPart.match(/路线[：:] *(.+)/);
-      const bm = metaPart.match(/印记[：:] *(.+)/);
-      if (rm) route = rm[1].trim();
-      if (bm) badge = '✦ ' + bm[1].trim() + ' ✦';
-    }
-    document.getElementById('jr-title').textContent        = name + ' · 丝路传奇';
-    document.getElementById('jr-story').textContent        = storyPart;
-    document.getElementById('jr-meta-name').textContent     = name;
-    document.getElementById('jr-meta-identity').textContent = identity;
-    document.getElementById('jr-meta-route').textContent    = route;
-    document.getElementById('jr-meta-badge').textContent    = badge;
-    document.getElementById('jr-loading').style.display  = 'none';
-    document.getElementById('jr-content').style.display  = 'flex';
-    window._journeyData = { name, identity, style, story: storyPart, route, badge };
-  } catch(e) {
-    document.getElementById('jr-loading').innerHTML =
-      '<div class="jr-loading-inner"><p class="jr-loading-text" style="color:rgba(212,175,55,0.45);">生成失败，请稍后重试</p>' +
-      '<button class="jr-btn jr-btn--ghost" onclick="journeyReset()" style="margin:16px auto;display:flex;">返回重试</button></div>';
+    const result = keyEmpty
+      ? (await new Promise(r => setTimeout(r, 1200)), mockJourney(state))
+      : await generateJourney({ ...state });
+    state.result = result;
+    await renderResult(result);
+    if (keyEmpty) showToast('演示数据 · 请配置 DeepSeek API Key');
+  } catch(err) {
+    console.error(err);
+    showToast('生成失败，使用演示数据');
+    state.result = mockJourney(state);
+    await renderResult(state.result);
+  } finally {
+    $('#loading').hidden = true;
+    $('#btn-generate').disabled = false;
   }
 }
 
-function downloadJourney() {
-  const d = window._journeyData; if (!d) return;
-  const sep = '═'.repeat(30);
+/* ── 结果按钮 ── */
+$('#btn-generate').addEventListener('click', handleGenerate);
+
+$('#btn-restart').addEventListener('click', () => {
+  state.start = state.end = state.identity = state.mood = state.result = null;
+  state.name = '';
+  $('#traveler-name').value = '';
+  $$('.chip, .mini-card').forEach(c => c.classList.remove('is-selected'));
+  $$('[data-next]').forEach(b => b.disabled = true);
+  $('#btn-generate').disabled = true;
+  $('#journey-card').hidden = true;
+  goStep(1);
+  $('#journey').scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+async function copyText(mode) {
+  if (!state.result) { showToast('请先生成一段旅程'); return }
+  const r = state.result;
   const text = [
-    '鎏途 · 专属丝路旅程', sep, '',
-    '旅者：' + d.name, '身份：' + d.identity, '风格：' + d.style,
-    '路线：' + d.route, '印记：' + d.badge, '',
-    '─'.repeat(30), '', d.story, '',
-    sep, '鎏途 LIUTU · SILK ROAD DIGITAL', '由 DeepSeek AI 生成 · 独一无二'
-  ].join('
-');
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
-  a.download = '鎏途丝路旅程_' + d.name + '.txt';
-  a.click();
+    `【鎏途 · 专属丝路旅程】${mode==='share' ? ' ✦ 分享版' : ''}`,
+    `旅者：${state.name} | 身份：${state.identity}`,
+    `路线：${state.start} → ${state.end} | 历时：${r.days}天`,
+    `同行：${r.partner}`,
+    '', `「${r.title}」`, '',
+    r.narrative, '',
+    '── 行者手记 ──',
+    r.cultural_egg, '',
+    '鎏途 LIUTU · 西夏文化数字IP · 毕业设计'
+  ].join('\n');
+
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+  }
+  showToast(mode === 'share' ? '分享文本已复制' : '旅程卡片已复制');
 }
 
-function copyJourney() {
-  const d = window._journeyData; if (!d) return;
-  const text = '【鎏途 · 专属丝路旅程】
-旅者：' + d.name + ' | 身份：' + d.identity + '
-路线：' + d.route + '
+$('#btn-save').addEventListener('click', () => copyText('save'));
+$('#btn-share').addEventListener('click', () => copyText('share'));
 
-' + d.story + '
-
-' + d.badge + '
-——鎏途 LIUTU · 丝路文明数字IP';
-  navigator.clipboard.writeText(text).then(() => {
-    document.getElementById('jr-copy-toast').textContent = '✓ 已复制到剪贴板！';
-    setTimeout(() => { document.getElementById('jr-copy-toast').textContent = '旅程故事可分享给朋友，一同踏上丝路'; }, 2500);
+/* ── 图片加载失败处理 ── */
+document.querySelectorAll('img').forEach(img => {
+  img.addEventListener('error', () => {
+    img.closest('.hero-bg, .showcase-img-wrap, .merch-img, .map-bg')?.classList.add('empty');
   });
-}
-
-function journeyReset() {
-  document.getElementById('jstep-1').classList.add('jstep--active');
-  document.getElementById('jstep-2').classList.remove('jstep--active');
-  document.getElementById('journey-step1').style.display = 'block';
-  document.getElementById('journey-step2').style.display = 'none';
-  document.getElementById('j-name').value = '';
-  document.querySelectorAll('.jip-tag').forEach(b => b.classList.remove('selected'));
-  journeyState = { name: '', identity: '', style: '' };
-}
-
-// ── Reveal 动画// ── Reveal 动画
+});
+</script>
+</body>
+</html>
