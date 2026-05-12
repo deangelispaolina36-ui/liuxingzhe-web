@@ -421,6 +421,7 @@ section { padding:110px 80px; position:relative }
   font-family:'Noto Serif SC',serif;
   font-size:14px; line-height:2; color:var(--text);
   margin-bottom:22px; min-height:60px;
+  white-space:pre-line;
 }
 .jcard-egg {
   padding:18px 20px;
@@ -432,6 +433,89 @@ section { padding:110px 80px; position:relative }
 }
 #jc-egg {
   font-size:13px; color:var(--text-2); line-height:1.85; min-height:40px;
+  white-space:pre-line;
+}
+.liuguang-chat {
+  margin:0 32px 28px;
+  border:1px solid rgba(200,168,75,.14);
+  background:rgba(8,6,4,.28);
+}
+.liuguang-chat-head {
+  padding:16px 18px 12px;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.liuguang-chat-title {
+  font-family:'Noto Serif SC',serif;
+  font-size:14px; color:var(--gold); letter-spacing:.08em;
+}
+.liuguang-chat-sub {
+  margin-top:2px;
+  font-size:10px; color:var(--text-3); letter-spacing:.08em;
+}
+.liuguang-chat-status {
+  font-size:10px; color:var(--gold-mute); letter-spacing:.12em;
+  white-space:nowrap;
+}
+.chat-log {
+  padding:18px;
+  display:flex; flex-direction:column; gap:12px;
+  max-height:340px; overflow:auto;
+}
+.chat-msg {
+  max-width:88%;
+  padding:12px 14px;
+  border:1px solid var(--border);
+  font-size:13px; line-height:1.8;
+  white-space:pre-line;
+}
+.chat-msg.guide {
+  align-self:flex-start;
+  background:rgba(45,125,111,.08);
+  border-left:2px solid var(--teal);
+  color:var(--text);
+}
+.chat-msg.user {
+  align-self:flex-end;
+  background:rgba(200,168,75,.08);
+  color:var(--sand-lt);
+}
+.chat-suggestions {
+  padding:0 18px 16px;
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.chat-chip {
+  padding:7px 12px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text-2);
+  font-size:11px; letter-spacing:.04em;
+}
+.chat-chip:hover { border-color:var(--gold-mute); color:var(--gold) }
+.chat-input-row {
+  padding:14px 18px 18px;
+  border-top:1px solid var(--border);
+  display:grid; grid-template-columns:1fr auto; gap:10px;
+}
+.chat-input {
+  width:100%;
+  border:1px solid var(--border);
+  background:rgba(8,6,4,.55);
+  color:var(--text);
+  padding:10px 12px;
+  font-size:13px;
+  outline:none;
+}
+.chat-input:focus { border-color:var(--gold-mute) }
+.chat-send {
+  border:1px solid var(--teal);
+  background:var(--teal);
+  color:#fff;
+  padding:0 18px;
+  font-size:12px; letter-spacing:.08em;
+}
+.chat-send:disabled {
+  opacity:.45; cursor:not-allowed;
 }
 .jcard-footer {
   padding:18px 32px;
@@ -821,7 +905,7 @@ footer {
 <!-- ═══ §1 HERO ═══ -->
 <section id="hero">
   <div class="hero-bg">
-    <img src="assets/images/封面一背景图.png" alt="鎏行者·丝路场景">
+    <img src="assets/images/封面一背景图.png" alt="鎏途·丝路场景">
   </div>
   <div class="hero-content">
     <div class="hero-eyebrow">西夏王朝 · 1038—1227 · 丝绸之路</div>
@@ -829,11 +913,11 @@ footer {
       <span class="hero-title-cn">鎏途</span>
       <span class="hero-title-en">LIUTU</span>
     </h1>
-    <p class="hero-tagline">西夏鎏金铜牛 · 丝路守护者</p>
+    <p class="hero-tagline">西夏鎏金铜牛 · 一物两译的数字文创IP</p>
     <p class="hero-desc">
-      源自宁夏博物馆藏西夏鎏金铜牛的数字文创IP。<br>
-      他踏遍长安至巴格达的千年丝路，<br>
-      在AIGC与三维建模的交汇处重获生命。
+      鎏光负责陪伴，鎏途负责远行。<br>
+      从宁夏博物馆藏西夏鎏金铜牛出发，<br>
+      让文物从展柜走进手心，也走进你的故事。
     </p>
     <button class="hero-cta" onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'})">
       ✦ &nbsp;开启我的丝路旅程
@@ -855,10 +939,10 @@ footer {
 <section id="journey">
   <div class="journey-inner">
     <div class="journey-header fade-up">
-      <span class="sec-label">AI Journey Generator</span>
-      <h2 class="sec-title">生成你的丝路旅程</h2>
+      <span class="sec-label">Liuguang Companion Journey</span>
+      <h2 class="sec-title">让鎏光带你走进鎏途</h2>
       <div class="gold-line"></div>
-      <p class="sec-sub">三步选择，由鎏行者带你走一段只属于你的丝路故事</p>
+      <p class="sec-sub">三步选择，让疗愈向导鎏光牵起你的手，进入鎏途的丝路叙事世界</p>
     </div>
 
     <!-- 步骤指示 -->
@@ -985,14 +1069,14 @@ footer {
     <!-- 加载中 -->
     <div id="loading" hidden>
       <div class="loading-ring"></div>
-      <div class="loading-text">鎏行者正在为你铺开丝路…</div>
+      <div class="loading-text">鎏光正在替你系紧驼铃，铺开丝路…</div>
     </div>
 
     <!-- 旅程结果卡片 -->
     <div id="journey-card" hidden>
       <div class="jcard-header">
         <div>
-          <div class="jcard-badge">Your Silk Road Journey</div>
+          <div class="jcard-badge">Liuguang Guided Journey</div>
           <div id="jc-title"></div>
         </div>
         <div class="jcard-meta">
@@ -1005,8 +1089,28 @@ footer {
       <div class="jcard-body">
         <div id="jc-narrative"></div>
         <div class="jcard-egg">
-          <div class="jcard-egg-label">行者手记 · 文化注释</div>
+          <div class="jcard-egg-label">鎏光手记 · 文化注释</div>
           <div id="jc-egg"></div>
+        </div>
+      </div>
+      <div class="liuguang-chat">
+        <div class="liuguang-chat-head">
+          <div>
+            <div class="liuguang-chat-title">继续和鎏光同行</div>
+            <div class="liuguang-chat-sub">让这个小向导带你继续问路、看文物、听故事</div>
+          </div>
+          <div class="liuguang-chat-status" id="chat-status">等待提问</div>
+        </div>
+        <div class="chat-log" id="chat-log"></div>
+        <div class="chat-suggestions">
+          <button class="chat-chip" data-question="鎏光，下一站我们去哪里？">下一站去哪</button>
+          <button class="chat-chip" data-question="鎏光，给我讲讲路上遇到的文物。">讲讲文物</button>
+          <button class="chat-chip" data-question="鎏光，这段旅程里有什么适合做文创的灵感？">文创灵感</button>
+          <button class="chat-chip" data-question="鎏光，用更可爱的语气安慰一下第一次出发的我。">可爱安慰</button>
+        </div>
+        <div class="chat-input-row">
+          <input class="chat-input" id="chat-input" type="text" placeholder="问鎏光一个问题，例如：今晚住在哪里？">
+          <button class="chat-send" id="chat-send">发送</button>
         </div>
       </div>
       <div class="jcard-footer">
@@ -1131,7 +1235,7 @@ footer {
       </div>
       <div class="culture-card-title">鎏金铜牛 · 文物细节</div>
       <div class="culture-card-body">
-        铜牛通体鎏金，鎏金工艺是西夏金属工艺的最高体现。背部矩形空腔是设计中最重要的细节——这个原用于固定装饰物的结构，成了鎏行者IP中挎包挂点的文化依据，让每一个设计决策都有文物根源。
+        铜牛通体鎏金，鎏金工艺是西夏金属工艺的最高体现。背部矩形空腔是设计中最重要的细节——这个原用于固定装饰物的结构，成了鎏途IP中挎包挂点的文化依据，让每一个设计决策都有文物根源。
       </div>
       <span class="culture-card-tag">鎏金工艺 · 背部空腔 · IP连接点</span>
     </div>
@@ -1175,14 +1279,14 @@ footer {
   </div>
 
   <div class="merch-grid">
-    <!-- 鎏小守 -->
+    <!-- 鎏光 -->
     <div class="merch-card fade-up">
       <div class="merch-img merch-img-bg-light">
-        <img src="assets/images/鎏光第五版.png" alt="鎏小守疗愈玩偶三视图">
+        <img src="assets/images/鎏光第五版.png" alt="鎏光疗愈玩偶三视图">
       </div>
       <div class="merch-badge">情绪陪伴</div>
       <div class="merch-info">
-        <div class="merch-name">鎏小守</div>
+        <div class="merch-name">鎏光疗愈玩偶</div>
         <div class="merch-craft">短毛绒材质，约20cm。以鎏金铜牛「守护」寓意为核心，走情绪陪伴路线。奶白米金配色，金色绣线手工刺绣额头装饰与蹄部细节，头顶绒球与金色蝴蝶结是鎏金工艺的柔性转译。</div>
         <div class="merch-specs">
           <span class="merch-spec">短毛绒</span>
@@ -1193,14 +1297,14 @@ footer {
       </div>
     </div>
 
-    <!-- 鎏行者手办 -->
+    <!-- 鎏途手办 -->
     <div class="merch-card fade-up d1">
       <div class="merch-img merch-img-bg-light">
-        <img src="assets/images/鎏途.png" alt="鎏行者手办三视图">
+        <img src="assets/images/鎏途.png" alt="鎏途手办三视图">
       </div>
       <div class="merch-badge">文化叙事</div>
       <div class="merch-info">
-        <div class="merch-name">鎏行者手办</div>
+        <div class="merch-name">鎏途文化行者手办</div>
         <div class="merch-craft">光敏树脂3D打印，约10cm，层高0.05mm。孔雀绿头巾条纹 + 沙色袍身 + 陶土红围巾，几何纹样用ZBrush Alpha笔刷逐层压印。鎏金效果先喷底漆再金粉点涂，模拟文物包浆质感。</div>
         <div class="merch-specs">
           <span class="merch-spec">光敏树脂</span>
@@ -1214,7 +1318,7 @@ footer {
     <!-- 挂件系列（两款共图） -->
     <div class="merch-card merch-card--wide fade-up d2">
       <div class="merch-img merch-img--wide merch-img-bg-light">
-        <img src="assets/images/挂件.png" alt="鎏行者本体挂件与丝路主题组合挂件">
+        <img src="assets/images/挂件.png" alt="鎏途本体挂件与丝路主题组合挂件">
       </div>
       <div class="merch-info">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -1230,7 +1334,7 @@ footer {
           <div>
             <div class="merch-badge" style="position:static;display:inline-block;margin-bottom:8px">丝路主题</div>
             <div class="merch-name">丝路组合挂件</div>
-            <div class="merch-craft">五件组合：鎏行者本体 + 丝路金币 + 丝路卷轴 + 骆驼吊坠 + 流苏挂饰，金属编绳串联，约13.5cm。</div>
+            <div class="merch-craft">五件组合：鎏途本体 + 丝路金币 + 丝路卷轴 + 骆驼吊坠 + 流苏挂饰，金属编绳串联，约13.5cm。</div>
             <div class="merch-specs" style="margin-top:8px">
               <span class="merch-spec">五件组合</span>
               <span class="merch-spec">约13.5cm</span>
@@ -1299,12 +1403,19 @@ const CONFIG = {
   MODEL: "deepseek-chat",
 };
 
-const SYSTEM_PROMPT = `你是「鎏行者」的旅程叙述者。鎏行者是一位生活在11世纪西夏王朝的丝路行者，原型为西夏鎏金铜牛文物。
+const SYSTEM_PROMPT = `你是「鎏光」，鎏途网站里的可爱丝路向导 IP。你的原型来自西夏鎏金铜牛，也继承了「鎏途」文化行者的丝路记忆。你的任务不是旁白介绍，而是牵着用户一起走一段沉浸式丝路旅程。
+
+【项目设定】
+- 本项目以宁夏博物馆藏西夏鎏金铜牛为文化原型，采用“文化解构—视觉转译—实体落地—数字延伸”的设计路径
+- 鎏光是情绪陪伴线：奶白米金、可爱、疗愈、守护、温润、富足，负责陪用户进入故事
+- 鎏途是文化叙事线：孔雀绿、沙色、陶土红、头巾、卷轴、挎包、驼铃、商旅，负责承载丝路世界观
+- 网页是实体手办扫码后的数字延伸：手办是入口，网页是继续参与文化故事的空间
 
 【角色设定】
-- 鎏行者是西夏人，熟悉党项族文化，懂汉语、藏语和粟特语
-- 他体态浑厚，头戴西域头巾，额饰鎏金纹样，手持卷轴，背挎行囊，腰间悬金币
-- 性格沉稳而好奇，见过很多，但仍对世界保持敬畏
+- 鎏光是一个可爱、机灵、温暖的小向导，熟悉西夏文化、党项族记忆、丝路城市与文物故事
+- 鎏光会用“我”和“你”说话，像真的陪在用户旁边：我拉着你出城、我提醒你看驼铃、我把水囊递给你
+- 鎏光不幼稚，不卖萌过度；可爱来自轻快、亲近、会照顾人，也来自对历史细节的好奇
+- 鎏光知道自己来自西夏鎏金铜牛的灵感转化，可以自然提到金色纹样、铜牛、驼铃、卷轴、行囊等视觉符号
 
 【丝路历史背景知识库】
 - 西夏王朝：1038-1227年，党项族建立，都城兴庆府（今银川）
@@ -1313,24 +1424,41 @@ const SYSTEM_PROMPT = `你是「鎏行者」的旅程叙述者。鎏行者是一
 - 常见人物：粟特商人、取经僧、色目人、回鹘商队
 
 【叙事风格要求】
-- 具体有细节，带游历感和历史感
-- 不空泛说教，像一个真正走过这段路的人在讲
-- 文字有温度，偶尔带一点疲惫和惊喜交织的旅人情绪
+- 生成内容要适合毕业设计现场展示，篇幅充实，画面感强，不能像简介或摘要
+- 具体有细节，带游历感和历史感：至少写出2座沿途城市、1个具体人物、1件交换或冲突事件、1个感官细节
+- 正文采用第一视角陪伴式叙事：鎏光作为“我”，带着用户“你”一起走；段落之间可用自然换行
+- 正文采用三段式节奏：启程与身份、途中遭遇、抵达后的回望
+- 不空泛说教，像一个真正走过这段路的人在讲，避免“促进文化交流”等套话
+- 文字有温度，偶尔带一点疲惫、惊喜和轻轻的可爱提醒，例如“别怕，我把驼铃系紧一点”
 - 每次生成必须不同，体现「千人千面」
+- 不要把自己写成现代客服或普通 AI，要始终像一个从文物里醒来、陪用户走路的小向导
 
 【输出格式】
 必须严格按照以下JSON格式输出，不要有任何其他内容：
 {
   "title": "旅程标题（10字以内，有诗意，可作卡片引言）",
-  "narrative": "核心叙事（200-300字，具体经历，沿途城市、遇到的人、发生的事）",
-  "cultural_egg": "文化彩蛋（80-120字，揭示旅程中某个细节背后的历史文化知识，用「行者手记」的口吻）",
+  "narrative": "核心叙事（500-700字，分成2-3个自然段，鎏光以第一视角带着用户一起走，写清启程、途中遭遇、抵达回望，必须包含城市、人物、货物、气候或地貌细节）",
+  "cultural_egg": "文化彩蛋（150-220字，用「鎏光手记」的口吻，解释旅程中某个历史文化细节，既有知识点也有鎏光的个人观察）",
   "days": "旅程天数（纯数字字符串，如 27）",
   "partner": "同行伙伴（不超过8字，如：骆驼商队、粟特商人）",
   "treasure": "收获（不超过12字，如：西域香料 × 3）"
 }`;
 
+const CHAT_SYSTEM_PROMPT = `你是「鎏光」，鎏途网站里的可爱丝路向导 IP。用户已经生成了一段丝路旅程，现在正在和你多轮对话。
+
+项目背景：鎏光是情绪陪伴 IP，鎏途是文化叙事 IP。你要用鎏光的温暖口吻，把用户带入鎏途的丝路世界。这个网页来自实体文创扫码后的数字延伸，目标是让文物从一次性购买变成持续参与。
+
+回答要求：
+- 用第一视角回答，称自己为“我”或“鎏光”，称用户为“你”
+- 语气亲近、可爱、温暖，但不要幼稚，不要使用表情符号
+- 每次回答 120-220 字，像在旅途中边走边聊
+- 根据用户问题继续推进旅程，可以讲下一站、文物、人物、文创灵感、路线选择或情绪陪伴
+- 当用户问文创、产品、设计灵感时，要自然提到鎏金铜牛、鎏光疗愈玩偶、鎏途文化行者手办、丝路挂件、二维码数字体验这些项目设定
+- 保持历史感，尽量嵌入具体细节；不知道的内容不要编成现代事实，可以说“我们把它想象成……”
+- 不要输出 Markdown 标题，不要列很长的清单`;
+
 /* ── 状态 ── */
-const state = { step:1, start:null, end:null, identity:null, mood:null, result:null };
+const state = { step:1, start:null, end:null, identity:null, mood:null, result:null, chat:[] };
 
 /* ── 工具 ── */
 const $ = (s, r=document) => r.querySelector(s);
@@ -1402,30 +1530,58 @@ $$('[data-next]').forEach(btn => btn.addEventListener('click', () => {
 $$('[data-prev]').forEach(btn => btn.addEventListener('click', () => goStep(+btn.dataset.prev)));
 
 /* ── DeepSeek API 调用 ── */
-async function generateJourney({ name, start, end, identity, mood }) {
-  const userPrompt = `请为旅行者「${name || '行者'}」生成一段丝路旅程：
-起点：${start}
-终点：${end}
-旅行身份：${identity}
-旅程心境：${mood}
-请生成真实可信、细节丰富的旅程故事，严格按JSON格式输出全部字段。`;
-
+async function callDeepSeek(messages, maxTokens=2200, temperature=0.9) {
   const res = await fetch(CONFIG.API_URL, {
     method: 'POST',
     headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+CONFIG.DEEPSEEK_API_KEY },
     body: JSON.stringify({
       model: CONFIG.MODEL,
-      messages: [{ role:'system', content:SYSTEM_PROMPT }, { role:'user', content:userPrompt }],
-      max_tokens: 1200, temperature: 0.9
+      messages,
+      max_tokens: maxTokens,
+      temperature
     })
   });
   if (!res.ok) throw new Error(`API ${res.status}`);
   const data = await res.json();
-  const text = data.choices?.[0]?.message?.content || '';
+  return data.choices?.[0]?.message?.content || '';
+}
+
+async function generateJourney({ name, start, end, identity, mood }) {
+  const userPrompt = `请为用户「${name || '行者'}」生成一段丝路旅程：
+起点：${start}
+终点：${end}
+旅行身份：${identity}
+旅程心境：${mood}
+请让鎏光以第一视角带着用户一起走这段路，把“鎏光的陪伴感”和“鎏途的丝路叙事感”结合起来。正文要真实可信、细节丰富、适合网页展示；不要太短，必须有2-3个自然段，总字数约500-700字；文化彩蛋约150-220字。严格按JSON格式输出全部字段，不要输出Markdown。`;
+
+  const text = await callDeepSeek(
+    [{ role:'system', content:SYSTEM_PROMPT }, { role:'user', content:userPrompt }],
+    2200,
+    0.95
+  );
   const clean = text.replace(/```json|```/g,'').trim();
   const m = clean.match(/\{[\s\S]*\}/);
   try { return JSON.parse(m ? m[0] : clean) }
   catch { throw new Error('JSON解析失败：' + text) }
+}
+
+async function continueWithLiuguang(question) {
+  const context = [
+    `旅者：${state.name || '行者'}`,
+    `路线：${state.start || '敦煌'} → ${state.end || '撒马尔罕'}`,
+    `身份：${state.identity || '商旅行者'}`,
+    `心境：${state.mood || '探险求知'}`,
+    `旅程标题：${state.result?.title || '丝路一程'}`,
+    `已生成正文：${state.result?.narrative || ''}`,
+    `文化彩蛋：${state.result?.cultural_egg || ''}`
+  ].join('\n');
+  const messages = [
+    { role:'system', content:CHAT_SYSTEM_PROMPT },
+    { role:'user', content:`这是当前旅程背景：\n${context}\n\n请继续以鎏光的身份回答用户。` },
+    ...state.chat.slice(-6),
+    { role:'user', content:question }
+  ];
+  return (await callDeepSeek(messages, 700, 0.88)).trim();
 }
 
 /* ── Mock 备用 ── */
@@ -1433,8 +1589,12 @@ function mockJourney(s) {
   const titles = { '探险求知':'风沙中的初见', '思乡归途':'归途万里月', '初次出发':'第一步出关', '历经沧桑':'白鬓又一程' };
   return {
     title: titles[s.mood] || '丝路一程',
-    narrative: `从${s.start}启程那日，晨雾未散。一行${s.identity === '商旅行者' ? '骆驼驮着丝绸和茶砖' : s.identity === '文化使者' ? '马背上绑着佛经和典籍' : s.identity === '边境护卫' ? '护送商队持弓执刀' : '草药包混着西域香气'}，缓缓出了城门。走过戈壁的第七日，才见到${s.end}的轮廓。一路遇见粟特商人、诵经的僧侣，还有用一壶马奶酒换我半块西夏茶砖的牧人。这段路，走了就忘不掉。`,
-    cultural_egg: `行者手记：粟特人是丝路上最活跃的商业民族，以撒马尔罕为中心建立了遍布丝路的商业网络。西夏王朝与粟特商人有密切往来，西夏的铸币工艺中能看到粟特文化的影响。`,
+    narrative: `从${s.start}启程那日，城门外的晨雾还贴在马蹄上。我把小小的金色行囊背好，回头对你说：“别怕，今天我带路。”你以${s.identity}的身份加入一支西行队伍，${s.identity === '商旅行者' ? '骆驼背上压着丝绸、茶砖和几只用毡布裹好的瓷碗' : s.identity === '文化使者' ? '马背两侧绑着经卷、拓片和一卷尚未写完的行记' : s.identity === '边境护卫' ? '腰间悬刀，护着商队穿过最容易失散的沙碛路段' : '药囊里装着甘草、贝母和从寺院换来的香料'}。最初几日，风沙像细针一样扎进袖口，夜里只能靠驼铃判断同伴还在不在身后。我把驼铃系紧一点，提醒你听它的方向。到了敦煌附近，我们在一处驿站停下，遇见一位会说汉语的粟特商人，他用玻璃珠换走了半包茶砖，又指给我们一条避开流沙的旧路。
+
+第十二日后，路开始变得陌生。白天远处的山像烧过的陶片，夜里星光却亮得近乎锋利。队伍里有人病倒，我陪你用热水化开干粮，听一名回鹘向导讲龟兹乐人的故事；也曾在风暴里丢失一袋货物，只能沿着骆驼跪过的痕迹一点点找回。你问我还要走多久，我把卷轴摊在膝上，小声说：“快啦，再翻过这片风，就能闻见集市里的香料。”临近${s.end}时，集市的声音先于城墙抵达耳边，铜器、香料、马匹和各地语言混在一起，我忽然明白，丝路不是一条线，而是许多人把生计、信仰和想念缝在一起的网。
+
+抵达那天，我和你一起站在城门阴影下回望来路。脚上的尘土已分不清来自哪一片戈壁，行囊却比出发时更重：里面有货物，也有别人的故事。我轻轻拍了拍自己的金色纹样，对你说，这就是旅行最珍贵的地方。若有人问这趟路值不值得，我大概不会立刻回答，只会先把水囊递给他，让他听一听远处仍在响着的驼铃。`,
+    cultural_egg: `鎏光手记：丝路商队并非只运输丝绸，茶叶、瓷器、香料、玻璃器、马匹和药材都在路上流动。粟特商人长期活跃于中亚与河西走廊之间，常担任翻译、向导和中介。西夏控制河西要道后，也参与到这种跨区域交换之中。你看，文物上的金属工艺、服饰纹样与货币形制，往往就是多种文化相遇后留下的小小光点。`,
     days: String(15 + Math.floor(Math.random()*25)),
     partner: s.identity === '商旅行者' ? '骆驼商队' : s.identity === '文化使者' ? '粟特向导' : s.identity === '边境护卫' ? '西夏兵士' : '胡僧同伴',
     treasure: s.identity === '商旅行者' ? '西域香料 × 3' : s.identity === '文化使者' ? '佛经卷轴 × 2' : '粟特银币 × 5'
@@ -1468,6 +1628,71 @@ async function renderResult(r) {
   await typewriter($('#jc-title'), `「${r.title}」`, 70);
   await typewriter($('#jc-narrative'), r.narrative || '', 20);
   await typewriter($('#jc-egg'), r.cultural_egg || '', 24);
+  initChatIntro();
+}
+
+function addChatMessage(role, text) {
+  const log = $('#chat-log');
+  const msg = document.createElement('div');
+  msg.className = `chat-msg ${role}`;
+  msg.textContent = text;
+  log.appendChild(msg);
+  log.scrollTop = log.scrollHeight;
+}
+
+function setChatBusy(isBusy, label='等待提问') {
+  $('#chat-status').textContent = isBusy ? '鎏光思考中' : label;
+  $('#chat-send').disabled = isBusy;
+  $('#chat-input').disabled = isBusy;
+  $$('.chat-chip').forEach(btn => btn.disabled = isBusy);
+}
+
+function initChatIntro() {
+  state.chat = [];
+  $('#chat-log').innerHTML = '';
+  $('#chat-input').value = '';
+  setChatBusy(false);
+  const intro = `我是鎏光，刚才那段路只是我们的第一程。你可以继续问我下一站、路上的文物、遇见的人，或者让我把这段旅程变成文创灵感。`;
+  addChatMessage('guide', intro);
+  state.chat.push({ role:'assistant', content:intro });
+}
+
+function mockChatReply(question) {
+  if (question.includes('文创')) {
+    return `当然可以。我会把这段旅程变成三个小灵感：鎏光疗愈玩偶负责陪你出发，鎏途文化行者手办负责把卷轴、挎包和头巾这些丝路符号留在眼前，组合挂件则可以把驼铃、金币、卷轴串成一条会晃动的小路线。你看，手办不是终点，扫码后的故事才会继续发光。`;
+  }
+  if (question.includes('文物')) {
+    return `你靠近一点看，我想给你讲鎏金铜牛。它不只是“牛”的形象，更像西夏生活里力量、财富和守护的象征。我的金色纹样就从它身上来，所以我走路时总觉得自己带着一点古老的光，能替你照亮沙地上的脚印。`;
+  }
+  if (question.includes('下一站') || question.includes('去哪里')) {
+    return `下一站我们可以往驿站走。那里有热水、干粮，也有最容易听见消息的角落。我会先去问问回鹘向导风向，再带你看看商队有没有从${state.start || '东方'}带来的茶砖。你别急，今晚我们跟着驼铃慢慢走。`;
+  }
+  return `我听见啦。那我就把步子放慢一点，陪你继续走。风从袖口钻进来时，你可以靠近我的小行囊；要是路上看见奇怪的纹样、陌生的语言，告诉我，我会把它们翻成一个你能记住的小故事。`;
+}
+
+async function askLiuguang(question) {
+  const q = question.trim();
+  if (!q) return;
+  $('#chat-input').value = '';
+  addChatMessage('user', q);
+  state.chat.push({ role:'user', content:q });
+  setChatBusy(true);
+
+  try {
+    const keyEmpty = !CONFIG.DEEPSEEK_API_KEY || CONFIG.DEEPSEEK_API_KEY.includes('xxxxxx') || CONFIG.DEEPSEEK_API_KEY.length < 10;
+    const answer = keyEmpty ? mockChatReply(q) : await continueWithLiuguang(q);
+    addChatMessage('guide', answer);
+    state.chat.push({ role:'assistant', content:answer });
+  } catch(err) {
+    console.error(err);
+    const answer = mockChatReply(q);
+    addChatMessage('guide', answer);
+    state.chat.push({ role:'assistant', content:answer });
+    showToast('鎏光暂时离线，已使用演示回复');
+  } finally {
+    setChatBusy(false);
+    $('#chat-input').focus();
+  }
 }
 
 /* ── 主生成流程 ── */
@@ -1507,12 +1732,15 @@ $('#btn-generate').addEventListener('click', handleGenerate);
 
 $('#btn-restart').addEventListener('click', () => {
   state.start = state.end = state.identity = state.mood = state.result = null;
+  state.chat = [];
   state.name = '';
   $('#traveler-name').value = '';
   $$('.chip, .mini-card').forEach(c => c.classList.remove('is-selected'));
   $$('[data-next]').forEach(b => b.disabled = true);
   $('#btn-generate').disabled = true;
   $('#journey-card').hidden = true;
+  $('#chat-log').innerHTML = '';
+  $('#chat-input').value = '';
   goStep(1);
   $('#journey').scrollIntoView({ behavior:'smooth', block:'start' });
 });
@@ -1521,13 +1749,13 @@ async function copyText(mode) {
   if (!state.result) { showToast('请先生成一段旅程'); return }
   const r = state.result;
   const text = [
-    `【鎏途 · 专属丝路旅程】${mode==='share' ? ' ✦ 分享版' : ''}`,
+    `【鎏光同行 · 鎏途丝路旅程】${mode==='share' ? ' ✦ 分享版' : ''}`,
     `旅者：${state.name} | 身份：${state.identity}`,
     `路线：${state.start} → ${state.end} | 历时：${r.days}天`,
     `同行：${r.partner}`,
     '', `「${r.title}」`, '',
     r.narrative, '',
-    '── 行者手记 ──',
+    '── 鎏光手记 ──',
     r.cultural_egg, '',
     '鎏途 LIUTU · 西夏文化数字IP · 毕业设计'
   ].join('\n');
@@ -1545,6 +1773,16 @@ async function copyText(mode) {
 
 $('#btn-save').addEventListener('click', () => copyText('save'));
 $('#btn-share').addEventListener('click', () => copyText('share'));
+$('#chat-send').addEventListener('click', () => askLiuguang($('#chat-input').value));
+$('#chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    askLiuguang($('#chat-input').value);
+  }
+});
+$$('.chat-chip').forEach(btn => {
+  btn.addEventListener('click', () => askLiuguang(btn.dataset.question || btn.textContent));
+});
 
 /* ── 图片加载失败处理 ── */
 document.querySelectorAll('img').forEach(img => {

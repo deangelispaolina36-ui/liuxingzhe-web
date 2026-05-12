@@ -1,61 +1,72 @@
-# 鎏行者 · 丝路旅程生成器
+# 鎏途 LIUTU · 西夏文化数字 IP 网站
 
-> 西夏文物数字化文创开发 · 毕业设计网页 Demo
-> © 2026 王泰然 · 宁夏大学新闻传播学院广告学
+西夏文物数字化文创开发毕业设计网页。项目为纯静态站点，无构建依赖。
 
-## 快速开始
+## 当前文件说明
 
-1. **填写 API Key**（必须）
-   打开 `app.js`，在文件顶部 `CONFIG.DEEPSEEK_API_KEY` 处填入你的 DeepSeek API Key。
-   - 获取地址：https://platform.deepseek.com
-   - 未填写时，页面会自动使用本地演示数据，仍然可以完整体验交互流程。
+| 文件 | 说明 |
+| --- | --- |
+| `index_new.html` | 开发版本，日常修改这个文件 |
+| `index.html` | 线上入口，部署前由 `index_new.html` 同步而来 |
+| `deploy.ps1` | 自动同步、提交、推送脚本 |
+| `assets/images/` | 页面图片资源 |
+| `app.js` / `styles.css` | 旧版备用文件，当前页面没有引用 |
 
-2. **放置图片**
-   将以下文件放到 `assets/images/` 目录，文件不存在时会显示文字占位，不会报错：
-   | 文件名 | 用途 |
-   |---|---|
-   | `hero-character.png` | 首屏鎏行者立绘 |
-   | `character-intro.png` | IP 介绍板块角色图 |
-   | `relic-bull.png` | 鎏金铜牛文物照片 |
-   | `product-liuxiaoshou.png` | 鎏小守疗愈玩偶 |
-   | `product-liuxingzhe.png` | 鎏行者收藏手办 |
-   | `product-keychain1.png` | 本体挂件 |
-   | `product-keychain2.png` | 丝路组合挂件 |
+## 本地预览
 
-3. **运行**
-   直接双击 `index.html` 即可在浏览器中打开；推荐使用 Chrome / Edge / Safari。
+在项目目录执行：
 
-## 目录结构
-
-```
-liuxingzhe-web/
-├── index.html      主页面
-├── styles.css      全部样式
-├── app.js          交互与 API 集成
-├── assets/
-│   └── images/     图片资源
-└── README.md
+```powershell
+python -m http.server 8899
 ```
 
-## 技术说明
+浏览器打开：
 
-- 纯 HTML + CSS + JavaScript，无构建依赖
-- DeepSeek API (OpenAI 兼容) 生成旅程文案
-- 适配 PC / 移动端
-- 西夏几何纹样全部用 SVG / CSS 实现，无需额外图片
+```text
+http://127.0.0.1:8899/index_new.html
+```
 
-## 配色
+## 修改流程
 
-| | HEX |
-|---|---|
-| 孔雀绿 | `#2D7D6F` |
-| 沙色 | `#C8A96E` |
-| 陶土红 | `#C4622D` |
-| 鎏金 | `#D4AF37` |
-| 深底 | `#1A1208` |
-| 文字浅色 | `#F5EDD6` |
+1. 修改 `index_new.html`
+2. 确认页面效果
+3. 同步到 `index.html`
+4. 提交并推送到 GitHub
+5. EdgeOne Pages 自动部署
 
-## 安全提醒
+## 自动部署脚本
 
-**不要把 API Key 提交到 Git 仓库或发送到聊天对话中。**
-建议在生产环境改为通过后端代理调用，避免 Key 暴露在前端。
+在有网络、且 GitHub 已登录或已配置凭据的电脑上执行：
+
+```powershell
+.\deploy.ps1 -Message "优化AI旅程生成内容"
+```
+
+脚本会自动：
+
+- 创建或复用旁边的 `liuxingzhe-web-deploy` Git 仓库目录
+- 克隆 `deangelispaolina36-ui/liuxingzhe-web`
+- 将当前目录文件同步过去
+- 将 `index_new.html` 覆盖到 `index.html`
+- `git add`、`git commit`、`git push`
+
+推送后 EdgeOne Pages 通常 1-2 分钟自动生效。
+
+## AI 生成说明
+
+DeepSeek 调用逻辑目前内嵌在 `index_new.html` 的底部脚本中。当前配置要求生成：
+
+- 500-700 字旅程正文
+- 2-3 个自然段
+- 150-220 字文化彩蛋
+- 至少包含城市、人物、货物、气候或地貌细节
+- 以「鎏光」第一视角带着用户一起走丝路
+- 生成结果后支持继续向鎏光提问，形成多轮对话
+
+当前叙事关系：
+
+- `鎏光`：情绪陪伴 IP，奶白米金、可爱、疗愈、守护，负责陪用户进入故事。
+- `鎏途`：文化叙事 IP，孔雀绿、沙色、陶土红、头巾、卷轴、行囊，负责承载丝路世界观。
+- `网页`：实体手办/挂件扫码后的数字延伸，让文创产品从一次性购买变成持续参与。
+
+如 API 调用失败，页面会自动使用本地演示数据，保证答辩展示流程不断。
