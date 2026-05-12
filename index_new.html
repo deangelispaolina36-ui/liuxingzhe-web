@@ -1500,6 +1500,231 @@ footer {
 .civilization-entries { display:none; }
 
 
+
+/* ═══════════════════════════════════════
+   Journey v2 · 两步骤冒险生成器
+   ═══════════════════════════════════════ */
+
+/* 步骤指示器 */
+.journey-steps {
+  display:flex; align-items:center; justify-content:center;
+  gap:0; margin:0 auto 40px; max-width:400px;
+}
+.jstep {
+  display:flex; align-items:center; gap:8px;
+  padding:8px 18px;
+  border:0.5px solid rgba(212,175,55,0.15);
+  cursor:default; transition:all 0.4s;
+}
+.jstep--active {
+  border-color:rgba(212,175,55,0.4);
+  background:rgba(212,175,55,0.04);
+}
+.jstep-num {
+  font-size:9px; letter-spacing:2px;
+  color:rgba(212,175,55,0.35);
+}
+.jstep--active .jstep-num { color:rgba(212,175,55,0.7); }
+.jstep-label { font-size:11px; letter-spacing:1.5px; color:rgba(212,175,55,0.35); }
+.jstep--active .jstep-label { color:rgba(212,175,55,0.8); }
+.jstep-line {
+  flex:0 0 48px; height:0.5px;
+  background:rgba(212,175,55,0.15);
+}
+
+/* ── Step 1 输入面板 ── */
+.journey-input-panel { max-width:680px; margin:0 auto; padding:0 24px; }
+.jip-inner {
+  border:0.5px solid rgba(212,175,55,0.2);
+  background:rgba(212,175,55,0.02);
+  padding:40px 48px;
+  position:relative;
+}
+.jip-inner::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);
+}
+.jip-field { margin-bottom:28px; }
+.jip-label {
+  display:block; font-size:10px; letter-spacing:3px;
+  color:rgba(212,175,55,0.55); margin-bottom:10px;
+}
+.jip-required { color:rgba(212,175,55,0.6); }
+.jip-input {
+  width:100%; padding:12px 16px;
+  background:rgba(212,175,55,0.03);
+  border:0.5px solid rgba(212,175,55,0.2);
+  color:rgba(212,175,55,0.85);
+  font-size:14px; letter-spacing:1px;
+  outline:none; transition:border-color 0.3s;
+  font-family:inherit;
+  box-sizing:border-box;
+}
+.jip-input::placeholder { color:rgba(212,175,55,0.25); }
+.jip-input:focus { border-color:rgba(212,175,55,0.5); background:rgba(212,175,55,0.05); }
+.jip-hint { display:block; font-size:10px; color:rgba(212,175,55,0.25); margin-top:6px; letter-spacing:0.5px; }
+
+/* 标签选择 */
+.jip-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.jip-tag {
+  padding:7px 16px;
+  border:0.5px solid rgba(212,175,55,0.2);
+  background:transparent;
+  color:rgba(212,175,55,0.45);
+  font-size:12px; letter-spacing:1px;
+  cursor:pointer; transition:all 0.25s;
+  font-family:inherit;
+}
+.jip-tag:hover { border-color:rgba(212,175,55,0.4); color:rgba(212,175,55,0.7); }
+.jip-tag.selected {
+  border-color:rgba(212,175,55,0.65);
+  background:rgba(212,175,55,0.08);
+  color:rgba(212,175,55,0.95);
+}
+
+/* 提交按钮 */
+.jip-submit {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  width:100%; padding:14px 24px; margin-top:8px;
+  background:rgba(212,175,55,0.08);
+  border:0.6px solid rgba(212,175,55,0.45);
+  color:rgba(212,175,55,0.9);
+  font-size:14px; letter-spacing:4px;
+  cursor:pointer; transition:all 0.35s;
+  font-family:inherit;
+  position:relative; overflow:hidden;
+}
+.jip-submit::before {
+  content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.1),transparent);
+  transition:left 0.5s;
+}
+.jip-submit:hover { background:rgba(212,175,55,0.12); border-color:rgba(212,175,55,0.7); }
+.jip-submit:hover::before { left:100%; }
+.jip-submit svg { width:18px; height:18px; }
+.jip-submit:disabled { opacity:0.35; cursor:not-allowed; }
+.jip-note { text-align:center; font-size:10px; color:rgba(212,175,55,0.22); letter-spacing:2px; margin-top:14px; }
+
+/* ── Step 2 生成结果 ── */
+.journey-result-panel { max-width:980px; margin:0 auto; padding:0 24px; }
+
+/* 加载 */
+.jr-loading {
+  display:flex; align-items:center; justify-content:center;
+  min-height:360px;
+}
+.jr-loading-inner { text-align:center; }
+.jr-spinner {
+  width:48px; height:48px; margin:0 auto 20px;
+  border:1px solid rgba(212,175,55,0.15);
+  border-top-color:rgba(212,175,55,0.7);
+  border-radius:50%;
+  animation:jrSpin 1.2s linear infinite;
+}
+@keyframes jrSpin { to { transform:rotate(360deg); } }
+.jr-loading-text { font-size:14px; color:rgba(212,175,55,0.6); letter-spacing:2px; margin-bottom:6px; }
+.jr-loading-sub { font-size:10px; color:rgba(212,175,55,0.28); letter-spacing:1.5px; }
+
+/* 结果内容双栏 */
+.jr-content {
+  display:flex; gap:40px; align-items:flex-start;
+}
+
+/* 故事卡片 */
+.jr-card {
+  flex:0 0 480px;
+  border:0.6px solid rgba(212,175,55,0.28);
+  background:rgba(5,4,2,0.85);
+  padding:32px;
+  position:relative;
+  overflow:hidden;
+}
+.jr-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1.5px;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.7),transparent);
+  animation:sweepLine 4s ease-in-out infinite;
+}
+.jr-card-header {
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:20px; padding-bottom:16px;
+  border-bottom:0.4px solid rgba(212,175,55,0.12);
+}
+.jr-card-badge svg { width:40px; height:40px; }
+.jr-card-eyebrow { font-size:8px; letter-spacing:3px; color:rgba(212,175,55,0.35); margin:0 0 4px; }
+.jr-card-title { font-family:serif; font-size:18px; color:rgba(212,175,55,0.9); letter-spacing:3px; margin:0; }
+
+/* 故事正文 */
+.jr-story-wrap {
+  margin-bottom:20px; padding-bottom:16px;
+  border-bottom:0.4px solid rgba(212,175,55,0.1);
+  min-height:160px;
+}
+.jr-story-text {
+  font-size:13.5px; line-height:2;
+  color:rgba(200,169,110,0.75);
+  letter-spacing:0.3px; margin:0;
+  white-space:pre-line;
+}
+
+/* 底部元数据 */
+.jr-card-meta { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+.jr-meta-row { display:flex; gap:12px; align-items:baseline; }
+.jr-meta-label { font-size:9px; letter-spacing:2px; color:rgba(212,175,55,0.3); min-width:56px; }
+.jr-meta-val { font-size:12px; color:rgba(200,169,110,0.65); letter-spacing:1px; }
+.jr-meta-val.gold { color:rgba(212,175,55,0.82); }
+.jr-card-watermark {
+  font-size:8.5px; letter-spacing:3px; color:rgba(212,175,55,0.12);
+  text-align:right; margin-top:8px;
+}
+
+/* 操作区 */
+.jr-actions { flex:1; padding-top:8px; }
+.jr-actions-title {
+  font-family:serif; font-size:16px;
+  color:rgba(212,175,55,0.75); letter-spacing:3px;
+  margin-bottom:12px; padding-bottom:12px;
+  border-bottom:0.4px solid rgba(212,175,55,0.1);
+}
+.jr-actions-sub {
+  font-size:12px; color:rgba(200,169,110,0.45);
+  line-height:1.9; letter-spacing:0.5px; margin-bottom:28px;
+}
+.jr-btn-group { display:flex; flex-direction:column; gap:10px; }
+.jr-btn {
+  display:flex; align-items:center; gap:10px;
+  padding:12px 20px;
+  font-size:12px; letter-spacing:2.5px;
+  cursor:pointer; transition:all 0.3s;
+  font-family:inherit; border-radius:0;
+}
+.jr-btn svg { width:16px; height:16px; flex-shrink:0; }
+.jr-btn--primary {
+  background:rgba(212,175,55,0.1);
+  border:0.6px solid rgba(212,175,55,0.5);
+  color:rgba(212,175,55,0.9);
+}
+.jr-btn--primary:hover { background:rgba(212,175,55,0.18); border-color:rgba(212,175,55,0.8); }
+.jr-btn--secondary {
+  background:rgba(212,175,55,0.04);
+  border:0.5px solid rgba(212,175,55,0.22);
+  color:rgba(212,175,55,0.6);
+}
+.jr-btn--secondary:hover { background:rgba(212,175,55,0.08); border-color:rgba(212,175,55,0.4); }
+.jr-btn--ghost {
+  background:transparent;
+  border:0.5px solid rgba(212,175,55,0.15);
+  color:rgba(212,175,55,0.4);
+}
+.jr-btn--ghost:hover { border-color:rgba(212,175,55,0.3); color:rgba(212,175,55,0.6); }
+.jr-share-hint { display:flex; align-items:center; gap:8px; margin-top:20px; }
+.jr-share-dot {
+  width:5px; height:5px; border-radius:50%;
+  background:rgba(212,175,55,0.5);
+  animation:dotBlink 2s ease-in-out infinite;
+}
+@keyframes dotBlink { 0%,100%{opacity:0.3} 50%{opacity:1} }
+#jr-copy-toast { font-size:10px; color:rgba(212,175,55,0.3); letter-spacing:1px; }
+
 </style>
 </head>
 <body>
@@ -1636,85 +1861,153 @@ footer {
      AI 旅程生成模块
      ============================================================ -->
 <section id="journey">
+  <!-- 标题 -->
   <div class="section-header reveal" style="position:relative;z-index:2;">
     <span class="section-label">AI · JOURNEY GENERATOR</span>
-    <h2 class="section-title-cn section-title">AI生成 · 你的丝路旅程</h2>
+    <h2 class="section-title-cn section-title">AI生成 · 你的丝路冒险</h2>
     <div class="section-divider"></div>
-    <p class="section-sub">输入你的名字，由鎏途为你开启专属旅程</p>
+    <p class="section-sub">与鎏途同行，踏上专属于你的丝路传奇</p>
   </div>
 
-  <div class="journey-layout">
-    <!-- 左侧输入区 -->
-    <div class="journey-input-area reveal reveal-delay-1">
-      <div class="input-group">
-        <label class="input-label">旅者名字</label>
-        <input type="text" class="input-field" id="traveler-name" placeholder="请输入你的名字">
+  <!-- 步骤指示器 -->
+  <div class="journey-steps reveal">
+    <div class="jstep jstep--active" id="jstep-1">
+      <span class="jstep-num">01</span>
+      <span class="jstep-label">填写旅者信息</span>
+    </div>
+    <div class="jstep-line"></div>
+    <div class="jstep" id="jstep-2">
+      <span class="jstep-num">02</span>
+      <span class="jstep-label">生成专属旅程</span>
+    </div>
+  </div>
+
+  <!-- ── Step 1：输入面板 ── -->
+  <div class="journey-input-panel reveal" id="journey-step1">
+    <div class="jip-inner">
+
+      <div class="jip-field">
+        <label class="jip-label">旅者昵称 <span class="jip-required">*</span></label>
+        <input type="text" id="j-name" class="jip-input" placeholder="你希望鎏途如何称呼你？" maxlength="20">
+        <span class="jip-hint">例如：月行者、沙漠旅人、大漠孤烟…</span>
       </div>
 
-      <div class="input-group">
-        <label class="input-label">旅途风格</label>
-        <div class="style-tags">
-          <button class="style-tag active" data-style="explorer">探险者</button>
-          <button class="style-tag" data-style="scholar">学者</button>
-          <button class="style-tag" data-style="merchant">商旅</button>
+      <div class="jip-field">
+        <label class="jip-label">旅者身份 <span class="jip-required">*</span></label>
+        <div class="jip-tags" id="identity-tags">
+          <button class="jip-tag" data-val="探险家">⚔ 探险家</button>
+          <button class="jip-tag" data-val="学者">📜 学者</button>
+          <button class="jip-tag" data-val="商旅">💰 商旅</button>
+          <button class="jip-tag" data-val="诗人">✍ 诗人</button>
+          <button class="jip-tag" data-val="使节">🏛 使节</button>
+          <button class="jip-tag" data-val="僧侣">☯ 僧侣</button>
         </div>
       </div>
 
-      <button class="generate-btn" id="generate-btn" onclick="handleGenerate()">
-        生成我的旅程
+      <div class="jip-field">
+        <label class="jip-label">旅程风格 <span class="jip-required">*</span></label>
+        <div class="jip-tags" id="style-tags">
+          <button class="jip-tag" data-val="浪漫史诗">✨ 浪漫史诗</button>
+          <button class="jip-tag" data-val="惊险冒险">🗡 惊险冒险</button>
+          <button class="jip-tag" data-val="文化探索">🏺 文化探索</button>
+          <button class="jip-tag" data-val="神秘志怪">🌙 神秘志怪</button>
+        </div>
+      </div>
+
+      <button class="jip-submit" id="jip-submit" onclick="journeyStep1Submit()">
+        <span>开启旅程</span>
+        <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-
-      <p class="gen-note">由 DeepSeek AI 实时生成 · 每段旅程独一无二</p>
-    </div>
-
-    <!-- 右侧卡片 -->
-    <div class="journey-card-area reveal reveal-delay-2">
-      <div class="journey-card" id="journey-card">
-        <!-- 加载动画 -->
-        <div class="card-loading" id="card-loading">
-          <div class="loading-spinner"></div>
-          <p class="loading-text">鎏途正在为你开启旅程…</p>
-        </div>
-
-        <!-- 卡片头部 -->
-        <div class="card-header">
-          <svg class="card-badge-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="22" r="20" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.5"/>
-            <path d="M22 8 L24 18 L34 18 L26 24 L29 34 L22 28 L15 34 L18 24 L10 18 L20 18 Z"
-                  stroke="#D4AF37" stroke-width="1.2" fill="rgba(212,175,55,0.1)"/>
-          </svg>
-          <div class="card-header-text">
-            <p class="card-title-label">YOUR SILK ROAD JOURNEY</p>
-            <p class="card-title-main" id="card-traveler-name">鎏途 · 专属旅程</p>
-          </div>
-        </div>
-
-        <!-- 卡片内容 -->
-        <div class="card-body" id="card-body">
-          <div class="card-field">
-            <p class="card-field-label">旅者</p>
-            <p class="card-field-value gold" id="card-name">待你输入姓名…</p>
-          </div>
-          <div class="card-field">
-            <p class="card-field-label">旅程路线</p>
-            <p class="card-field-value" id="card-route">长安 → 敦煌 → 楼兰 → 撒马尔罕 → 君士坦丁堡</p>
-          </div>
-          <div class="card-field">
-            <p class="card-field-label">守护语</p>
-            <p class="card-field-value" id="card-motto">「沙漠之行，以信念为灯；文明之路，以智慧为桥。」</p>
-          </div>
-          <div class="card-field">
-            <p class="card-field-label">途经城市</p>
-            <p class="card-field-value" id="card-cities">敦煌 · 高昌 · 龟兹 · 于阗 · 疏勒</p>
-          </div>
-          <div class="card-field">
-            <p class="card-field-label">数字徽章</p>
-            <p class="card-field-value" id="card-badge">✦ 丝路行者 · 西夏守护 · SILK ROAD GUARDIAN ✦</p>
-          </div>
-        </div>
-      </div>
+      <p class="jip-note">由 DeepSeek AI 实时生成 · 每段旅程独一无二</p>
     </div>
   </div>
+
+  <!-- ── Step 2：生成结果展示 ── -->
+  <div class="journey-result-panel" id="journey-step2" style="display:none;">
+
+    <!-- 加载状态 -->
+    <div class="jr-loading" id="jr-loading">
+      <div class="jr-loading-inner">
+        <div class="jr-spinner"></div>
+        <p class="jr-loading-text">鎏途正在为你铺开丝路…</p>
+        <p class="jr-loading-sub">穿越千年，生成专属冒险故事</p>
+      </div>
+    </div>
+
+    <!-- 结果内容（生成后显示） -->
+    <div class="jr-content" id="jr-content" style="display:none;">
+
+      <!-- 左：故事卡片 -->
+      <div class="jr-card" id="jr-card">
+        <!-- 卡片头部 -->
+        <div class="jr-card-header">
+          <div class="jr-card-badge">
+            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#D4AF37" stroke-width="0.8" opacity="0.5"/><path d="M24 8L26.5 18H37L28.5 24L31.5 34L24 28L16.5 34L19.5 24L11 18H21.5Z" stroke="#D4AF37" stroke-width="1" fill="rgba(212,175,55,0.12)"/></svg>
+          </div>
+          <div>
+            <p class="jr-card-eyebrow">YOUR SILK ROAD JOURNEY</p>
+            <h3 class="jr-card-title" id="jr-title">鎏途 · 专属旅程</h3>
+          </div>
+        </div>
+        <!-- 故事正文 -->
+        <div class="jr-story-wrap">
+          <p class="jr-story-text" id="jr-story">故事生成中…</p>
+        </div>
+        <!-- 卡片底部信息 -->
+        <div class="jr-card-meta">
+          <div class="jr-meta-row">
+            <span class="jr-meta-label">旅者</span>
+            <span class="jr-meta-val gold" id="jr-meta-name">—</span>
+          </div>
+          <div class="jr-meta-row">
+            <span class="jr-meta-label">身份</span>
+            <span class="jr-meta-val" id="jr-meta-identity">—</span>
+          </div>
+          <div class="jr-meta-row">
+            <span class="jr-meta-label">路线</span>
+            <span class="jr-meta-val" id="jr-meta-route">—</span>
+          </div>
+          <div class="jr-meta-row">
+            <span class="jr-meta-label">旅程印记</span>
+            <span class="jr-meta-val gold" id="jr-meta-badge">—</span>
+          </div>
+        </div>
+        <!-- 卡片水印 -->
+        <div class="jr-card-watermark">鎏途 LIUTU · SILK ROAD DIGITAL</div>
+      </div>
+
+      <!-- 右：操作区 -->
+      <div class="jr-actions">
+        <div class="jr-actions-title">
+          <span>你的专属旅程已生成</span>
+        </div>
+        <p class="jr-actions-sub">与鎏途共同踏上这段跨越千年的旅程，<br>每一步都是独一无二的文明印记。</p>
+
+        <div class="jr-btn-group">
+          <button class="jr-btn jr-btn--primary" onclick="downloadJourney()">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M10 3v10M6 9l4 4 4-4M4 15h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            下载旅程故事
+          </button>
+          <button class="jr-btn jr-btn--secondary" onclick="copyJourney()">
+            <svg viewBox="0 0 20 20" fill="none"><rect x="7" y="7" width="10" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M13 7V5a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            复制故事文本
+          </button>
+          <button class="jr-btn jr-btn--ghost" onclick="journeyReset()">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M4 10a6 6 0 1 0 1.5-4M4 6v4h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            重新生成
+          </button>
+        </div>
+
+        <!-- 分享提示 -->
+        <div class="jr-share-hint">
+          <span class="jr-share-dot"></span>
+          <span id="jr-copy-toast">旅程故事可分享给朋友，一同踏上丝路</span>
+        </div>
+      </div>
+
+    </div><!-- end jr-content -->
+  </div><!-- end journey-step2 -->
+
 </section>
 
 
@@ -2464,231 +2757,140 @@ document.querySelectorAll('.reveal').forEach(el => {
   revealObserver.observe(el);
 });
 
-/* --- 风格标签选择 --- */
-let selectedStyle = 'explorer';
-document.querySelectorAll('.style-tag').forEach(tag => {
-  tag.addEventListener('click', () => {
-    document.querySelectorAll('.style-tag').forEach(t => t.classList.remove('active'));
-    tag.classList.add('active');
-    selectedStyle = tag.dataset.style;
+// ═══════════════════════════════════════
+// Journey v2 · 两步骤冒险生成器
+// ═══════════════════════════════════════
+
+let journeyState = { name: '', identity: '', style: '' };
+
+document.querySelectorAll('#identity-tags .jip-tag').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#identity-tags .jip-tag').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    journeyState.identity = btn.dataset.val;
+  });
+});
+document.querySelectorAll('#style-tags .jip-tag').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#style-tags .jip-tag').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    journeyState.style = btn.dataset.val;
   });
 });
 
-/* --- AI 旅程生成 --- */
-async function handleGenerate() {
-  const nameInput = document.getElementById('traveler-name');
-  const name = nameInput.value.trim();
-  if (!name) {
-    nameInput.style.borderColor = 'rgba(139,58,30,0.8)';
-    nameInput.placeholder = '请先输入你的名字';
-    setTimeout(() => {
-      nameInput.style.borderColor = '';
-      nameInput.placeholder = '请输入你的名字';
-    }, 2000);
-    return;
-  }
-
-  const styleMap = {
-    explorer: '探险者',
-    scholar: '学者',
-    merchant: '商旅'
-  };
-
-  const btn = document.getElementById('generate-btn');
-  const loading = document.getElementById('card-loading');
-  btn.disabled = true;
-  btn.textContent = '旅程开启中…';
-  loading.classList.add('show');
-
-  // 先更新名字显示
-  document.getElementById('card-traveler-name').textContent = name + ' · 专属旅程';
-  document.getElementById('card-name').textContent = name;
-
-  // 如果 app.js 里有生成函数，调用它
-  if (typeof window.generateJourney === 'function') {
-    try {
-      const result = await window.generateJourney(name, selectedStyle);
-      if (result) {
-        updateCard(result);
-      }
-    } catch (e) {
-      console.error('generateJourney error:', e);
-      fallbackGenerate(name, styleMap[selectedStyle]);
-    }
-  } else {
-    // 内置生成逻辑（直接调用 DeepSeek）
-    await inlineGenerate(name, styleMap[selectedStyle]);
-  }
-
-  loading.classList.remove('show');
-  btn.disabled = false;
-  btn.textContent = '生成我的旅程';
+function journeyStep1Submit() {
+  const nameVal = document.getElementById('j-name').value.trim();
+  if (!nameVal) { alert('请输入旅者昵称'); return; }
+  if (!journeyState.identity) { alert('请选择旅者身份'); return; }
+  if (!journeyState.style) { alert('请选择旅程风格'); return; }
+  journeyState.name = nameVal;
+  document.getElementById('jstep-1').classList.remove('jstep--active');
+  document.getElementById('jstep-2').classList.add('jstep--active');
+  document.getElementById('journey-step1').style.display = 'none';
+  document.getElementById('journey-step2').style.display = 'block';
+  document.getElementById('jr-loading').style.display = 'flex';
+  document.getElementById('jr-content').style.display = 'none';
+  generateJourney();
 }
 
-/* 内置 DeepSeek 调用 */
-async function inlineGenerate(name, style) {
+async function generateJourney() {
+  const { name, identity, style } = journeyState;
+  const prompt = `你是鎏途（LIUTU），一个西夏鎏金铜牛化身的丝路精灵IP，现在要为旅者"${name}"生成一段专属的丝路冒险故事。
+
+旅者信息：
+- 昵称：${name}
+- 身份：${identity}
+- 风格偏好：${style}
+
+请生成200-280字的第一人称丝路冒险故事，要求：
+1. 以鎏途的视角，与旅者"${name}"一同踏上丝路
+2. 根据"${identity}"身份设计旅途遭遇
+3. 风格为"${style}"
+4. 包含1-2个具体丝路地点（长安、敦煌、楼兰、龟兹、撒马尔罕等）
+5. 语言优美有画面感，充满丝路文明气息
+6. 结尾一句专属守护语（格式：「守护语」）
+
+故事后另起一行输出：
+---META---
+路线：[3-5城市，用→连接]
+印记：[4-8字称号]`;
+
   try {
-    // 尝试从 app.js 的 CONFIG 获取 API Key
-    const apiKey = (typeof CONFIG !== 'undefined' && CONFIG.DEEPSEEK_API_KEY)
-      ? CONFIG.DEEPSEEK_API_KEY : null;
-
-    if (!apiKey || apiKey.includes('填入')) {
-      fallbackGenerate(name, style);
-      return;
-    }
-
-    const prompt = `你是"鎏途"，西夏鎏金铜牛的数字化身，丝绸之路的神秘守护者。
-请为名叫"${name}"的${style}生成一段专属丝路旅程，以JSON格式返回：
-{
-  "route": "旅程路线（格式：城市1 → 城市2 → 城市3，包含3-5个丝路城市）",
-  "motto": "守护语（一句古典风格的旅行格言，20字以内，加书名号）",
-  "cities": "途经城市（3-4个，用·分隔）",
-  "badge": "数字徽章文字（包含旅者称号和丝路元素，30字以内）"
-}
-只返回JSON，不要其他内容。`;
-
-    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: 'deepseek-chat',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.9,
-        max_tokens: 300
-      })
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + CONFIG.deepseekKey },
+      body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'user', content: prompt }], max_tokens: 650, temperature: 0.88 })
     });
-
-    if (!response.ok) throw new Error('API error');
-
-    const data = await response.json();
-    const text = data.choices[0].message.content.trim();
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON');
-
-    const result = JSON.parse(jsonMatch[0]);
-    updateCard({
-      name,
-      route: result.route,
-      motto: result.motto,
-      cities: result.cities,
-      badge: '✦ ' + result.badge + ' ✦'
-    });
-  } catch (e) {
-    console.error('inline generate error:', e);
-    fallbackGenerate(name, style);
-  }
-}
-
-/* 离线降级生成 */
-function fallbackGenerate(name, style) {
-  const routes = [
-    '长安 → 敦煌 → 高昌 → 龟兹 → 疏勒',
-    '长安 → 天水 → 凉州 → 敦煌 → 楼兰',
-    '长安 → 敦煌 → 楼兰 → 撒马尔罕 → 君士坦丁堡',
-    '长安 → 武威 → 张掖 → 酒泉 → 敦煌'
-  ];
-  const mottos = [
-    '「沙漠之行，以信念为灯；文明之路，以智慧为桥。」',
-    '「千里丝路，一步一文明；鎏金铜牛，护行于世间。」',
-    '「风沙掩不尽古道，星辰引向文明深处。」',
-    '「旅途虽远，文明永续；鎏途相伴，无惧风沙。」'
-  ];
-  const citiesList = [
-    '敦煌 · 高昌 · 龟兹 · 于阗',
-    '凉州 · 敦煌 · 楼兰 · 疏勒',
-    '张掖 · 酒泉 · 敦煌 · 鄯善',
-    '武威 · 张掖 · 敦煌 · 高昌'
-  ];
-  const badges = [
-    '✦ 丝路行者 · 西夏守护 · SILK ROAD GUARDIAN ✦',
-    '✦ 敦煌传人 · 鎏金护卫 · DUNHUANG KEEPER ✦',
-    '✦ 万里行者 · 文明使者 · CIVILIZATION ENVOY ✦',
-    '✦ 古道守望 · 铜牛庇佑 · BRONZE BULL BLESSED ✦'
-  ];
-
-  const i = Math.floor(Math.random() * routes.length);
-  updateCard({
-    name,
-    route: routes[i],
-    motto: mottos[i],
-    cities: citiesList[i],
-    badge: badges[i]
-  });
-}
-
-/* 更新卡片内容 */
-function updateCard(data) {
-  const fields = {
-    'card-traveler-name': (data.name || '') + ' · 专属旅程',
-    'card-name': data.name || '',
-    'card-route': data.route || '',
-    'card-motto': data.motto || '',
-    'card-cities': data.cities || '',
-    'card-badge': data.badge || ''
-  };
-
-  Object.entries(fields).forEach(([id, value]) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(10px)';
-      el.style.transition = 'opacity 0.4s, transform 0.4s';
-      setTimeout(() => {
-        el.textContent = value;
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      }, 100);
+    const data = await resp.json();
+    const raw = data.choices[0].message.content;
+    const parts = raw.split('---META---');
+    const storyPart = parts[0].trim();
+    const metaPart  = parts[1] ? parts[1].trim() : '';
+    let route = '长安 → 敦煌 → 龟兹 → 撒马尔罕 → 君士坦丁堡';
+    let badge = '✦ 丝路旅者 ✦';
+    if (metaPart) {
+      const rm = metaPart.match(/路线[：:] *(.+)/);
+      const bm = metaPart.match(/印记[：:] *(.+)/);
+      if (rm) route = rm[1].trim();
+      if (bm) badge = '✦ ' + bm[1].trim() + ' ✦';
     }
-  });
-
-  // 卡片发光效果
-  const card = document.getElementById('journey-card');
-  card.style.boxShadow = '0 0 40px rgba(212,175,55,0.15)';
-  setTimeout(() => {
-    card.style.boxShadow = '';
-  }, 2000);
+    document.getElementById('jr-title').textContent        = name + ' · 丝路传奇';
+    document.getElementById('jr-story').textContent        = storyPart;
+    document.getElementById('jr-meta-name').textContent     = name;
+    document.getElementById('jr-meta-identity').textContent = identity;
+    document.getElementById('jr-meta-route').textContent    = route;
+    document.getElementById('jr-meta-badge').textContent    = badge;
+    document.getElementById('jr-loading').style.display  = 'none';
+    document.getElementById('jr-content').style.display  = 'flex';
+    window._journeyData = { name, identity, style, story: storyPart, route, badge };
+  } catch(e) {
+    document.getElementById('jr-loading').innerHTML =
+      '<div class="jr-loading-inner"><p class="jr-loading-text" style="color:rgba(212,175,55,0.45);">生成失败，请稍后重试</p>' +
+      '<button class="jr-btn jr-btn--ghost" onclick="journeyReset()" style="margin:16px auto;display:flex;">返回重试</button></div>';
+  }
 }
 
-/* --- 视差滚动（轻微）--- */
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const heroRight = document.querySelector('.hero-right');
-  if (heroRight && scrollY < window.innerHeight) {
-    heroRight.style.transform = `translateY(${scrollY * 0.08}px)`;
-  }
-}, { passive: true });
+function downloadJourney() {
+  const d = window._journeyData; if (!d) return;
+  const sep = '═'.repeat(30);
+  const text = [
+    '鎏途 · 专属丝路旅程', sep, '',
+    '旅者：' + d.name, '身份：' + d.identity, '风格：' + d.style,
+    '路线：' + d.route, '印记：' + d.badge, '',
+    '─'.repeat(30), '', d.story, '',
+    sep, '鎏途 LIUTU · SILK ROAD DIGITAL', '由 DeepSeek AI 生成 · 独一无二'
+  ].join('
+');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+  a.download = '鎏途丝路旅程_' + d.name + '.txt';
+  a.click();
+}
 
-/* --- 平滑锚点滚动 --- */
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    const href = link.getAttribute('href');
-    if (href === '#') return;
-    const target = document.querySelector(href);
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+function copyJourney() {
+  const d = window._journeyData; if (!d) return;
+  const text = '【鎏途 · 专属丝路旅程】
+旅者：' + d.name + ' | 身份：' + d.identity + '
+路线：' + d.route + '
+
+' + d.story + '
+
+' + d.badge + '
+——鎏途 LIUTU · 丝路文明数字IP';
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('jr-copy-toast').textContent = '✓ 已复制到剪贴板！';
+    setTimeout(() => { document.getElementById('jr-copy-toast').textContent = '旅程故事可分享给朋友，一同踏上丝路'; }, 2500);
   });
-});
+}
 
-/* Enter 键触发生成 */
-document.getElementById('traveler-name').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') handleGenerate();
-});
-</script>
+function journeyReset() {
+  document.getElementById('jstep-1').classList.add('jstep--active');
+  document.getElementById('jstep-2').classList.remove('jstep--active');
+  document.getElementById('journey-step1').style.display = 'block';
+  document.getElementById('journey-step2').style.display = 'none';
+  document.getElementById('j-name').value = '';
+  document.querySelectorAll('.jip-tag').forEach(b => b.classList.remove('selected'));
+  journeyState = { name: '', identity: '', style: '' };
+}
 
-<!-- 引入原有 app.js 的 CONFIG（如果存在）-->
-<script>
-// 确保 CONFIG 可被访问（兼容 app.js）
-window.addEventListener('load', () => {
-  if (typeof CONFIG !== 'undefined') {
-    console.log('✓ CONFIG loaded from app.js');
-  }
-});
-</script>
-
-</body>
-</html>
+// ── Reveal 动画// ── Reveal 动画
