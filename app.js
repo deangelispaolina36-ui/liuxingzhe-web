@@ -10,7 +10,7 @@
 // ========== 配置 ==========
 const CONFIG = {
   // ↓↓↓↓↓ 在下面一行填入你的 DeepSeek API Key ↓↓↓↓↓
-  DEEPSEEK_API_KEY: "在这里填入你的API Key",
+  DEEPSEEK_API_KEY: "sk-6bd36f89159a444d8a673a6b38bc6175",
   API_URL: "https://api.deepseek.com/v1/chat/completions",
   MODEL: "deepseek-chat",
 };
