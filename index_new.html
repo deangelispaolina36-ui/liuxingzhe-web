@@ -1484,302 +1484,418 @@ footer {
     </div>
 
     <!-- 全宽地图 SVG -->
-    <svg class="silkroad-map-svg reveal reveal-delay-1" viewBox="0 0 1400 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="silkroad-map-svg reveal reveal-delay-1" viewBox="0 0 1400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- 城市光晕滤镜 -->
-        <filter id="cityGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="4" result="blur"/>
+        <filter id="cityGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
           <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <!-- 航线光晕 -->
-        <filter id="routeGlow" x="-10%" y="-100%" width="120%" height="300%">
-          <feGaussianBlur stdDeviation="3" result="blur"/>
+        <filter id="routeGlow" x="-5%" y="-200%" width="110%" height="500%">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
           <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <!-- 粒子点光晕 -->
-        <filter id="dotGlow">
+        <filter id="iconGlow" x="-30%" y="-30%" width="160%" height="160%">
           <feGaussianBlur stdDeviation="2.5" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <!-- 经纬网格 -->
+        <!-- 经纬格 -->
         <pattern id="latlonGrid" x="0" y="0" width="70" height="70" patternUnits="userSpaceOnUse">
-          <path d="M 70 0 L 0 0 0 70" fill="none" stroke="rgba(212,175,55,0.04)" stroke-width="0.5"/>
+          <path d="M 70 0 L 0 0 0 70" fill="none" stroke="rgba(212,175,55,0.045)" stroke-width="0.5"/>
         </pattern>
-        <!-- 细密辅助格 -->
         <pattern id="fineGrid" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
-          <path d="M 14 0 L 0 0 0 14" fill="none" stroke="rgba(212,175,55,0.025)" stroke-width="0.3"/>
+          <path d="M 14 0 L 0 0 0 14" fill="none" stroke="rgba(212,175,55,0.022)" stroke-width="0.3"/>
         </pattern>
-        <!-- 沙漠等高线纹理（底部） -->
-        <pattern id="contourPattern" x="0" y="0" width="200" height="60" patternUnits="userSpaceOnUse">
-          <path d="M0 30 Q25 20 50 30 Q75 40 100 30 Q125 20 150 30 Q175 40 200 30"
-                stroke="rgba(200,169,110,0.04)" stroke-width="0.6" fill="none"/>
-          <path d="M0 45 Q30 35 60 45 Q90 55 120 45 Q150 35 180 45 Q195 50 200 45"
-                stroke="rgba(200,169,110,0.03)" stroke-width="0.4" fill="none"/>
+        <!-- 等高线 -->
+        <pattern id="contour" x="0" y="0" width="240" height="80" patternUnits="userSpaceOnUse">
+          <path d="M0 40 Q30 28 60 40 Q90 52 120 40 Q150 28 180 40 Q210 52 240 40"
+                stroke="rgba(200,169,110,0.05)" stroke-width="0.7" fill="none"/>
+          <path d="M0 55 Q40 44 80 55 Q120 66 160 55 Q200 44 240 55"
+                stroke="rgba(200,169,110,0.035)" stroke-width="0.5" fill="none"/>
         </pattern>
-        <!-- 金色渐变 -->
+        <!-- 山脉纹理 -->
+        <pattern id="mountains" x="0" y="0" width="160" height="50" patternUnits="userSpaceOnUse">
+          <path d="M0 50 L20 20 L40 35 L60 10 L80 30 L100 15 L120 32 L140 8 L160 25 L160 50 Z"
+                fill="none" stroke="rgba(212,175,55,0.04)" stroke-width="0.6"/>
+        </pattern>
+        <!-- 路线渐变 -->
         <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.2"/>
-          <stop offset="30%" stop-color="#E8C840" stop-opacity="0.9"/>
-          <stop offset="70%" stop-color="#D4AF37" stop-opacity="0.8"/>
-          <stop offset="100%" stop-color="#C8A96E" stop-opacity="0.2"/>
-        </linearGradient>
-        <!-- 流光粒子渐变 -->
-        <linearGradient id="particleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.15"/>
+          <stop offset="15%" stop-color="#E8C840" stop-opacity="0.85"/>
           <stop offset="50%" stop-color="#FFE566" stop-opacity="1"/>
-          <stop offset="100%" stop-color="transparent"/>
+          <stop offset="85%" stop-color="#D4AF37" stop-opacity="0.85"/>
+          <stop offset="100%" stop-color="#C8A96E" stop-opacity="0.15"/>
         </linearGradient>
-        <!-- 径向氛围渐变 -->
-        <radialGradient id="ambientGlow1" cx="25%" cy="50%" r="35%">
-          <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.04"/>
-          <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
-        </radialGradient>
-        <radialGradient id="ambientGlow2" cx="75%" cy="50%" r="30%">
-          <stop offset="0%" stop-color="#8B7320" stop-opacity="0.05"/>
-          <stop offset="100%" stop-color="#8B7320" stop-opacity="0"/>
+        <!-- 氛围径向光 -->
+        <radialGradient id="bgLight" cx="50%" cy="45%" r="50%">
+          <stop offset="0%" stop-color="#4A3800" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#080604" stop-opacity="0"/>
         </radialGradient>
       </defs>
 
-      <!-- ── 背景层 ── -->
-      <rect width="1400" height="560" fill="#080604"/>
-      <!-- 经纬网格 -->
-      <rect width="1400" height="560" fill="url(#fineGrid)"/>
-      <rect width="1400" height="560" fill="url(#latlonGrid)"/>
-      <!-- 等高线（下半部分，模拟沙漠地形） -->
-      <rect y="320" width="1400" height="240" fill="url(#contourPattern)"/>
-      <!-- 氛围光 -->
-      <rect width="1400" height="560" fill="url(#ambientGlow1)"/>
-      <rect width="1400" height="560" fill="url(#ambientGlow2)"/>
+      <!-- ── 背景 ── -->
+      <rect width="1400" height="600" fill="#060504"/>
+      <rect width="1400" height="600" fill="url(#fineGrid)"/>
+      <rect width="1400" height="600" fill="url(#latlonGrid)"/>
+      <!-- 等高线下半部 -->
+      <rect y="300" width="1400" height="300" fill="url(#contour)"/>
+      <!-- 山脉纹理上半部 -->
+      <rect y="120" width="1400" height="180" fill="url(#mountains)" opacity="0.6"/>
+      <!-- 中心氛围光 -->
+      <rect width="1400" height="600" fill="url(#bgLight)"/>
 
-      <!-- ── 大陆轮廓迷雾层 ── -->
-      <!-- 用宽描边模拟大陆带，极淡金色 -->
-      <path d="M 60 290 Q 200 240 380 255 Q 560 268 720 260 Q 900 250 1060 265 Q 1220 278 1350 270"
-            stroke="rgba(200,169,110,0.06)" stroke-width="120" fill="none" stroke-linecap="round"/>
-      <!-- 北方山脉轮廓 -->
-      <path d="M 100 180 Q 200 165 350 175 Q 480 182 620 170 Q 760 158 900 172 Q 1040 185 1200 175 Q 1320 168 1380 175"
-            stroke="rgba(200,169,110,0.04)" stroke-width="40" fill="none" stroke-linecap="round"/>
-      <!-- 南方沙漠带 -->
-      <path d="M 200 380 Q 400 395 600 385 Q 800 375 1000 390 Q 1150 400 1300 388"
-            stroke="rgba(200,169,110,0.03)" stroke-width="80" fill="none" stroke-linecap="round"/>
+      <!-- ── 大陆地形雾层 ── -->
+      <path d="M 0 310 Q 200 270 420 280 Q 640 290 800 278 Q 960 266 1120 275 Q 1280 284 1400 278 L1400 600 L0 600 Z"
+            fill="rgba(30,22,8,0.35)"/>
+      <!-- 北方山脉剪影 -->
+      <path d="M 0 200 Q 80 170 160 185 Q 240 198 320 172 Q 400 148 480 168 Q 560 186 640 160 Q 720 136 800 158 Q 880 178 960 152 Q 1040 128 1120 148 Q 1200 166 1280 142 Q 1340 128 1400 140 L1400 250 L0 250 Z"
+            fill="rgba(20,15,5,0.4)"/>
+      <!-- 山峰剪影装饰 -->
+      <path d="M 100 250 L 130 200 L 160 230 L 200 175 L 240 215 L 270 185 L 300 220"
+            stroke="rgba(212,175,55,0.06)" stroke-width="1" fill="none"/>
+      <path d="M 500 245 L 540 195 L 570 218 L 610 170 L 650 208 L 680 188 L 720 225"
+            stroke="rgba(212,175,55,0.05)" stroke-width="1" fill="none"/>
+      <path d="M 950 248 L 990 198 L 1020 220 L 1060 172 L 1100 210 L 1140 190 L 1180 228"
+            stroke="rgba(212,175,55,0.05)" stroke-width="1" fill="none"/>
 
-      <!-- ── 丝路航线系统 ── -->
-
-      <!-- 主航线底层（宽发光） -->
-      <path d="M 160 285 Q 280 268 420 275 Q 560 282 680 278 Q 810 273 940 282 Q 1060 290 1180 284 Q 1290 278 1360 282"
-            stroke="rgba(212,175,55,0.08)" stroke-width="12" fill="none" stroke-linecap="round" filter="url(#routeGlow)"/>
-
-      <!-- 主航线中层（中等宽，流动） -->
-      <path id="mainRoute"
-            d="M 160 285 Q 280 268 420 275 Q 560 282 680 278 Q 810 273 940 282 Q 1060 290 1180 284 Q 1290 278 1360 282"
-            stroke="url(#routeGrad)" stroke-width="2.5" fill="none" stroke-linecap="round"
-            stroke-dasharray="12,5"/>
-
-      <!-- 主航线流光层（细亮线，快速流动） -->
-      <path d="M 160 285 Q 280 268 420 275 Q 560 282 680 278 Q 810 273 940 282 Q 1060 290 1180 284 Q 1290 278 1360 282"
-            stroke="rgba(255,235,100,0.7)" stroke-width="1" fill="none" stroke-linecap="round"
-            stroke-dasharray="20,180">
-        <animate attributeName="stroke-dashoffset" from="200" to="-1000" dur="4s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.3;0.9;0.3" dur="4s" repeatCount="indefinite"/>
+      <!-- ── 主航线系统 ── -->
+      <!-- 航线底层宽光晕 -->
+      <path d="M 155 295 Q 300 272 460 278 Q 620 284 760 278 Q 900 272 1020 280 Q 1140 288 1240 282 Q 1310 277 1355 280"
+            stroke="rgba(212,175,55,0.06)" stroke-width="24" fill="none" stroke-linecap="round"/>
+      <path d="M 155 295 Q 300 272 460 278 Q 620 284 760 278 Q 900 272 1020 280 Q 1140 288 1240 282 Q 1310 277 1355 280"
+            stroke="rgba(212,175,55,0.1)" stroke-width="10" fill="none" stroke-linecap="round" filter="url(#routeGlow)"/>
+      <!-- 航线主体（发光金带） -->
+      <path d="M 155 295 Q 300 272 460 278 Q 620 284 760 278 Q 900 272 1020 280 Q 1140 288 1240 282 Q 1310 277 1355 280"
+            stroke="url(#routeGrad)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <!-- 流光动画1（快） -->
+      <path d="M 155 295 Q 300 272 460 278 Q 620 284 760 278 Q 900 272 1020 280 Q 1140 288 1240 282 Q 1310 277 1355 280"
+            stroke="rgba(255,240,120,0.85)" stroke-width="1.2" fill="none" stroke-linecap="round"
+            stroke-dasharray="25,220">
+        <animate attributeName="stroke-dashoffset" from="250" to="-1200" dur="3.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.2;1;0.2" dur="3.5s" repeatCount="indefinite"/>
       </path>
-      <path d="M 160 285 Q 280 268 420 275 Q 560 282 680 278 Q 810 273 940 282 Q 1060 290 1180 284 Q 1290 278 1360 282"
-            stroke="rgba(255,245,150,0.5)" stroke-width="0.8" fill="none"
-            stroke-dasharray="10,240">
-        <animate attributeName="stroke-dashoffset" from="0" to="-1200" dur="6s" begin="2s" repeatCount="indefinite"/>
-      </path>
-
-      <!-- 南线支路 -->
-      <path d="M 680 278 Q 720 320 760 345 Q 810 375 860 370 Q 910 365 950 340"
-            stroke="rgba(200,169,110,0.25)" stroke-width="1.5" fill="none" stroke-dasharray="6,8">
-        <animate attributeName="stroke-dashoffset" from="0" to="-80" dur="5s" repeatCount="indefinite"/>
-      </path>
-      <path d="M 680 278 Q 720 320 760 345 Q 810 375 860 370 Q 910 365 950 340"
-            stroke="rgba(255,220,80,0.4)" stroke-width="0.6" fill="none" stroke-dasharray="8,150">
-        <animate attributeName="stroke-dashoffset" from="50" to="-600" dur="7s" repeatCount="indefinite"/>
+      <!-- 流光动画2（慢，错位） -->
+      <path d="M 155 295 Q 300 272 460 278 Q 620 284 760 278 Q 900 272 1020 280 Q 1140 288 1240 282 Q 1310 277 1355 280"
+            stroke="rgba(255,255,180,0.5)" stroke-width="0.7" fill="none"
+            stroke-dasharray="12,300">
+        <animate attributeName="stroke-dashoffset" from="0" to="-1400" dur="5.5s" begin="1.5s" repeatCount="indefinite"/>
       </path>
 
-      <!-- 北线支路（草原丝路） -->
-      <path d="M 420 275 Q 480 220 580 210 Q 680 200 780 215 Q 870 228 940 282"
-            stroke="rgba(200,169,110,0.2)" stroke-width="1.2" fill="none" stroke-dasharray="5,9">
+      <!-- 南线支路（楼兰方向） -->
+      <path d="M 760 278 Q 800 330 830 360 Q 870 395 900 385"
+            stroke="rgba(200,169,110,0.28)" stroke-width="1.5" fill="none" stroke-dasharray="6,7">
+        <animate attributeName="stroke-dashoffset" from="0" to="-80" dur="4s" repeatCount="indefinite"/>
+      </path>
+      <path d="M 760 278 Q 800 330 830 360 Q 870 395 900 385"
+            stroke="rgba(255,220,80,0.4)" stroke-width="0.6" fill="none" stroke-dasharray="8,120">
+        <animate attributeName="stroke-dashoffset" from="30" to="-500" dur="6s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- 北线草原支路 -->
+      <path d="M 460 278 Q 530 225 640 212 Q 740 200 840 218 Q 920 232 1020 280"
+            stroke="rgba(200,169,110,0.18)" stroke-width="1.2" fill="none" stroke-dasharray="5,8">
         <animate attributeName="stroke-dashoffset" from="0" to="-80" dur="6s" repeatCount="indefinite"/>
       </path>
-      <path d="M 420 275 Q 480 220 580 210 Q 680 200 780 215 Q 870 228 940 282"
-            stroke="rgba(255,220,80,0.35)" stroke-width="0.5" fill="none" stroke-dasharray="6,180">
-        <animate attributeName="stroke-dashoffset" from="30" to="-700" dur="8s" repeatCount="indefinite"/>
+      <path d="M 460 278 Q 530 225 640 212 Q 740 200 840 218 Q 920 232 1020 280"
+            stroke="rgba(255,215,60,0.3)" stroke-width="0.5" fill="none" stroke-dasharray="6,160">
+        <animate attributeName="stroke-dashoffset" from="0" to="-800" dur="9s" begin="1s" repeatCount="indefinite"/>
       </path>
 
-      <!-- ── 城市文明坐标点 ── -->
+      <!-- ── 城市文明坐标（含专属图标）── -->
 
-      <!-- 长安 (起点·大城) -->
-      <g filter="url(#cityGlow)">
-        <!-- 外扩呼吸环 -->
-        <circle cx="160" cy="285" r="18" fill="none" stroke="rgba(212,175,55,0.15)" stroke-width="1">
-          <animate attributeName="r" values="14;24;14" dur="3s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="160" cy="285" r="11" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="1">
-          <animate attributeName="r" values="9;16;9" dur="3s" begin="0.5s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.6;0.1;0.6" dur="3s" begin="0.5s" repeatCount="indefinite"/>
-        </circle>
-        <!-- 核心点 -->
-        <circle cx="160" cy="285" r="7" fill="rgba(212,175,55,0.2)" stroke="#D4AF37" stroke-width="1.5"/>
-        <circle cx="160" cy="285" r="3.5" fill="#FFE566"/>
-        <!-- 内核光 -->
-        <circle cx="160" cy="285" r="1.5" fill="white" opacity="0.8"/>
+      <!-- === 长安 CHANG'AN === -->
+      <!-- 标注牌 -->
+      <rect x="88" y="228" width="72" height="32" fill="rgba(6,5,3,0.88)" stroke="rgba(212,175,55,0.4)" stroke-width="0.8" rx="1"/>
+      <rect x="88" y="228" width="72" height="1.5" fill="rgba(212,175,55,0.6)"/>
+      <text x="124" y="243" text-anchor="middle" fill="#D4AF37" font-size="12" font-family="serif" letter-spacing="1.5" font-weight="bold">长安</text>
+      <text x="124" y="254" text-anchor="middle" fill="rgba(212,175,55,0.45)" font-size="6.5" letter-spacing="2">CHANG'AN</text>
+      <!-- 连接线 -->
+      <line x1="155" y1="295" x2="155" y2="270" stroke="rgba(212,175,55,0.2)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <!-- 呼吸光环 -->
+      <circle cx="155" cy="295" r="20" fill="none" stroke="rgba(212,175,55,0.08)" stroke-width="1">
+        <animate attributeName="r" values="14;24;14" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="155" cy="295" r="12" fill="none" stroke="rgba(212,175,55,0.15)" stroke-width="0.8">
+        <animate attributeName="r" values="9;17;9" dur="3s" begin="0.6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" begin="0.6s" repeatCount="indefinite"/>
+      </circle>
+      <!-- 节点圆 -->
+      <circle cx="155" cy="295" r="8" fill="rgba(212,175,55,0.18)" stroke="#D4AF37" stroke-width="1.5" filter="url(#cityGlow)"/>
+      <circle cx="155" cy="295" r="4" fill="#FFE566"/>
+      <circle cx="155" cy="295" r="1.8" fill="white" opacity="0.9"/>
+      <!-- 专属图标：宫殿/城门（长安） -->
+      <g transform="translate(140, 305)" filter="url(#iconGlow)" opacity="0.7">
+        <rect x="0" y="14" width="30" height="8" fill="none" stroke="rgba(212,175,55,0.6)" stroke-width="0.7"/>
+        <path d="M-2 14 L15 4 L32 14" fill="none" stroke="rgba(212,175,55,0.7)" stroke-width="0.8"/>
+        <rect x="6" y="8" width="5" height="8" fill="none" stroke="rgba(212,175,55,0.5)" stroke-width="0.6"/>
+        <rect x="19" y="8" width="5" height="8" fill="none" stroke="rgba(212,175,55,0.5)" stroke-width="0.6"/>
+        <rect x="12" y="10" width="6" height="12" fill="none" stroke="rgba(212,175,55,0.6)" stroke-width="0.6"/>
+        <path d="M2 4 L5 0 L8 4" fill="none" stroke="rgba(212,175,55,0.4)" stroke-width="0.5"/>
+        <path d="M22 4 L25 0 L28 4" fill="none" stroke="rgba(212,175,55,0.4)" stroke-width="0.5"/>
       </g>
-      <!-- 长安标注 -->
-      <rect x="100" y="248" width="60" height="28" fill="rgba(8,6,4,0.8)" stroke="rgba(212,175,55,0.3)" stroke-width="0.6" rx="1"/>
-      <text x="130" y="261" text-anchor="middle" fill="#D4AF37" font-size="11" font-family="serif" letter-spacing="1.5" font-weight="bold">长安</text>
-      <text x="130" y="271" text-anchor="middle" fill="rgba(212,175,55,0.5)" font-size="7" letter-spacing="1.5">CHANG'AN</text>
-      <!-- 坐标线 -->
-      <line x1="160" y1="278" x2="160" y2="276" stroke="rgba(212,175,55,0.3)" stroke-width="0.5"/>
 
-      <!-- 敦煌 -->
-      <g filter="url(#cityGlow)">
-        <circle cx="420" cy="275" r="14" fill="none" stroke="rgba(212,175,55,0.12)" stroke-width="0.8">
-          <animate attributeName="r" values="10;18;10" dur="3.5s" begin="0.3s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.4;0;0.4" dur="3.5s" begin="0.3s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="420" cy="275" r="6" fill="rgba(212,175,55,0.15)" stroke="#D4AF37" stroke-width="1.3"/>
-        <circle cx="420" cy="275" r="2.8" fill="#E8C840"/>
-        <circle cx="420" cy="275" r="1.2" fill="white" opacity="0.7"/>
+      <!-- === 敦煌 DUNHUANG === -->
+      <rect x="396" y="230" width="68" height="32" fill="rgba(6,5,3,0.85)" stroke="rgba(212,175,55,0.35)" stroke-width="0.7" rx="1"/>
+      <rect x="396" y="230" width="68" height="1.5" fill="rgba(212,175,55,0.5)"/>
+      <text x="430" y="244" text-anchor="middle" fill="rgba(212,175,55,0.95)" font-size="11" font-family="serif" letter-spacing="1.5">敦煌</text>
+      <text x="430" y="255" text-anchor="middle" fill="rgba(212,175,55,0.4)" font-size="6.5" letter-spacing="1.5">DUNHUANG</text>
+      <line x1="460" y1="278" x2="430" y2="270" stroke="rgba(212,175,55,0.18)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <!-- 呼吸光环 -->
+      <circle cx="460" cy="278" r="16" fill="none" stroke="rgba(212,175,55,0.1)" stroke-width="0.8">
+        <animate attributeName="r" values="11;19;11" dur="3.8s" begin="0.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="3.8s" begin="0.4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="460" cy="278" r="7" fill="rgba(212,175,55,0.15)" stroke="#E0C040" stroke-width="1.3" filter="url(#cityGlow)"/>
+      <circle cx="460" cy="278" r="3.2" fill="#FFE040"/>
+      <circle cx="460" cy="278" r="1.4" fill="white" opacity="0.8"/>
+      <!-- 专属图标：飞天/月牙（敦煌） -->
+      <g transform="translate(445, 290)" filter="url(#iconGlow)" opacity="0.7">
+        <!-- 飞天简化 -->
+        <path d="M8 16 Q0 10 2 4 Q6 0 12 2 Q18 4 18 10" stroke="rgba(212,175,55,0.65)" stroke-width="0.8" fill="none"/>
+        <circle cx="12" cy="1" r="2.5" stroke="rgba(212,175,55,0.6)" stroke-width="0.7" fill="none"/>
+        <!-- 飘带 -->
+        <path d="M4 8 Q-2 6 0 2" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="none"/>
+        <path d="M16 6 Q22 4 20 10" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="none"/>
+        <!-- 莫高窟洞口暗示 -->
+        <ellipse cx="9" cy="20" rx="4" ry="5" stroke="rgba(212,175,55,0.3)" stroke-width="0.6" fill="none"/>
+        <line x1="0" y1="20" x2="20" y2="20" stroke="rgba(212,175,55,0.2)" stroke-width="0.5"/>
       </g>
-      <rect x="365" y="248" width="55" height="22" fill="rgba(8,6,4,0.75)" stroke="rgba(212,175,55,0.25)" stroke-width="0.5" rx="1"/>
-      <text x="392" y="259" text-anchor="middle" fill="rgba(212,175,55,0.95)" font-size="10" font-family="serif" letter-spacing="1">敦煌</text>
-      <text x="392" y="267" text-anchor="middle" fill="rgba(212,175,55,0.4)" font-size="6.5" letter-spacing="1">DUNHUANG</text>
 
-      <!-- 高昌 -->
-      <g filter="url(#cityGlow)">
-        <circle cx="590" cy="278" r="12" fill="none" stroke="rgba(200,169,110,0.1)" stroke-width="0.8">
-          <animate attributeName="r" values="8;15;8" dur="4s" begin="0.8s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.35;0;0.35" dur="4s" begin="0.8s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="590" cy="278" r="5" fill="rgba(200,169,110,0.12)" stroke="rgba(200,169,110,0.7)" stroke-width="1.1"/>
-        <circle cx="590" cy="278" r="2.2" fill="#D4B870"/>
+      <!-- === 龟兹 KUCHA === -->
+      <rect x="710" y="230" width="60" height="32" fill="rgba(6,5,3,0.82)" stroke="rgba(200,169,110,0.3)" stroke-width="0.7" rx="1"/>
+      <rect x="710" y="230" width="60" height="1.5" fill="rgba(200,169,110,0.45)"/>
+      <text x="740" y="244" text-anchor="middle" fill="rgba(200,169,110,0.92)" font-size="11" font-family="serif" letter-spacing="1.5">龟兹</text>
+      <text x="740" y="255" text-anchor="middle" fill="rgba(200,169,110,0.38)" font-size="6.5" letter-spacing="1">KUCHA</text>
+      <line x1="760" y1="278" x2="750" y2="268" stroke="rgba(200,169,110,0.15)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="760" cy="278" r="14" fill="none" stroke="rgba(200,169,110,0.09)" stroke-width="0.8">
+        <animate attributeName="r" values="10;17;10" dur="4.2s" begin="1s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="4.2s" begin="1s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="760" cy="278" r="6" fill="rgba(200,169,110,0.12)" stroke="rgba(200,169,110,0.65)" stroke-width="1.2" filter="url(#cityGlow)"/>
+      <circle cx="760" cy="278" r="2.8" fill="#C8A96E"/>
+      <circle cx="760" cy="278" r="1.2" fill="white" opacity="0.65"/>
+      <!-- 专属图标：琵琶（龟兹） -->
+      <g transform="translate(746, 290)" filter="url(#iconGlow)" opacity="0.65">
+        <!-- 琴身 -->
+        <ellipse cx="7" cy="16" rx="5" ry="7" stroke="rgba(200,169,110,0.65)" stroke-width="0.8" fill="none"/>
+        <!-- 琴颈 -->
+        <rect x="6" y="2" width="2" height="9" stroke="rgba(200,169,110,0.55)" stroke-width="0.7" fill="none"/>
+        <!-- 弦 -->
+        <line x1="7" y1="9" x2="7" y2="23" stroke="rgba(200,169,110,0.4)" stroke-width="0.4"/>
+        <line x1="5" y1="10" x2="5" y2="22" stroke="rgba(200,169,110,0.3)" stroke-width="0.3"/>
+        <line x1="9" y1="10" x2="9" y2="22" stroke="rgba(200,169,100,0.3)" stroke-width="0.3"/>
+        <!-- 琴头 -->
+        <circle cx="7" cy="2" r="2" stroke="rgba(200,169,110,0.5)" stroke-width="0.6" fill="none"/>
       </g>
-      <text x="590" y="257" text-anchor="middle" fill="rgba(200,169,110,0.88)" font-size="10" font-family="serif" letter-spacing="1">高昌</text>
-      <text x="590" y="266" text-anchor="middle" fill="rgba(200,169,110,0.38)" font-size="6.5" letter-spacing="1">GAOCHANG</text>
 
-      <!-- 龟兹 -->
-      <g filter="url(#cityGlow)">
-        <circle cx="750" cy="278" r="12" fill="none" stroke="rgba(200,169,110,0.1)" stroke-width="0.8">
-          <animate attributeName="r" values="8;15;8" dur="4.5s" begin="1.2s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.35;0;0.35" dur="4.5s" begin="1.2s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="750" cy="278" r="5" fill="rgba(200,169,110,0.12)" stroke="rgba(200,169,110,0.65)" stroke-width="1.1"/>
-        <circle cx="750" cy="278" r="2.2" fill="#C8A96E"/>
+      <!-- === 撒马尔罕 SAMARKAND === -->
+      <rect x="950" y="228" width="80" height="32" fill="rgba(6,5,3,0.85)" stroke="rgba(212,175,55,0.32)" stroke-width="0.7" rx="1"/>
+      <rect x="950" y="228" width="80" height="1.5" fill="rgba(212,175,55,0.48)"/>
+      <text x="990" y="242" text-anchor="middle" fill="rgba(212,175,55,0.92)" font-size="10" font-family="serif" letter-spacing="0.8">撒马尔罕</text>
+      <text x="990" y="253" text-anchor="middle" fill="rgba(212,175,55,0.38)" font-size="6" letter-spacing="1">SAMARKAND</text>
+      <line x1="1020" y1="280" x2="1005" y2="268" stroke="rgba(212,175,55,0.15)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <circle cx="1020" cy="280" r="17" fill="none" stroke="rgba(212,175,55,0.08)" stroke-width="0.8">
+        <animate attributeName="r" values="12;21;12" dur="4s" begin="0.7s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="4s" begin="0.7s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="1020" cy="280" r="7" fill="rgba(212,175,55,0.14)" stroke="#C8A96E" stroke-width="1.3" filter="url(#cityGlow)"/>
+      <circle cx="1020" cy="280" r="3.2" fill="#D4AF37"/>
+      <circle cx="1020" cy="280" r="1.4" fill="white" opacity="0.7"/>
+      <!-- 专属图标：伊斯兰几何纹/穹顶（撒马尔罕） -->
+      <g transform="translate(1006, 292)" filter="url(#iconGlow)" opacity="0.65">
+        <!-- 穹顶主体 -->
+        <path d="M2 18 Q2 8 14 8 Q26 8 26 18" stroke="rgba(212,175,55,0.6)" stroke-width="0.8" fill="none"/>
+        <!-- 中心塔尖 -->
+        <path d="M14 8 Q14 3 14 0" stroke="rgba(212,175,55,0.5)" stroke-width="0.7"/>
+        <circle cx="14" cy="0" r="1.5" fill="none" stroke="rgba(212,175,55,0.5)" stroke-width="0.6"/>
+        <!-- 侧翼穹顶 -->
+        <path d="M2 18 Q0 13 5 13 Q9 13 8 18" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="none"/>
+        <path d="M26 18 Q28 13 23 13 Q19 13 20 18" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="none"/>
+        <!-- 几何纹装饰 -->
+        <path d="M8 14 L14 10 L20 14 L14 18 Z" stroke="rgba(212,175,55,0.35)" stroke-width="0.5" fill="none"/>
+        <!-- 底座 -->
+        <line x1="0" y1="18" x2="28" y2="18" stroke="rgba(212,175,55,0.3)" stroke-width="0.6"/>
       </g>
-      <text x="750" y="258" text-anchor="middle" fill="rgba(200,169,110,0.85)" font-size="10" font-family="serif" letter-spacing="1">龟兹</text>
-      <text x="750" y="267" text-anchor="middle" fill="rgba(200,169,110,0.35)" font-size="6.5" letter-spacing="1">KUCHA</text>
 
-      <!-- 撒马尔罕 -->
-      <g filter="url(#cityGlow)">
-        <circle cx="960" cy="282" r="16" fill="none" stroke="rgba(212,175,55,0.12)" stroke-width="0.8">
-          <animate attributeName="r" values="11;20;11" dur="3.8s" begin="0.6s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.4;0;0.4" dur="3.8s" begin="0.6s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="960" cy="282" r="7" fill="rgba(200,169,110,0.15)" stroke="#C8A96E" stroke-width="1.3"/>
-        <circle cx="960" cy="282" r="3" fill="#D4AF37"/>
-        <circle cx="960" cy="282" r="1.2" fill="white" opacity="0.6"/>
+      <!-- === 君士坦丁堡 CONSTANTINOPLE === -->
+      <rect x="1272" y="226" width="88" height="32" fill="rgba(6,5,3,0.88)" stroke="rgba(212,175,55,0.4)" stroke-width="0.8" rx="1"/>
+      <rect x="1272" y="226" width="88" height="1.5" fill="rgba(212,175,55,0.65)"/>
+      <text x="1316" y="240" text-anchor="middle" fill="#D4AF37" font-size="9.5" font-family="serif" letter-spacing="0.8" font-weight="bold">君士坦丁堡</text>
+      <text x="1316" y="251" text-anchor="middle" fill="rgba(212,175,55,0.42)" font-size="5.8" letter-spacing="0.8">CONSTANTINOPLE</text>
+      <line x1="1355" y1="280" x2="1340" y2="266" stroke="rgba(212,175,55,0.2)" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <!-- 大呼吸环（终点城市） -->
+      <circle cx="1355" cy="280" r="25" fill="none" stroke="rgba(212,175,55,0.07)" stroke-width="1">
+        <animate attributeName="r" values="17;30;17" dur="4s" begin="0.3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0;0.4" dur="4s" begin="0.3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="1355" cy="280" r="17" fill="none" stroke="rgba(212,175,55,0.1)" stroke-width="0.8">
+        <animate attributeName="r" values="12;22;12" dur="4s" begin="1.2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.35;0;0.35" dur="4s" begin="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="1355" cy="280" r="9" fill="rgba(212,175,55,0.2)" stroke="#D4AF37" stroke-width="1.8" filter="url(#cityGlow)"/>
+      <circle cx="1355" cy="280" r="4.5" fill="#FFE566"/>
+      <circle cx="1355" cy="280" r="2" fill="white" opacity="0.9"/>
+      <!-- 专属图标：圆顶教堂/索菲亚大教堂（君士坦丁堡） -->
+      <g transform="translate(1337, 292)" filter="url(#iconGlow)" opacity="0.7">
+        <!-- 主穹顶 -->
+        <path d="M4 18 Q1 10 9 7 Q18 4 22 8 Q27 12 24 18" stroke="rgba(212,175,55,0.65)" stroke-width="0.8" fill="none"/>
+        <!-- 顶部十字架 -->
+        <line x1="14" y1="7" x2="14" y2="1" stroke="rgba(212,175,55,0.55)" stroke-width="0.8"/>
+        <line x1="11" y1="3.5" x2="17" y2="3.5" stroke="rgba(212,175,55,0.55)" stroke-width="0.8"/>
+        <!-- 侧翼小穹顶 -->
+        <path d="M4 18 Q2 13 6 12 Q10 11 9 18" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="none"/>
+        <path d="M24 18 Q26 13 22 12 Q18 11 19 18" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="none"/>
+        <!-- 墙体 -->
+        <line x1="0" y1="18" x2="28" y2="18" stroke="rgba(212,175,55,0.35)" stroke-width="0.7"/>
+        <rect x="6" y="12" width="4" height="6" stroke="rgba(212,175,55,0.25)" stroke-width="0.5" fill="none"/>
+        <rect x="18" y="12" width="4" height="6" stroke="rgba(212,175,55,0.25)" stroke-width="0.5" fill="none"/>
       </g>
-      <rect x="895" y="253" width="70" height="22" fill="rgba(8,6,4,0.75)" stroke="rgba(200,169,110,0.25)" stroke-width="0.5" rx="1"/>
-      <text x="930" y="264" text-anchor="middle" fill="rgba(200,169,110,0.92)" font-size="9.5" font-family="serif" letter-spacing="0.8">撒马尔罕</text>
-      <text x="930" y="272" text-anchor="middle" fill="rgba(200,169,110,0.38)" font-size="6" letter-spacing="0.8">SAMARKAND</text>
 
-      <!-- 巴格达（新增节点） -->
-      <g filter="url(#cityGlow)">
-        <circle cx="1120" cy="286" r="12" fill="none" stroke="rgba(200,169,110,0.1)" stroke-width="0.8">
-          <animate attributeName="r" values="8;16;8" dur="5s" begin="1.5s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.3;0;0.3" dur="5s" begin="1.5s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="1120" cy="286" r="5" fill="rgba(200,169,110,0.1)" stroke="rgba(200,169,110,0.6)" stroke-width="1"/>
-        <circle cx="1120" cy="286" r="2.2" fill="#B89840"/>
+      <!-- === 楼兰（支线·已消逝的城市） === -->
+      <circle cx="880" cy="390" r="4.5" fill="none" stroke="rgba(180,140,60,0.35)" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <circle cx="880" cy="390" r="2" fill="rgba(180,140,60,0.45)"/>
+      <text x="880" y="408" text-anchor="middle" fill="rgba(180,140,60,0.55)" font-size="9.5" font-family="serif" letter-spacing="1">楼兰†</text>
+      <text x="880" y="418" text-anchor="middle" fill="rgba(180,140,60,0.28)" font-size="6.5" letter-spacing="0.8">LOULAN · LOST CITY</text>
+
+      <!-- ── 底部装饰带 ── -->
+
+      <!-- 骆驼队剪影（居中底部） -->
+      <g transform="translate(560, 470)" fill="rgba(212,175,55,0.18)">
+        <!-- 骆驼1 -->
+        <ellipse cx="0" cy="30" rx="22" ry="12"/>
+        <ellipse cx="-3" cy="18" rx="12" ry="10"/>
+        <ellipse cx="-13" cy="13" rx="5.5" ry="4.5"/>
+        <!-- 驼峰 -->
+        <ellipse cx="-6" cy="11" rx="5" ry="7"/>
+        <ellipse cx="6" cy="12" rx="4" ry="6"/>
+        <!-- 腿 -->
+        <rect x="-14" y="38" width="5" height="18" rx="2"/>
+        <rect x="-6" y="40" width="5" height="16" rx="2"/>
+        <rect x="4" y="38" width="5" height="18" rx="2"/>
+        <rect x="12" y="40" width="5" height="16" rx="2"/>
+        <!-- 骑手 -->
+        <ellipse cx="-1" cy="6" rx="5" ry="6"/>
+        <ellipse cx="-1" cy="0" rx="4" ry="3.5"/>
+
+        <!-- 骆驼2（右侧，略小） -->
+        <g transform="translate(58, 5)">
+          <ellipse cx="0" cy="26" rx="18" ry="10"/>
+          <ellipse cx="-2" cy="16" rx="10" ry="8"/>
+          <ellipse cx="-10" cy="12" rx="4.5" ry="3.8"/>
+          <ellipse cx="-4" cy="10" rx="4" ry="6"/>
+          <ellipse cx="4" cy="11" rx="3.5" ry="5"/>
+          <rect x="-12" y="33" width="4" height="15" rx="2"/>
+          <rect x="-5" y="34" width="4" height="14" rx="2"/>
+          <rect x="3" y="33" width="4" height="15" rx="2"/>
+          <rect x="9" y="34" width="4" height="13" rx="2"/>
+          <ellipse cx="-1" cy="5" rx="4" ry="5"/>
+          <ellipse cx="-1" cy="0" rx="3.5" ry="3"/>
+        </g>
+
+        <!-- 骆驼3（左侧，更小） -->
+        <g transform="translate(-65, 8)">
+          <ellipse cx="0" cy="24" rx="16" ry="9"/>
+          <ellipse cx="-2" cy="15" rx="9" ry="7"/>
+          <ellipse cx="-9" cy="11" rx="4" ry="3.2"/>
+          <ellipse cx="-3" cy="9" rx="3.5" ry="5.5"/>
+          <ellipse cx="3" cy="10" rx="3" ry="4.8"/>
+          <rect x="-11" y="30" width="3.5" height="13" rx="2"/>
+          <rect x="-4" y="31" width="3.5" height="12" rx="2"/>
+          <rect x="3" y="30" width="3.5" height="13" rx="2"/>
+          <rect x="9" y="31" width="3" height="12" rx="2"/>
+          <ellipse cx="-1" cy="5" rx="3.8" ry="4.5"/>
+        </g>
       </g>
-      <text x="1120" y="265" text-anchor="middle" fill="rgba(200,169,110,0.78)" font-size="9.5" font-family="serif" letter-spacing="0.8">巴格达</text>
-      <text x="1120" y="274" text-anchor="middle" fill="rgba(200,169,110,0.32)" font-size="6" letter-spacing="0.8">BAGHDAD</text>
 
-      <!-- 君士坦丁堡（终点·大城） -->
-      <g filter="url(#cityGlow)">
-        <circle cx="1330" cy="284" r="20" fill="none" stroke="rgba(212,175,55,0.1)" stroke-width="0.8">
-          <animate attributeName="r" values="14;26;14" dur="4s" begin="0.2s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.35;0;0.35" dur="4s" begin="0.2s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="1330" cy="284" r="13" fill="none" stroke="rgba(212,175,55,0.15)" stroke-width="0.8">
-          <animate attributeName="r" values="10;19;10" dur="4s" begin="1s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.3;0;0.3" dur="4s" begin="1s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="1330" cy="284" r="7.5" fill="rgba(212,175,55,0.18)" stroke="#D4AF37" stroke-width="1.5"/>
-        <circle cx="1330" cy="284" r="3.8" fill="#FFE566"/>
-        <circle cx="1330" cy="284" r="1.5" fill="white" opacity="0.85"/>
+      <!-- 帆船剪影（右侧底部） -->
+      <g transform="translate(1220, 460)" fill="rgba(212,175,55,0.14)" stroke="rgba(212,175,55,0.2)" stroke-width="0.6">
+        <!-- 船体 -->
+        <path d="M0 50 Q40 55 80 50 Q70 60 40 62 Q10 60 0 50 Z"/>
+        <!-- 主帆 -->
+        <path d="M40 50 L40 15 L68 50 Z"/>
+        <!-- 前帆 -->
+        <path d="M40 50 L40 25 L18 50 Z"/>
+        <!-- 桅杆 -->
+        <line x1="40" y1="50" x2="40" y2="8" stroke-width="1"/>
+        <!-- 横帆 -->
+        <path d="M25 28 Q40 22 55 28"/>
+        <!-- 旗 -->
+        <path d="M40 8 L52 13 L40 18 Z" fill="rgba(212,175,55,0.3)"/>
       </g>
-      <rect x="1258" y="253" width="80" height="24" fill="rgba(8,6,4,0.82)" stroke="rgba(212,175,55,0.35)" stroke-width="0.7" rx="1"/>
-      <text x="1298" y="264" text-anchor="middle" fill="#D4AF37" font-size="9" font-family="serif" letter-spacing="0.8" font-weight="bold">君士坦丁堡</text>
-      <text x="1298" y="273" text-anchor="middle" fill="rgba(212,175,55,0.45)" font-size="6" letter-spacing="0.8">CONSTANTINOPLE</text>
 
-      <!-- 楼兰（支线，已消失的城市） -->
-      <g opacity="0.6">
-        <circle cx="800" cy="370" r="4.5" fill="rgba(180,140,60,0.08)" stroke="rgba(180,140,60,0.4)" stroke-width="0.8" stroke-dasharray="3,2"/>
-        <circle cx="800" cy="370" r="1.8" fill="rgba(180,140,60,0.5)"/>
+      <!-- 旗帜（左侧） -->
+      <g transform="translate(160, 350)" opacity="0.45">
+        <line x1="0" y1="0" x2="0" y2="90" stroke="rgba(200,169,110,0.4)" stroke-width="1.5"/>
+        <path d="M0 0 L36 12 L0 24 Z" fill="rgba(200,100,50,0.3)" stroke="rgba(200,100,50,0.4)" stroke-width="0.8"/>
+        <!-- 旗帜上的简单纹样 -->
+        <path d="M6 8 L18 12 L6 16" stroke="rgba(212,175,55,0.3)" stroke-width="0.5" fill="none"/>
       </g>
-      <text x="800" y="388" text-anchor="middle" fill="rgba(180,140,60,0.55)" font-size="9.5" font-family="serif" letter-spacing="1">楼兰†</text>
-      <text x="800" y="398" text-anchor="middle" fill="rgba(180,140,60,0.28)" font-size="6.5" letter-spacing="1">LOULAN · LOST</text>
-      <!-- 楼兰到主路的支线 -->
-      <line x1="800" y1="365" x2="800" y2="340" stroke="rgba(180,140,60,0.2)" stroke-width="0.8" stroke-dasharray="4,4"/>
-      <line x1="800" y1="340" x2="750" y2="282" stroke="rgba(180,140,60,0.15)" stroke-width="0.8" stroke-dasharray="3,5"/>
 
-      <!-- ── 指南针系统 ── -->
-      <g transform="translate(80, 468)">
-        <!-- 外环 -->
-        <circle cx="0" cy="0" r="34" stroke="rgba(212,175,55,0.15)" stroke-width="0.8" fill="none"/>
-        <circle cx="0" cy="0" r="28" stroke="rgba(212,175,55,0.1)" stroke-width="0.5" fill="none" stroke-dasharray="2,4"/>
-        <circle cx="0" cy="0" r="20" stroke="rgba(212,175,55,0.08)" stroke-width="0.5" fill="none"/>
-        <!-- 刻度 -->
-        <line x1="0" y1="-34" x2="0" y2="-28" stroke="rgba(212,175,55,0.3)" stroke-width="0.8"/>
-        <line x1="0" y1="34" x2="0" y2="28" stroke="rgba(212,175,55,0.2)" stroke-width="0.8"/>
-        <line x1="-34" y1="0" x2="-28" y2="0" stroke="rgba(212,175,55,0.2)" stroke-width="0.8"/>
-        <line x1="34" y1="0" x2="28" y2="0" stroke="rgba(212,175,55,0.2)" stroke-width="0.8"/>
-        <!-- 指针 北（金色） -->
-        <path d="M0 -26 L4 -8 L0 0 L-4 -8 Z" fill="#D4AF37" opacity="0.85"/>
-        <!-- 指针 南（暗） -->
-        <path d="M0 26 L3 8 L0 0 L-3 8 Z" fill="rgba(212,175,55,0.3)"/>
-        <!-- 指针 东西 -->
-        <path d="M26 0 L8 -3 L0 0 L8 3 Z" fill="rgba(212,175,55,0.25)"/>
-        <path d="M-26 0 L-8 -3 L0 0 L-8 3 Z" fill="rgba(212,175,55,0.2)"/>
+      <!-- ── 指南针系统（左下角） ── -->
+      <g transform="translate(90, 510)">
+        <circle cx="0" cy="0" r="38" stroke="rgba(212,175,55,0.12)" stroke-width="0.8" fill="rgba(6,5,3,0.5)"/>
+        <circle cx="0" cy="0" r="32" stroke="rgba(212,175,55,0.08)" stroke-width="0.5" fill="none" stroke-dasharray="2,4"/>
+        <circle cx="0" cy="0" r="24" stroke="rgba(212,175,55,0.06)" stroke-width="0.4" fill="none"/>
+        <!-- 刻度线 -->
+        <line x1="0" y1="-38" x2="0" y2="-30" stroke="rgba(212,175,55,0.35)" stroke-width="1"/>
+        <line x1="0" y1="38" x2="0" y2="30" stroke="rgba(212,175,55,0.2)" stroke-width="0.8"/>
+        <line x1="-38" y1="0" x2="-30" y2="0" stroke="rgba(212,175,55,0.2)" stroke-width="0.8"/>
+        <line x1="38" y1="0" x2="30" y2="0" stroke="rgba(212,175,55,0.2)" stroke-width="0.8"/>
+        <!-- 斜刻度 -->
+        <line x1="27" y1="-27" x2="22" y2="-22" stroke="rgba(212,175,55,0.12)" stroke-width="0.5"/>
+        <line x1="-27" y1="-27" x2="-22" y2="-22" stroke="rgba(212,175,55,0.12)" stroke-width="0.5"/>
+        <line x1="27" y1="27" x2="22" y2="22" stroke="rgba(212,175,55,0.12)" stroke-width="0.5"/>
+        <line x1="-27" y1="27" x2="-22" y2="22" stroke="rgba(212,175,55,0.12)" stroke-width="0.5"/>
+        <!-- 北针（金色三角） -->
+        <path d="M0 -30 L5 -8 L0 0 L-5 -8 Z" fill="#D4AF37" opacity="0.9" filter="url(#cityGlow)"/>
+        <!-- 南针（暗） -->
+        <path d="M0 30 L4 8 L0 0 L-4 8 Z" fill="rgba(212,175,55,0.3)"/>
+        <!-- 东西针 -->
+        <path d="M30 0 L8 -4 L0 0 L8 4 Z" fill="rgba(212,175,55,0.22)"/>
+        <path d="M-30 0 L-8 -4 L0 0 L-8 4 Z" fill="rgba(212,175,55,0.22)"/>
         <!-- 中心 -->
-        <circle cx="0" cy="0" r="3.5" fill="rgba(12,10,7,1)" stroke="rgba(212,175,55,0.5)" stroke-width="0.8"/>
-        <circle cx="0" cy="0" r="1.5" fill="rgba(212,175,55,0.7)"/>
-        <!-- 方向文字 -->
-        <text x="0" y="-37" text-anchor="middle" fill="rgba(212,175,55,0.7)" font-size="9" font-family="serif">北</text>
-        <text x="38" y="3" text-anchor="start" fill="rgba(212,175,55,0.4)" font-size="7" font-family="serif">东</text>
-        <text x="-38" y="3" text-anchor="end" fill="rgba(212,175,55,0.4)" font-size="7" font-family="serif">西</text>
+        <circle cx="0" cy="0" r="4" fill="rgba(8,6,4,1)" stroke="rgba(212,175,55,0.55)" stroke-width="1"/>
+        <circle cx="0" cy="0" r="1.8" fill="#D4AF37" opacity="0.8"/>
+        <!-- 文字 -->
+        <text x="0" y="-42" text-anchor="middle" fill="rgba(212,175,55,0.75)" font-size="10" font-family="serif">北</text>
+        <text x="43" y="4" text-anchor="start" fill="rgba(212,175,55,0.45)" font-size="8" font-family="serif">东</text>
+        <text x="-43" y="4" text-anchor="end" fill="rgba(212,175,55,0.45)" font-size="8" font-family="serif">西</text>
+        <text x="0" y="54" text-anchor="middle" fill="rgba(212,175,55,0.3)" font-size="8" font-family="serif">南</text>
       </g>
 
-      <!-- ── 系统信息面板（右下角） ── -->
-      <rect x="1160" y="420" width="220" height="115" fill="rgba(8,6,4,0.85)" stroke="rgba(212,175,55,0.2)" stroke-width="0.7" rx="1"/>
-      <rect x="1160" y="420" width="220" height="1" fill="rgba(212,175,55,0.4)"/>
-      <text x="1172" y="436" fill="rgba(212,175,55,0.7)" font-size="8" letter-spacing="2">SILK ROAD · NAV SYSTEM</text>
-      <line x1="1172" y1="441" x2="1368" y2="441" stroke="rgba(212,175,55,0.12)" stroke-width="0.5"/>
-      <text x="1172" y="454" fill="rgba(200,169,110,0.55)" font-size="7.5" letter-spacing="0.5">航线类型 · 主干道 / 支线</text>
-      <text x="1172" y="466" fill="rgba(200,169,110,0.55)" font-size="7.5" letter-spacing="0.5">文明节点 · 7处坐标</text>
-      <text x="1172" y="478" fill="rgba(200,169,110,0.55)" font-size="7.5" letter-spacing="0.5">跨度 · 东亚 → 地中海</text>
-      <text x="1172" y="490" fill="rgba(200,169,110,0.55)" font-size="7.5" letter-spacing="0.5">时代 · 汉唐 — 西夏</text>
-      <line x1="1172" y1="496" x2="1368" y2="496" stroke="rgba(212,175,55,0.08)" stroke-width="0.5"/>
-      <text x="1172" y="510" fill="rgba(212,175,55,0.35)" font-size="7" letter-spacing="1">鎏途 · LIUTU 文明探索系统</text>
-      <text x="1172" y="521" fill="rgba(212,175,55,0.2)" font-size="6.5" letter-spacing="1">DIGITAL HERITAGE · v1.0</text>
+      <!-- ── 信息面板（右下） ── -->
+      <rect x="1120" y="450" width="255" height="128" fill="rgba(6,5,3,0.88)" stroke="rgba(212,175,55,0.22)" stroke-width="0.7" rx="1"/>
+      <rect x="1120" y="450" width="255" height="2" fill="rgba(212,175,55,0.45)"/>
+      <text x="1134" y="468" fill="rgba(212,175,55,0.72)" font-size="8.5" letter-spacing="2.5">SILK ROAD · NAV SYSTEM</text>
+      <line x1="1134" y1="474" x2="1362" y2="474" stroke="rgba(212,175,55,0.1)" stroke-width="0.5"/>
+      <text x="1134" y="489" fill="rgba(200,169,110,0.58)" font-size="8" letter-spacing="0.5">主航线  长安 → 君士坦丁堡</text>
+      <text x="1134" y="503" fill="rgba(200,169,110,0.52)" font-size="8" letter-spacing="0.5">文明坐标  5处主节点 · 1处遗址</text>
+      <text x="1134" y="517" fill="rgba(200,169,110,0.52)" font-size="8" letter-spacing="0.5">支线  草原丝路 / 南疆绿洲</text>
+      <text x="1134" y="531" fill="rgba(200,169,110,0.52)" font-size="8" letter-spacing="0.5">时代  汉  唐  西夏  元</text>
+      <line x1="1134" y1="538" x2="1362" y2="538" stroke="rgba(212,175,55,0.08)" stroke-width="0.5"/>
+      <text x="1134" y="552" fill="rgba(212,175,55,0.32)" font-size="7.5" letter-spacing="1.5">鎏途 · LIUTU 文明探索系统</text>
+      <text x="1134" y="564" fill="rgba(212,175,55,0.18)" font-size="6.5" letter-spacing="1">DIGITAL SILK ROAD · v1.0</text>
 
-      <!-- ── 左下角：时代标注 ── -->
-      <text x="150" y="455" fill="rgba(212,175,55,0.2)" font-size="42" font-family="serif" letter-spacing="6" opacity="0.6">丝路</text>
-      <text x="148" y="500" fill="rgba(212,175,55,0.08)" font-size="28" font-family="serif" letter-spacing="8">SILK ROAD</text>
+      <!-- ── 水印大字 ── -->
+      <text x="700" y="530" text-anchor="middle" fill="rgba(212,175,55,0.06)" font-size="56" font-family="serif" letter-spacing="12">丝路</text>
+      <text x="700" y="575" text-anchor="middle" fill="rgba(212,175,55,0.04)" font-size="28" font-family="serif" letter-spacing="10">SILK ROAD</text>
 
-      <!-- ── 整体边框系统 ── -->
-      <rect x="12" y="12" width="1376" height="536" stroke="rgba(212,175,55,0.1)" stroke-width="0.8" fill="none"/>
-      <rect x="20" y="20" width="1360" height="520" stroke="rgba(212,175,55,0.05)" stroke-width="0.4" fill="none"/>
-      <!-- 角落装饰 -->
-      <path d="M12 12 L12 40 M12 12 L40 12" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
-      <path d="M1388 12 L1388 40 M1388 12 L1360 12" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
-      <path d="M12 548 L12 520 M12 548 L40 548" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
-      <path d="M1388 548 L1388 520 M1388 548 L1360 548" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
+      <!-- 顶部标题 -->
+      <text x="700" y="52" text-anchor="middle" fill="rgba(212,175,55,0.55)" font-size="13" font-family="'Playfair Display',serif" letter-spacing="8" font-style="italic">THE SILK ROAD</text>
+      <line x1="560" y1="60" x2="840" y2="60" stroke="rgba(212,175,55,0.15)" stroke-width="0.5"/>
+      <line x1="620" y1="64" x2="780" y2="64" stroke="rgba(212,175,55,0.08)" stroke-width="0.3"/>
+
+      <!-- ── 整体边框 ── -->
+      <rect x="10" y="10" width="1380" height="580" stroke="rgba(212,175,55,0.1)" stroke-width="0.8" fill="none"/>
+      <rect x="18" y="18" width="1364" height="564" stroke="rgba(212,175,55,0.045)" stroke-width="0.4" fill="none"/>
+      <!-- 四角装饰 -->
+      <path d="M10 10 L10 46 M10 10 L46 10" stroke="rgba(212,175,55,0.5)" stroke-width="1.5"/>
+      <path d="M1390 10 L1390 46 M1390 10 L1354 10" stroke="rgba(212,175,55,0.5)" stroke-width="1.5"/>
+      <path d="M10 590 L10 554 M10 590 L46 590" stroke="rgba(212,175,55,0.5)" stroke-width="1.5"/>
+      <path d="M1390 590 L1390 554 M1390 590 L1354 590" stroke="rgba(212,175,55,0.5)" stroke-width="1.5"/>
     </svg>
 
+    <p class="map-caption reveal reveal-delay-2">跟随鎏途，穿越七大文明坐标 · 在数字丝路上启程</p>
     <p class="map-caption reveal reveal-delay-2">跟随鎏途，穿越七大文明坐标 · 在数字丝路上启程</p>
   </div>
 </section>
