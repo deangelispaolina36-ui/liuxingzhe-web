@@ -303,20 +303,25 @@ section { padding:110px 80px; position:relative }
 
 /* ─── §2 AI旅程生成器 ─── */
 #journey {
-  background:var(--bg-mid);
+  background:
+    radial-gradient(circle at 24% 18%, rgba(45,125,111,.14), transparent 28vw),
+    radial-gradient(circle at 78% 64%, rgba(200,168,75,.12), transparent 30vw),
+    linear-gradient(to bottom, var(--bg), var(--bg-mid) 42%, var(--bg));
   overflow:hidden;
+  padding-top:88px;
 }
 #journey::before {
   content:''; position:absolute; inset:0; z-index:0;
-  background-image:url('assets/images/第二页背景图.png');
-  background-size:cover; background-position:center;
-  opacity:.28;
-  animation:bgFloat 24s ease-in-out infinite;
+  background:
+    repeating-linear-gradient(45deg, transparent 0, transparent 22px, rgba(200,168,75,.035) 22px, rgba(200,168,75,.035) 23px),
+    repeating-linear-gradient(-45deg, transparent 0, transparent 22px, rgba(45,125,111,.025) 22px, rgba(45,125,111,.025) 23px);
+  opacity:.58;
+  mask-image:radial-gradient(circle at 50% 34%, #000, transparent 78%);
 }
 #journey::after {
   content:''; position:absolute; inset:0; z-index:1;
   background:
-    linear-gradient(to bottom, rgba(15,13,9,.95) 0%, rgba(15,13,9,.55) 18%, rgba(15,13,9,.4) 50%, rgba(15,13,9,.6) 82%, rgba(15,13,9,.98) 100%);
+    linear-gradient(to bottom, rgba(8,6,4,.98) 0%, rgba(15,13,9,.36) 24%, rgba(15,13,9,.28) 58%, rgba(8,6,4,.98) 100%);
 }
 .journey-inner::before {
   content:'';
@@ -1023,10 +1028,10 @@ section { padding:110px 80px; position:relative }
 #ending::after {
   content:'';
   position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-image:url('assets/images/silkroad-bg-v2.jpg');
-  background-size:cover; background-position:center;
-  opacity:.07;
-  filter:grayscale(.3) saturate(.7);
+  background:
+    repeating-linear-gradient(45deg, transparent 0, transparent 24px, rgba(200,168,75,.03) 24px, rgba(200,168,75,.03) 25px),
+    repeating-linear-gradient(-45deg, transparent 0, transparent 24px, rgba(200,168,75,.02) 24px, rgba(200,168,75,.02) 25px);
+  opacity:.8;
 }
 #ending > * { position:relative; z-index:1 }
 .ending-bg-pattern {
