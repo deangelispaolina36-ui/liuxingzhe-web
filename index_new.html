@@ -202,7 +202,40 @@ body {
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 100px 48px 60px;
+  padding: 0;
+}
+
+/* 全屏背景图 */
+.hero-fullbg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-fullbg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+}
+/* 渐变遮罩：保证文字可读，底部融入页面 */
+.hero-fullbg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right,
+      rgba(10,8,5,0.82) 0%,
+      rgba(10,8,5,0.55) 45%,
+      rgba(10,8,5,0.15) 70%,
+      rgba(10,8,5,0.0) 100%
+    ),
+    linear-gradient(to bottom,
+      rgba(10,8,5,0.3) 0%,
+      rgba(10,8,5,0.0) 30%,
+      rgba(10,8,5,0.0) 65%,
+      rgba(10,8,5,0.85) 100%
+    );
 }
 
 /* 背景层 */
@@ -257,15 +290,18 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  gap: 80px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 80px;
+  min-height: 100vh;
+  gap: 0;
 }
 
 /* 左侧文字区 */
 .hero-left {
-  flex: 1;
-  max-width: 560px;
+  flex: 0 0 auto;
+  max-width: 580px;
+  padding-top: 0;
 }
 
 .hero-tag {
@@ -308,12 +344,13 @@ body {
 }
 
 .hero-desc {
-  font-size: 14px;
-  color: var(--text-secondary);
+  font-size: 15px;
+  color: rgba(240,230,208,0.85);
   line-height: 2;
-  max-width: 440px;
+  max-width: 460px;
   margin-bottom: 40px;
   animation: fadeInUp 1s ease 0.6s both;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
 
 .hero-cta {
@@ -357,13 +394,7 @@ body {
 
 /* 右侧视觉区 */
 .hero-right {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  min-height: 520px;
-  animation: fadeIn 1.5s ease 0.5s both;
+  display: none;  /* 全屏背景模式，右侧独立区域隐藏 */
 }
 
 .hero-glow {
@@ -454,6 +485,11 @@ body {
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scroll-line {
+  0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+  50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
 }
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -1167,9 +1203,9 @@ footer {
      Hero 主KV区域
      ============================================================ -->
 <section id="hero">
-  <div class="hero-bg">
-    <div class="hero-bg-gradient"></div>
-    <div class="hero-map-bg"></div>
+  <!-- 全屏背景图 -->
+  <div class="hero-fullbg">
+    <img src="assets/images/hero-liutu.png" alt="鎏途LIUTU场景">
   </div>
 
   <!-- 漂浮粒子 -->
@@ -1243,6 +1279,13 @@ footer {
       </div>
     </div><!-- /hero-right -->
   </div><!-- /hero-content -->
+
+  <!-- 滚动提示 -->
+  <div style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeIn 2s ease 1.5s both;">
+    <span style="font-size:10px;letter-spacing:4px;color:rgba(212,175,55,0.6);text-transform:uppercase;">Scroll</span>
+    <div style="width:1px;height:40px;background:linear-gradient(to bottom,rgba(212,175,55,0.6),transparent);animation:scroll-line 1.8s ease-in-out infinite;">
+    </div>
+  </div>
 </section>
 
 
