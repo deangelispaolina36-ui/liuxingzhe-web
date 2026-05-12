@@ -406,8 +406,18 @@ body {
 .hero-desert-scene {
   position: relative;
   z-index: 2;
-  width: 440px;
-  height: 440px;
+  width: 580px;
+  height: 360px;
+}
+.hero-real-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 2px;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 65%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 65%, rgba(0,0,0,0) 100%);
+  filter: brightness(0.92) contrast(1.08) saturate(1.12);
 }
 
 /* 城市标注点 */
@@ -1200,140 +1210,33 @@ footer {
       <div class="hero-ring hero-ring-1"></div>
       <div class="hero-ring hero-ring-2"></div>
 
-      <!-- 主视觉 SVG 场景 -->
+      <!-- 主视觉：真实立绘 -->
       <div class="hero-desert-scene">
-        <svg viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- 背景光晕 -->
+        <!-- 底部光晕 -->
+        <div style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:85%;height:30px;background:radial-gradient(ellipse,rgba(212,175,55,0.12) 0%,transparent 70%);pointer-events:none;z-index:3;"></div>
+        <!-- 真实立绘图片 -->
+        <img src="assets/images/hero-liutu.png" alt="鎏途 LIUTU" class="hero-real-img">
+        <!-- 金色底部描边 -->
+        <div style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);z-index:4;"></div>
+        <!-- 覆盖装饰层 -->
+        <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" viewBox="0 0 580 360" fill="none">
+          <!-- 左侧渐变遮罩，融合背景 -->
           <defs>
-            <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.06"/>
-              <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
-            </radialGradient>
-            <radialGradient id="bodyGrad" cx="50%" cy="30%" r="60%">
-              <stop offset="0%" stop-color="#E8C840" stop-opacity="0.9"/>
-              <stop offset="60%" stop-color="#D4AF37" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#8B7320" stop-opacity="0.7"/>
-            </radialGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
+            <linearGradient id="imgFadeLeft" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#0A0805" stop-opacity="0.8"/>
+              <stop offset="25%" stop-color="#0A0805" stop-opacity="0"/>
+            </linearGradient>
           </defs>
-
-          <circle cx="220" cy="220" r="200" fill="url(#bgGlow)"/>
-
-          <!-- 沙漠地平线 -->
-          <path d="M0 340 Q110 320 220 330 Q330 340 440 320 L440 440 L0 440 Z" fill="rgba(200,169,110,0.04)"/>
-          <path d="M0 360 Q150 345 280 355 Q360 360 440 345 L440 440 L0 440 Z" fill="rgba(200,169,110,0.03)"/>
-
-          <!-- 远处古城轮廓 -->
-          <g opacity="0.25" fill="none" stroke="#C8A96E" stroke-width="0.8">
-            <!-- 城墙 -->
-            <rect x="40" y="280" width="60" height="40"/>
-            <rect x="50" y="265" width="10" height="20"/>
-            <rect x="70" y="260" width="12" height="25"/>
-            <rect x="85" y="268" width="8" height="17"/>
-            <!-- 塔 -->
-            <rect x="340" y="270" width="50" height="50"/>
-            <path d="M340 270 L365 250 L390 270"/>
-            <rect x="350" y="255" width="8" height="18"/>
-            <rect x="372" y="258" width="8" height="15"/>
-          </g>
-
-          <!-- 驼队剪影 -->
-          <g opacity="0.2" fill="#C8A96E">
-            <!-- 骆驼1 -->
-            <ellipse cx="80" cy="360" rx="18" ry="10"/>
-            <ellipse cx="78" cy="350" rx="10" ry="7"/>
-            <rect x="73" y="346" width="3" height="16"/><!-- 腿 -->
-            <rect x="81" y="346" width="3" height="16"/>
-            <rect x="68" y="348" width="3" height="15"/>
-            <rect x="86" y="348" width="3" height="15"/>
-            <ellipse cx="70" cy="345" rx="5" ry="4"/><!-- 头 -->
-            <rect x="68" y="338" width="2" height="8"/><!-- 脖子 -->
-            <!-- 驼峰 -->
-            <ellipse cx="76" cy="344" rx="4" ry="6"/>
-            <ellipse cx="84" cy="345" rx="3" ry="5"/>
-
-            <!-- 骆驼2 (小) -->
-            <ellipse cx="130" cy="362" rx="14" ry="8"/>
-            <ellipse cx="128" cy="354" rx="8" ry="6"/>
-            <ellipse cx="120" cy="350" rx="4" ry="3.5"/>
-            <ellipse cx="126" cy="347" rx="3" ry="4.5"/>
-            <ellipse cx="133" cy="348" rx="2.5" ry="4"/>
-
-            <!-- 骆驼3 (远) -->
-            <ellipse cx="340" cy="358" rx="12" ry="7"/>
-            <ellipse cx="338" cy="352" rx="7" ry="5"/>
-            <ellipse cx="332" cy="348" rx="3.5" ry="3"/>
-            <ellipse cx="336" cy="346" rx="2.5" ry="4"/>
-            <ellipse cx="342" cy="347" rx="2" ry="3.5"/>
-          </g>
-
-          <!-- 主体：鎏金铜牛 几何艺术风格 -->
-          <g filter="url(#glow)">
-            <!-- 牛身 -->
-            <path d="M160 280 Q155 240 165 210 Q180 185 220 180 Q260 175 278 200 Q295 225 290 265 Q288 285 280 295 L240 305 L200 308 Z"
-                  fill="url(#bodyGrad)" opacity="0.9"/>
-
-            <!-- 牛头 -->
-            <path d="M165 210 Q155 195 148 180 Q155 165 170 162 Q185 160 195 172 Q200 182 200 195 Q185 205 165 210 Z"
-                  fill="url(#bodyGrad)" opacity="0.85"/>
-
-            <!-- 牛角 -->
-            <path d="M155 175 Q130 150 125 130 Q138 125 148 140 Q155 160 157 172 Z"
-                  fill="rgba(232,200,64,0.7)"/>
-            <path d="M175 165 Q170 138 185 120 Q196 128 192 148 Q186 162 180 170 Z"
-                  fill="rgba(232,200,64,0.7)"/>
-
-            <!-- 牛腿（几何化）-->
-            <rect x="185" y="300" width="18" height="55" rx="4" fill="rgba(212,175,55,0.8)"/>
-            <rect x="210" y="302" width="18" height="53" rx="4" fill="rgba(212,175,55,0.75)"/>
-            <rect x="238" y="298" width="18" height="57" rx="4" fill="rgba(200,165,50,0.8)"/>
-            <rect x="258" y="296" width="16" height="56" rx="4" fill="rgba(180,150,45,0.7)"/>
-
-            <!-- 牛尾 -->
-            <path d="M285 268 Q310 255 318 240 Q312 230 305 238 Q295 252 280 280"
-                  stroke="rgba(212,175,55,0.7)" stroke-width="5" fill="none" stroke-linecap="round"/>
-
-            <!-- 装饰纹路 -->
-            <path d="M185 220 Q200 215 215 218 Q230 221 242 216"
-                  stroke="rgba(232,200,64,0.5)" stroke-width="1.5" fill="none"/>
-            <path d="M180 240 Q200 235 220 238 Q240 241 260 235"
-                  stroke="rgba(232,200,64,0.4)" stroke-width="1.2" fill="none"/>
-            <path d="M182 258 Q205 253 225 256 Q248 259 265 253"
-                  stroke="rgba(232,200,64,0.35)" stroke-width="1" fill="none"/>
-
-            <!-- 眼睛 -->
-            <circle cx="162" cy="185" r="5" fill="rgba(12,10,6,0.9)"/>
-            <circle cx="162" cy="185" r="2" fill="rgba(232,200,64,0.8)"/>
-
-            <!-- 鼻环 -->
-            <ellipse cx="172" cy="200" rx="7" ry="3" stroke="rgba(232,200,64,0.9)" stroke-width="2" fill="none"/>
-
-            <!-- 额头纹样 -->
-            <path d="M162 172 L168 166 L174 172 L168 178 Z"
-                  stroke="rgba(232,200,64,0.8)" stroke-width="1" fill="rgba(232,200,64,0.2)"/>
-
-            <!-- 高光 -->
-            <path d="M185 200 Q195 190 215 192" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <path d="M230 195 Q245 188 258 195" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          </g>
-
-          <!-- 地面光晕 -->
-          <ellipse cx="228" cy="358" rx="100" ry="12" fill="rgba(212,175,55,0.06)"/>
-
-          <!-- 装饰文字 - 丝路路线 -->
-          <path d="M20 390 Q110 380 220 388 Q330 396 420 382"
-                stroke="rgba(212,175,55,0.12)" stroke-width="1" fill="none" stroke-dasharray="3,5"/>
-
-          <!-- 右下角装饰框 -->
-          <rect x="310" y="360" width="90" height="50" stroke="rgba(212,175,55,0.2)" stroke-width="0.8" fill="none"/>
-          <text x="355" y="380" text-anchor="middle" fill="rgba(200,169,110,0.5)" font-size="8" letter-spacing="1">丝路守护</text>
-          <text x="355" y="395" text-anchor="middle" fill="rgba(200,169,110,0.4)" font-size="7" font-family="serif" letter-spacing="1">SILK ROAD</text>
+          <rect width="160" height="360" fill="url(#imgFadeLeft)"/>
+          <!-- 右下角信息框 -->
+          <rect x="430" y="280" width="130" height="58" stroke="rgba(212,175,55,0.3)" stroke-width="0.8" fill="rgba(10,8,5,0.55)"/>
+          <text x="495" y="302" text-anchor="middle" fill="rgba(212,175,55,0.8)" font-size="9" font-family="serif" letter-spacing="2">鎏途守护</text>
+          <text x="495" y="318" text-anchor="middle" fill="rgba(200,169,110,0.55)" font-size="7.5" letter-spacing="1.5">SILK ROAD GUARDIAN</text>
+          <text x="495" y="330" text-anchor="middle" fill="rgba(200,169,110,0.4)" font-size="7" letter-spacing="1">西夏 · 丝路文创IP</text>
+          <!-- 路线装饰 -->
+          <path d="M20 340 Q150 330 300 336 Q420 342 560 330" stroke="rgba(212,175,55,0.1)" stroke-width="1" fill="none" stroke-dasharray="3,6"/>
         </svg>
-
-        <!-- 城市标注 -->
+                <!-- 城市标注 -->
         <div class="city-dot city-dot-1"><span>敦煌</span></div>
         <div class="city-dot city-dot-2"><span>西域</span></div>
         <div class="city-dot city-dot-3"><span>长安</span></div>
