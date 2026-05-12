@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>鎏行者 · 数字旅程 | 西夏文创IP</title>
+  <meta name="description" content="西夏鎏金铜牛数字化文创 · 鎏行者丝路旅程生成器" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== 顶部导航 ===== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <span class="nav-logo-badge" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width="0.6"/><path d="M20 8 L23 17 L32 17 L25 22 L28 31 L20 26 L12 31 L15 22 L8 17 L17 17 Z" fill="currentColor" opacity="0.85"/></svg>
+        </span>
+        <span class="nav-logo-text">
+          <strong>鎏行者</strong> <em>数字旅程</em>
+          <small>丝路守护者 · 数字化文创IP DEMO</small>
+        </span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hero" class="is-active">首页</a></li>
+        <li><a href="#intro">IP介绍</a></li>
+        <li><a href="#generator">数字体验</a></li>
+        <li><a href="#map">丝路地图</a></li>
+        <li><a href="#products">藏馆阁</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== 板块① 首屏 + 生成器并列 ===== -->
+  <header id="hero" class="hero">
+    <div class="hero-grid">
+
+      <!-- 左：主视觉 -->
+      <div class="hero-main">
+        <div class="hero-bg" aria-hidden="true">
+          <div class="hero-bg-sand"></div>
+          <div class="hero-bg-sun"></div>
+          <svg class="hero-bg-dunes" viewBox="0 0 1200 600" preserveAspectRatio="none">
+            <path d="M0 420 Q200 380 400 410 T800 400 T1200 420 L1200 600 L0 600 Z" fill="#D8B888" opacity="0.55"/>
+            <path d="M0 470 Q250 430 500 460 T1000 460 T1200 470 L1200 600 L0 600 Z" fill="#C89968" opacity="0.55"/>
+            <path d="M0 520 Q300 490 600 510 T1200 515 L1200 600 L0 600 Z" fill="#A57A4A" opacity="0.6"/>
+          </svg>
+        </div>
+
+        <!-- 顶部西夏纹饰横线 -->
+        <div class="hero-top-line" aria-hidden="true">
+          <svg viewBox="0 0 600 20"><path d="M0 10 L260 10 M340 10 L600 10" stroke="#A57A4A" stroke-width="0.8"/><circle cx="300" cy="10" r="4" fill="#B8941F"/><circle cx="300" cy="10" r="1.5" fill="#F5EDD6"/></svg>
+        </div>
+
+        <div class="hero-text">
+          <h1 class="hero-title">鎏行者</h1>
+          <p class="hero-slogan">穿越千年丝路<br/>守护文明与希望</p>
+          <p class="hero-desc">鎏行者来自鎏金铜牛的传说，<br/>以守护者的身份走在丝绸之路上，<br/>连接不同的文化与故事。</p>
+          <a href="#intro" class="hero-more">
+            <span>了解更多</span>
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <figure class="hero-character">
+          <img src="assets/images/hero-character.png" alt="鎏行者 IP 形象" onerror="this.classList.add('is-missing');"/>
+          <div class="hero-character-fallback" aria-hidden="true">
+            <svg viewBox="0 0 200 240">
+              <ellipse cx="100" cy="230" rx="70" ry="6" fill="#8B6B3E" opacity="0.3"/>
+              <path d="M60 100 Q55 70 75 60 Q85 48 100 52 Q115 48 125 60 Q145 70 140 100 L140 180 Q140 210 100 210 Q60 210 60 180 Z" fill="#D4AF37"/>
+              <path d="M75 75 Q65 60 72 50 Q80 55 82 65 Z M125 75 Q135 60 128 50 Q120 55 118 65 Z" fill="#1A1208"/>
+              <circle cx="85" cy="100" r="4" fill="#1A1208"/>
+              <circle cx="115" cy="100" r="4" fill="#1A1208"/>
+              <path d="M95 118 Q100 122 105 118" stroke="#1A1208" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <rect x="70" y="130" width="60" height="50" fill="#C4622D" opacity="0.8"/>
+              <circle cx="100" cy="155" r="8" fill="#D4AF37"/>
+              <text x="100" y="160" font-size="14" fill="#1A1208" text-anchor="middle" font-family="serif" font-weight="700">鎏</text>
+            </svg>
+          </div>
+        </figure>
+
+        <!-- 底部三个入口卡 -->
+        <div class="hero-entries">
+          <a href="#intro" class="entry-card">
+            <span class="entry-icon"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2 L14 8 L20 8 L15 12 L17 18 L12 14 L7 18 L9 12 L4 8 L10 8 Z" fill="currentColor"/></svg></span>
+            <span class="entry-body">
+              <strong>IP介绍</strong>
+              <em>认识鎏行者</em>
+            </span>
+          </a>
+          <a href="#generator" class="entry-card">
+            <span class="entry-icon"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="19" cy="18" r="2" fill="currentColor"/></svg></span>
+            <span class="entry-body">
+              <strong>数字体验</strong>
+              <em>生成你的丝路旅程</em>
+            </span>
+          </a>
+          <a href="#map" class="entry-card">
+            <span class="entry-icon"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 22s-8-7.5-8-13a8 8 0 1 1 16 0c0 5.5-8 13-8 13z" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg></span>
+            <span class="entry-body">
+              <strong>丝路地图</strong>
+              <em>探索文明之路</em>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 右：生成器卡牌（板块③合并到首屏右侧，呼应参考图） -->
+      <aside id="generator" class="hero-gen">
+        <div class="hero-gen-head">
+          <span class="hero-gen-deco deco-left" aria-hidden="true"></span>
+          <h2>AI生成 · 你的丝路旅程</h2>
+          <span class="hero-gen-deco deco-right" aria-hidden="true"></span>
+        </div>
+
+        <!-- 姓名输入 + 生成按钮 -->
+        <div class="gen-input-row">
+          <input type="text" id="traveler-name" placeholder="请输入你的名字或一句话..." maxlength="20" />
+          <button type="button" class="btn-generate-inline" id="btn-generate-quick">生成旅程</button>
+        </div>
+
+        <!-- 三步选择（折叠在上方，轻量化） -->
+        <div class="gen-steps">
+          <div class="gen-steps-head">
+            <div class="steps-bar">
+              <div class="step-item is-active" data-step="1"><span class="step-num">01</span><span class="step-label">路线</span></div>
+              <div class="step-line"></div>
+              <div class="step-item" data-step="2"><span class="step-num">02</span><span class="step-label">身份</span></div>
+              <div class="step-line"></div>
+              <div class="step-item" data-step="3"><span class="step-num">03</span><span class="step-label">心境</span></div>
+            </div>
+          </div>
+
+          <div class="step-panel is-active" data-panel="1">
+            <div class="mini-field">
+              <label><span class="dot dot-start"></span>起点</label>
+              <div class="chip-row" data-field="start">
+                <button class="chip" data-value="长安">长安</button>
+                <button class="chip" data-value="敦煌">敦煌</button>
+                <button class="chip" data-value="玉门关">玉门关</button>
+                <button class="chip" data-value="龟兹">龟兹</button>
+              </div>
+            </div>
+            <div class="mini-field">
+              <label><span class="dot dot-end"></span>终点</label>
+              <div class="chip-row" data-field="end">
+                <button class="chip" data-value="撒马尔罕">撒马尔罕</button>
+                <button class="chip" data-value="木鹿">木鹿</button>
+                <button class="chip" data-value="巴格达">巴格达</button>
+                <button class="chip" data-value="疏勒">疏勒</button>
+                <button class="chip" data-value="于阗">于阗</button>
+              </div>
+            </div>
+            <div class="step-actions"><button class="btn btn-small" data-next="2" disabled>下一步</button></div>
+          </div>
+
+          <div class="step-panel" data-panel="2">
+            <div class="mini-grid" data-field="identity">
+              <button class="mini-card" data-value="商旅行者"><span>🐪</span><strong>商旅行者</strong><em>丝绸与香料</em></button>
+              <button class="mini-card" data-value="文化使者"><span>📜</span><strong>文化使者</strong><em>佛经与典籍</em></button>
+              <button class="mini-card" data-value="边境护卫"><span>🏹</span><strong>边境护卫</strong><em>护送商队</em></button>
+              <button class="mini-card" data-value="医药行商"><span>🌿</span><strong>医药行商</strong><em>西域草药</em></button>
+            </div>
+            <div class="step-actions step-actions-dual">
+              <button class="btn btn-small btn-ghost" data-prev="1">上一步</button>
+              <button class="btn btn-small" data-next="3" disabled>下一步</button>
+            </div>
+          </div>
+
+          <div class="step-panel" data-panel="3">
+            <div class="mini-grid mini-grid-mood" data-field="mood">
+              <button class="mini-card mood" data-value="探险求知"><strong>探险求知</strong><em>Curious</em></button>
+              <button class="mini-card mood" data-value="思乡归途"><strong>思乡归途</strong><em>Homeward</em></button>
+              <button class="mini-card mood" data-value="初次出发"><strong>初次出发</strong><em>First Trip</em></button>
+              <button class="mini-card mood" data-value="历经沧桑"><strong>历经沧桑</strong><em>Weathered</em></button>
+            </div>
+            <div class="step-actions step-actions-dual">
+              <button class="btn btn-small btn-ghost" data-prev="2">上一步</button>
+              <button class="btn btn-small" id="btn-generate" disabled>开启旅程</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 加载动画 -->
+        <div class="loading" id="loading" hidden>
+          <svg class="loading-camel" viewBox="0 0 160 90" aria-hidden="true">
+            <path class="sand" d="M0 80 Q40 72 80 78 T160 76 L160 90 L0 90 Z" fill="#C8A96E" opacity="0.35"/>
+            <g class="camel">
+              <path d="M40 60 Q48 42 60 44 Q65 30 72 44 Q80 30 88 44 Q100 44 104 60 L104 72 L98 72 L96 66 L92 72 L70 72 L68 66 L64 72 L48 72 L46 66 L42 72 L40 72 Z" fill="#B8941F"/>
+              <path d="M104 60 Q116 54 118 46 Q124 44 122 52 Q118 58 112 62 Z" fill="#B8941F"/>
+              <circle cx="117" cy="50" r="1.2" fill="#1A1208"/>
+              <rect class="leg leg1" x="48" y="66" width="3" height="12" fill="#8B6B1A"/>
+              <rect class="leg leg2" x="66" y="66" width="3" height="12" fill="#8B6B1A"/>
+              <rect class="leg leg3" x="88" y="66" width="3" height="12" fill="#8B6B1A"/>
+              <rect class="leg leg4" x="98" y="66" width="3" height="12" fill="#8B6B1A"/>
+            </g>
+          </svg>
+          <p class="loading-text">鎏行者正在为你书写旅程<span class="dots"><i>.</i><i>.</i><i>.</i></span></p>
+        </div>
+
+        <!-- 结果卡片 -->
+        <article class="journey-card" id="journey-card" hidden>
+          <div class="journey-card-top">
+            <h3>你的专属丝旅程卡</h3>
+          </div>
+
+          <div class="journey-card-body">
+            <div class="journey-card-left">
+              <dl class="journey-meta">
+                <div><dt>旅行者</dt><dd id="jc-name">王泰然</dd></div>
+                <div class="jc-quote"><dd id="jc-title">"今天的我，充满希望与勇气"</dd></div>
+                <div><dt>出发地</dt><dd id="jc-start">敦煌</dd></div>
+                <div><dt>目的地</dt><dd id="jc-end">绿洲</dd></div>
+                <div><dt>旅程时长</dt><dd id="jc-days">27天</dd></div>
+                <div><dt>同行伙伴</dt><dd id="jc-partner">骆驼商队</dd></div>
+                <div><dt>收获宝藏</dt><dd id="jc-treasure">西域香料 × 3</dd></div>
+              </dl>
+            </div>
+            <div class="journey-card-right">
+              <div class="jc-avatar">
+                <img src="assets/images/character-intro.png" alt="鎏行者" onerror="this.classList.add('is-missing');"/>
+                <div class="jc-avatar-fallback" aria-hidden="true">
+                  <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" fill="#E8C97A" opacity="0.3"/><text x="80" y="95" text-anchor="middle" font-size="48" fill="#B8941F" font-family="serif" font-weight="900">鎏</text></svg>
+                </div>
+                <div class="jc-seal" aria-hidden="true">西夏纪行</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-story">
+            <h4>旅程故事</h4>
+            <p id="jc-narrative"></p>
+          </div>
+          <div class="journey-egg">
+            <h4>行者手记 · 文化注释</h4>
+            <p id="jc-egg"></p>
+          </div>
+
+          <div class="journey-actions">
+            <button class="btn btn-ghost btn-small" id="btn-save">保存卡片</button>
+            <button class="btn btn-small" id="btn-share">分享旅程</button>
+            <button class="btn btn-small btn-ghost" id="btn-restart">再启旅程</button>
+          </div>
+        </article>
+      </aside>
+    </div>
+  </header>
+
+  <!-- ===== 板块② IP介绍 ===== -->
+  <section id="intro" class="intro">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-kicker">CHAPTER Ⅰ · 关于</span>
+        <h2 class="section-title">认识鎏行者</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="intro-grid">
+        <figure class="intro-figure">
+          <img src="assets/images/character-intro.png" alt="鎏行者插图" onerror="this.classList.add('is-missing');"/>
+          <div class="intro-figure-fallback" aria-hidden="true">角色插图</div>
+        </figure>
+        <div class="intro-text">
+          <p>鎏行者的原型是<strong>西夏鎏金铜牛</strong>——一件出土于宁夏的西夏时期文物，现藏于宁夏博物馆。铜牛通体鎏金，背部有一矩形空腔，推测原用于固定装饰物。</p>
+          <p>在 IP 转译中，这个空腔成为鎏行者背上挎包的挂点，连接着文物本身的历史细节与角色的行旅身份。</p>
+          <p>鎏行者头戴西域头巾，额饰鎏金纹样，手持卷轴，背挎行囊，腰间悬金币——<em>卷轴代表文化传播，挎包代表商贸往来，金币代表丝路上的财富流通</em>。</p>
+          <p>他是西夏商队的一员，行走在 <span class="highlight">11 世纪</span>的丝绸之路上。</p>
+          <ul class="intro-tags">
+            <li>党项族 · 西夏</li>
+            <li>1038 — 1227</li>
+            <li>宁夏博物馆 · 藏</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 板块③ IP产品展示 + 丝路地图（并列） ===== -->
+  <section class="showcase">
+    <div class="showcase-grid">
+
+      <!-- 左：IP产品展示 -->
+      <div id="products" class="showcase-block showcase-products">
+        <header class="showcase-head">
+          <h2>IP产品展示</h2>
+          <a href="#" class="showcase-more">查看更多 →</a>
+        </header>
+        <div class="products-grid">
+          <article class="product-card">
+            <div class="product-media">
+              <img src="assets/images/product-liuxingzhe.png" alt="场景手办" onerror="this.classList.add('is-missing');"/>
+              <span class="product-placeholder">场景手办</span>
+            </div>
+            <h4>场景手办</h4>
+            <p>黄沙遥货版</p>
+          </article>
+          <article class="product-card">
+            <div class="product-media">
+              <img src="assets/images/product-keychain1.png" alt="鎏行者挂件" onerror="this.classList.add('is-missing');"/>
+              <span class="product-placeholder">鎏行者挂件</span>
+            </div>
+            <h4>鎏行者挂件</h4>
+            <p>迷你款</p>
+          </article>
+          <article class="product-card">
+            <div class="product-media">
+              <img src="assets/images/product-keychain2.png" alt="丝路主题挂件" onerror="this.classList.add('is-missing');"/>
+              <span class="product-placeholder">丝路主题挂件</span>
+            </div>
+            <h4>丝路主题挂件</h4>
+            <p>组合款</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- 右：丝路地图 -->
+      <div id="map" class="showcase-block showcase-map">
+        <header class="showcase-head">
+          <h2>丝路地图 <small>探索文明之路</small></h2>
+          <a href="#" class="showcase-more">查看更多 →</a>
+        </header>
+        <div class="silk-map">
+          <svg class="silk-map-svg" viewBox="0 0 600 360" aria-label="丝路地图">
+            <defs>
+              <pattern id="parchment" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                <rect width="40" height="40" fill="#E8D4A6"/>
+                <circle cx="10" cy="10" r="0.6" fill="#B8941F" opacity="0.2"/>
+                <circle cx="30" cy="25" r="0.5" fill="#8B6B3E" opacity="0.25"/>
+                <circle cx="20" cy="35" r="0.4" fill="#B8941F" opacity="0.2"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="360" fill="url(#parchment)"/>
+            <!-- 山脉水墨 -->
+            <g opacity="0.25" fill="#8B6B3E">
+              <path d="M40 200 Q80 170 120 195 Q160 175 200 200 Q180 205 160 200 Q120 210 80 205 Z"/>
+              <path d="M300 120 Q340 95 380 118 Q420 100 460 125 Q420 132 380 125 Q340 130 300 130 Z"/>
+              <path d="M440 240 Q480 215 520 238 Q540 232 550 240 Q510 248 470 245 Z"/>
+            </g>
+            <!-- 虚线路径 -->
+            <path class="silk-route" d="M120 230 Q200 200 310 210 Q400 220 500 200"
+                  fill="none" stroke="#8B6B3E" stroke-width="2" stroke-dasharray="5 6"/>
+            <!-- 城市节点：敦煌 / 西域 / 绿洲 -->
+            <g class="map-city" transform="translate(120,230)">
+              <circle r="4" fill="#5A3A1A"/>
+              <g transform="translate(-30,-60)">
+                <path d="M5 40 L5 20 Q5 12 15 12 Q20 4 30 10 Q40 4 45 12 Q55 12 55 20 L55 40 Z" fill="#C89968" stroke="#8B6B3E" stroke-width="1"/>
+                <rect x="26" y="24" width="8" height="16" fill="#8B6B3E"/>
+                <path d="M15 12 Q20 4 30 10 Q40 4 45 12" fill="#D4AF37"/>
+              </g>
+              <text y="22" text-anchor="middle" font-size="14" fill="#5A3A1A" font-weight="700">敦煌</text>
+            </g>
+            <g class="map-city" transform="translate(310,210)">
+              <circle r="4" fill="#5A3A1A"/>
+              <g transform="translate(-28,-60)">
+                <path d="M5 40 L8 18 L28 8 L48 18 L51 40 Z" fill="#C89968" stroke="#8B6B3E" stroke-width="1"/>
+                <circle cx="28" cy="20" r="6" fill="#D4AF37"/>
+                <rect x="24" y="26" width="8" height="14" fill="#8B6B3E"/>
+              </g>
+              <text y="22" text-anchor="middle" font-size="14" fill="#5A3A1A" font-weight="700">西域</text>
+            </g>
+            <g class="map-city" transform="translate(500,200)">
+              <circle r="4" fill="#5A3A1A"/>
+              <g transform="translate(-32,-62)">
+                <path d="M5 42 L5 22 Q5 10 15 10 L15 4 L20 4 L20 10 Q32 10 35 22 L45 22 Q55 22 55 34 L55 42 Z" fill="#C89968" stroke="#8B6B3E" stroke-width="1"/>
+                <path d="M15 10 Q20 2 25 10" fill="#D4AF37"/>
+                <rect x="22" y="30" width="7" height="12" fill="#8B6B3E"/>
+              </g>
+              <text y="22" text-anchor="middle" font-size="14" fill="#5A3A1A" font-weight="700">绿洲</text>
+            </g>
+            <!-- 小骆驼行走 -->
+            <g class="map-camel" aria-hidden="true">
+              <ellipse cx="0" cy="0" rx="6" ry="3" fill="#B8941F"/>
+              <path d="M-5 -1 Q-3 -5 0 -4 Q3 -7 5 -3 L6 0 Z" fill="#B8941F"/>
+              <rect x="-4" y="1" width="1.2" height="3" fill="#8B6B1A"/>
+              <rect x="2" y="1" width="1.2" height="3" fill="#8B6B1A"/>
+            </g>
+          </svg>
+          <!-- 地图操作按钮 -->
+          <div class="map-controls">
+            <button aria-label="放大">+</button>
+            <button aria-label="缩小">−</button>
+            <button aria-label="定位">⊕</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 板块④ 如何体验 + AR体验 ===== -->
+  <section class="bottom">
+    <div class="bottom-grid">
+      <!-- 左：如何体验 4步 -->
+      <div class="bottom-block bottom-guide">
+        <h2>如何体验数字旅程</h2>
+        <ol class="guide-steps">
+          <li>
+            <div class="guide-icon"><svg viewBox="0 0 32 32"><circle cx="16" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 26c0-5 5-8 10-8s10 3 10 8" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>
+            <strong>输入信息</strong>
+            <em>写下你的名字或心情</em>
+          </li>
+          <li class="arrow" aria-hidden="true">→</li>
+          <li>
+            <div class="guide-icon"><svg viewBox="0 0 32 32"><path d="M6 22 L12 14 L18 20 L26 8" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M20 8 L26 8 L26 14" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></div>
+            <strong>生成旅程</strong>
+            <em>AI生成专属丝路故事</em>
+          </li>
+          <li class="arrow" aria-hidden="true">→</li>
+          <li>
+            <div class="guide-icon"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z" fill="currentColor"/></svg></div>
+            <strong>探索地图</strong>
+            <em>跟随鎏行者一起出发</em>
+          </li>
+          <li class="arrow" aria-hidden="true">→</li>
+          <li>
+            <div class="guide-icon"><svg viewBox="0 0 32 32"><rect x="8" y="6" width="16" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 12 L20 12 M12 16 L20 16 M12 20 L18 20" stroke="currentColor" stroke-width="1.5"/></svg></div>
+            <strong>收获纪念卡</strong>
+            <em>保存你的专属旅程卡</em>
+          </li>
+        </ol>
+      </div>
+
+      <!-- 右：AR互动体验 -->
+      <div class="bottom-block bottom-ar">
+        <div class="ar-text">
+          <h2>AR互动体验 <small>（概念）</small></h2>
+          <p>扫描卡片底部二维码，<br/>鎏行者将出现在你的现实世界中！</p>
+          <a href="#" class="btn btn-small ar-btn">立即体验 →</a>
+        </div>
+        <div class="ar-phone" aria-hidden="true">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="phone-bg"></div>
+              <svg viewBox="0 0 120 180" class="phone-character">
+                <ellipse cx="60" cy="160" rx="40" ry="4" fill="#000" opacity="0.15"/>
+                <path d="M35 90 Q30 65 50 58 Q60 48 70 58 Q90 65 85 90 L85 150 Q85 165 60 165 Q35 165 35 150 Z" fill="#D4AF37"/>
+                <circle cx="50" cy="90" r="3" fill="#1A1208"/>
+                <circle cx="70" cy="90" r="3" fill="#1A1208"/>
+                <path d="M55 105 Q60 110 65 105" stroke="#1A1208" stroke-width="1.5" fill="none"/>
+                <text x="60" y="130" text-anchor="middle" font-size="10" fill="#1A1208" font-weight="700">鎏</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 页脚 ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-ornament" aria-hidden="true">
+        <svg viewBox="0 0 400 20"><path d="M0 10 L400 10" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 4" opacity="0.6"/><circle cx="200" cy="10" r="3" fill="currentColor"/></svg>
+      </div>
+      <p class="footer-main">© 2026 王泰然 · 宁夏大学新闻传播学院广告学 · 毕业设计</p>
+      <p class="footer-sub">西夏鎏金铜牛藏于宁夏博物馆，致谢宁夏文化遗产</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
