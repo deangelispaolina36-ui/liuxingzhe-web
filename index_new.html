@@ -1517,13 +1517,9 @@ footer {
       <p class="section-sub" style="letter-spacing:3px;">丝绸之路 · 七大文明坐标 · 动态航线追踪</p>
     </div>
 
-    <!-- 全宽地图 SVG · 文明导航系统 v4 -->
+    <!-- 全宽地图 SVG · 文明导航系统 v5 · 纯UI叠加层，不画节点 -->
     <svg class="silkroad-map-svg reveal reveal-delay-1" viewBox="0 0 1400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <filter id="gA" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="6" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
         <filter id="gB" x="-60%" y="-60%" width="220%" height="220%">
           <feGaussianBlur stdDeviation="3" result="b"/>
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -1532,6 +1528,7 @@ footer {
           <feGaussianBlur stdDeviation="1.2" result="b"/>
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
+        <!-- 极细网格 -->
         <pattern id="grid80" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
           <path d="M80 0L0 0 0 80" fill="none" stroke="rgba(212,175,55,0.025)" stroke-width="0.3"/>
         </pattern>
@@ -1550,11 +1547,11 @@ footer {
           <stop offset="100%" stop-color="#060504" stop-opacity="0.68"/>
         </linearGradient>
         <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="#D4AF37" stop-opacity="0.08"/>
-          <stop offset="10%"  stop-color="#E8C840" stop-opacity="0.7"/>
-          <stop offset="50%"  stop-color="#FFE566" stop-opacity="0.9"/>
-          <stop offset="90%"  stop-color="#D4AF37" stop-opacity="0.68"/>
-          <stop offset="100%" stop-color="#C8A96E" stop-opacity="0.08"/>
+          <stop offset="0%"   stop-color="#D4AF37" stop-opacity="0.05"/>
+          <stop offset="10%"  stop-color="#E8C840" stop-opacity="0.65"/>
+          <stop offset="50%"  stop-color="#FFE566" stop-opacity="0.88"/>
+          <stop offset="90%"  stop-color="#D4AF37" stop-opacity="0.62"/>
+          <stop offset="100%" stop-color="#C8A96E" stop-opacity="0.05"/>
         </linearGradient>
       </defs>
 
@@ -1562,7 +1559,7 @@ footer {
       <rect width="1400" height="600" fill="url(#grid16)"/>
       <rect width="1400" height="600" fill="url(#grid80)"/>
       <rect width="1400" height="600" fill="url(#scan)"/>
-      <!-- 顶底融合 -->
+      <!-- 顶底渐变融合 -->
       <rect width="1400" height="80" fill="url(#fadeTop)"/>
       <rect y="520" width="1400" height="80" fill="url(#fadeBot)"/>
 
@@ -1583,7 +1580,7 @@ footer {
         <text x="0" y="-66" text-anchor="middle" fill="rgba(212,175,55,0.2)" font-size="5.5" letter-spacing="2">NAV</text>
       </g>
 
-      <!-- 顶部标题 -->
+      <!-- 顶部系统标题 -->
       <text x="700" y="36" text-anchor="middle" fill="rgba(212,175,55,0.45)" font-size="10.5"
             font-family="'Playfair Display',serif" letter-spacing="10" font-style="italic">THE SILK ROAD</text>
       <line x1="600" y1="44" x2="800" y2="44" stroke="rgba(212,175,55,0.1)" stroke-width="0.35"/>
@@ -1591,21 +1588,21 @@ footer {
         CIVILIZATION NAVIGATION SYSTEM · AI GENERATED
       </text>
 
-      <!-- 航线增强层（叠在背景图路线上，增加立体发光感） -->
-      <!-- path 匹配参考图路线走势 -->
+      <!-- 航线流光层（叠在背景图路线上）-->
+      <!-- 路线path匹配背景图走势 -->
       <path d="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
-            stroke="rgba(212,175,55,0.04)" stroke-width="28" fill="none" stroke-linecap="round"/>
+            stroke="rgba(212,175,55,0.04)" stroke-width="26" fill="none" stroke-linecap="round"/>
       <path d="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
-            stroke="rgba(212,175,55,0.1)" stroke-width="8" fill="none" stroke-linecap="round"/>
+            stroke="rgba(212,175,55,0.09)" stroke-width="7" fill="none" stroke-linecap="round"/>
       <path d="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
-            stroke="url(#routeGrad)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-      <!-- 流光1（快） -->
+            stroke="url(#routeGrad)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- 流光1（快，亮） -->
       <path d="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
             stroke="rgba(255,245,120,0.85)" stroke-width="0.9" fill="none" stroke-dasharray="18,250">
         <animate attributeName="stroke-dashoffset" from="268" to="-1400" dur="4s" repeatCount="indefinite"/>
         <animate attributeName="opacity" values="0.15;1;0.15" dur="4s" repeatCount="indefinite"/>
       </path>
-      <!-- 流光2（中） -->
+      <!-- 流光2（中速） -->
       <path d="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
             stroke="rgba(255,228,70,0.55)" stroke-width="0.6" fill="none" stroke-dasharray="10,320">
         <animate attributeName="stroke-dashoffset" from="0" to="-1600" dur="6.5s" begin="2s" repeatCount="indefinite"/>
@@ -1616,7 +1613,7 @@ footer {
         <animate attributeName="stroke-dashoffset" from="80" to="-1800" dur="10s" begin="4.5s" repeatCount="indefinite"/>
       </path>
 
-      <!-- 粒子流（animateMotion） -->
+      <!-- 粒子流（沿路线运动） -->
       <circle r="2.4" fill="rgba(255,242,100,0.88)" filter="url(#gB)">
         <animateMotion path="M95,244 Q200,236 305,229 Q388,232 470,240 Q555,248 640,252 Q710,256 780,260 Q882,265 985,270 Q1118,273 1250,275"
           dur="7s" repeatCount="indefinite"/>
@@ -1633,142 +1630,7 @@ footer {
         <animate attributeName="opacity" values="0;0.55;0.55;0" keyTimes="0;0.09;0.91;1" dur="7s" begin="5.1s" repeatCount="indefinite"/>
       </circle>
 
-      <!-- ══════════════════════════════════════
-           七大文明节点
-           上: 长安(95,244) 玉门关(470,240) 疏勒(780,260) 君士坦丁堡(1250,275)
-           下: 敦煌(305,229) 龟兹(640,252) 撒马尔罕(985,270)
-           ══════════════════════════════════════ -->
-
-      <!-- ── 01 长安 · 主城 · 上标 ── -->
-      <circle cx="95" cy="244" fill="none" stroke="rgba(212,175,55,0.32)" stroke-width="0.9">
-        <animate attributeName="r" values="11;22;11" dur="3s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.48;0;0.48" dur="3s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="95" cy="244" fill="none" stroke="rgba(212,175,55,0.18)" stroke-width="0.6">
-        <animate attributeName="r" values="7;15;7" dur="3s" begin="0.7s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.35;0;0.35" dur="3s" begin="0.7s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="95" cy="244" r="7" fill="rgba(255,230,80,0.16)" stroke="#FFE566" stroke-width="1.4" filter="url(#gA)"/>
-      <circle cx="95" cy="244" r="3.2" fill="#FFE566"/>
-      <circle cx="95" cy="244" r="1.3" fill="white" opacity="0.9"/>
-      <line x1="95" y1="236" x2="95" y2="192" stroke="rgba(212,175,55,0.28)" stroke-width="0.45">
-        <animate attributeName="opacity" values="0.18;0.42;0.18" dur="3s" repeatCount="indefinite"/>
-      </line>
-      <rect x="38" y="154" width="114" height="38" fill="rgba(4,3,2,0.86)" stroke="rgba(212,175,55,0.4)" stroke-width="0.55"/>
-      <rect x="38" y="154" width="114" height="1.5" fill="rgba(212,175,55,0.65)"/>
-      <text x="44" y="165" fill="rgba(212,175,55,0.3)" font-size="6" letter-spacing="1">01 · 起点</text>
-      <text x="95" y="181" text-anchor="middle" fill="#D4AF37" font-size="16" font-family="serif" letter-spacing="3" font-weight="bold" filter="url(#gT)">长安</text>
-      <text x="95" y="191" text-anchor="middle" fill="rgba(212,175,55,0.36)" font-size="6.5" letter-spacing="2.5">CHANG'AN</text>
-
-      <!-- ── 02 敦煌 · 主城 · 下标 ── -->
-      <circle cx="305" cy="229" fill="none" stroke="rgba(212,175,55,0.28)" stroke-width="0.85">
-        <animate attributeName="r" values="10;20;10" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.42;0;0.42" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="305" cy="229" r="6.5" fill="rgba(255,224,70,0.14)" stroke="#FFE040" stroke-width="1.3" filter="url(#gA)"/>
-      <circle cx="305" cy="229" r="3" fill="#FFE040"/>
-      <circle cx="305" cy="229" r="1.2" fill="white" opacity="0.82"/>
-      <line x1="305" y1="236" x2="305" y2="280" stroke="rgba(212,175,55,0.22)" stroke-width="0.45">
-        <animate attributeName="opacity" values="0.14;0.34;0.14" dur="3.5s" begin="0.5s" repeatCount="indefinite"/>
-      </line>
-      <rect x="248" y="282" width="114" height="38" fill="rgba(4,3,2,0.84)" stroke="rgba(212,175,55,0.35)" stroke-width="0.55"/>
-      <rect x="248" y="282" width="114" height="1.5" fill="rgba(212,175,55,0.55)"/>
-      <text x="254" y="293" fill="rgba(212,175,55,0.26)" font-size="6" letter-spacing="1">02 · 艺术圣地</text>
-      <text x="305" y="309" text-anchor="middle" fill="rgba(212,175,55,0.92)" font-size="16" font-family="serif" letter-spacing="3" filter="url(#gT)">敦煌</text>
-      <text x="305" y="319" text-anchor="middle" fill="rgba(212,175,55,0.33)" font-size="6.5" letter-spacing="2.5">DUNHUANG</text>
-
-      <!-- ── 03 玉门关 · 次城 · 上标 ── -->
-      <circle cx="470" cy="240" fill="none" stroke="rgba(200,169,110,0.22)" stroke-width="0.65">
-        <animate attributeName="r" values="7;15;7" dur="4.2s" begin="0.9s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.38;0;0.38" dur="4.2s" begin="0.9s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="470" cy="240" r="4.5" fill="rgba(200,169,110,0.1)" stroke="rgba(200,169,110,0.58)" stroke-width="0.95" filter="url(#gB)"/>
-      <circle cx="470" cy="240" r="2" fill="#C8A96E"/>
-      <line x1="470" y1="233" x2="456" y2="192" stroke="rgba(200,169,110,0.18)" stroke-width="0.4">
-        <animate attributeName="opacity" values="0.1;0.26;0.1" dur="4.2s" begin="0.9s" repeatCount="indefinite"/>
-      </line>
-      <rect x="396" y="155" width="120" height="36" fill="rgba(4,3,2,0.8)" stroke="rgba(200,169,110,0.26)" stroke-width="0.5"/>
-      <rect x="396" y="155" width="120" height="1.2" fill="rgba(200,169,110,0.4)"/>
-      <text x="402" y="165" fill="rgba(200,169,110,0.22)" font-size="6" letter-spacing="1">03</text>
-      <text x="456" y="180" text-anchor="middle" fill="rgba(200,169,110,0.86)" font-size="14" font-family="serif" letter-spacing="2" filter="url(#gT)">玉门关</text>
-      <text x="456" y="190" text-anchor="middle" fill="rgba(200,169,110,0.28)" font-size="6" letter-spacing="2">JADE GATE</text>
-
-      <!-- ── 04 龟兹 · 次城 · 下标 ── -->
-      <circle cx="640" cy="252" fill="none" stroke="rgba(200,169,110,0.2)" stroke-width="0.6">
-        <animate attributeName="r" values="6;14;6" dur="4.6s" begin="1.3s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.35;0;0.35" dur="4.6s" begin="1.3s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="640" cy="252" r="4.5" fill="rgba(200,169,110,0.08)" stroke="rgba(200,169,110,0.52)" stroke-width="0.9" filter="url(#gB)"/>
-      <circle cx="640" cy="252" r="2" fill="#C8A96E" opacity="0.88"/>
-      <line x1="640" y1="258" x2="640" y2="300" stroke="rgba(200,169,110,0.16)" stroke-width="0.38">
-        <animate attributeName="opacity" values="0.09;0.22;0.09" dur="4.6s" begin="1.3s" repeatCount="indefinite"/>
-      </line>
-      <rect x="580" y="302" width="120" height="36" fill="rgba(4,3,2,0.78)" stroke="rgba(200,169,110,0.22)" stroke-width="0.48"/>
-      <rect x="580" y="302" width="120" height="1.2" fill="rgba(200,169,110,0.35)"/>
-      <text x="586" y="312" fill="rgba(200,169,110,0.2)" font-size="6" letter-spacing="1">04</text>
-      <text x="640" y="327" text-anchor="middle" fill="rgba(200,169,110,0.84)" font-size="14" font-family="serif" letter-spacing="3" filter="url(#gT)">龟兹</text>
-      <text x="640" y="337" text-anchor="middle" fill="rgba(200,169,110,0.26)" font-size="6" letter-spacing="2">KUCHA</text>
-
-      <!-- ── 05 疏勒 · 次城 · 上标 ── -->
-      <circle cx="780" cy="260" fill="none" stroke="rgba(200,169,110,0.18)" stroke-width="0.55">
-        <animate attributeName="r" values="5;12;5" dur="5s" begin="1.7s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.32;0;0.32" dur="5s" begin="1.7s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="780" cy="260" r="4" fill="rgba(200,169,110,0.08)" stroke="rgba(200,169,110,0.48)" stroke-width="0.85" filter="url(#gB)"/>
-      <circle cx="780" cy="260" r="1.7" fill="#B89850" opacity="0.82"/>
-      <line x1="780" y1="253" x2="780" y2="208" stroke="rgba(200,169,110,0.14)" stroke-width="0.38">
-        <animate attributeName="opacity" values="0.08;0.2;0.08" dur="5s" begin="1.7s" repeatCount="indefinite"/>
-      </line>
-      <rect x="718" y="172" width="124" height="36" fill="rgba(4,3,2,0.76)" stroke="rgba(200,169,110,0.2)" stroke-width="0.45"/>
-      <rect x="718" y="172" width="124" height="1.2" fill="rgba(200,169,110,0.32)"/>
-      <text x="724" y="182" fill="rgba(200,169,110,0.18)" font-size="6" letter-spacing="1">05</text>
-      <text x="780" y="197" text-anchor="middle" fill="rgba(200,169,110,0.82)" font-size="13.5" font-family="serif" letter-spacing="3" filter="url(#gT)">疏勒</text>
-      <text x="780" y="207" text-anchor="middle" fill="rgba(200,169,110,0.24)" font-size="6" letter-spacing="2">KASHGAR</text>
-
-      <!-- ── 06 撒马尔罕 · 主城 · 下标 ── -->
-      <circle cx="985" cy="270" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="0.9">
-        <animate attributeName="r" values="9;20;9" dur="3.8s" begin="0.8s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.42;0;0.42" dur="3.8s" begin="0.8s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="985" cy="270" fill="none" stroke="rgba(212,175,55,0.14)" stroke-width="0.55">
-        <animate attributeName="r" values="5;13;5" dur="3.8s" begin="1.5s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.28;0;0.28" dur="3.8s" begin="1.5s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="985" cy="270" r="6.5" fill="rgba(212,175,55,0.14)" stroke="#D4AF37" stroke-width="1.25" filter="url(#gA)"/>
-      <circle cx="985" cy="270" r="3" fill="#E8C840"/>
-      <circle cx="985" cy="270" r="1.2" fill="white" opacity="0.72"/>
-      <line x1="985" y1="278" x2="985" y2="320" stroke="rgba(212,175,55,0.2)" stroke-width="0.45">
-        <animate attributeName="opacity" values="0.12;0.3;0.12" dur="3.8s" begin="0.8s" repeatCount="indefinite"/>
-      </line>
-      <rect x="920" y="322" width="130" height="40" fill="rgba(4,3,2,0.84)" stroke="rgba(212,175,55,0.36)" stroke-width="0.6"/>
-      <rect x="920" y="322" width="130" height="1.5" fill="rgba(212,175,55,0.56)"/>
-      <text x="926" y="333" fill="rgba(212,175,55,0.28)" font-size="6" letter-spacing="1">06 · 中亚枢纽</text>
-      <text x="985" y="350" text-anchor="middle" fill="rgba(212,175,55,0.92)" font-size="14" font-family="serif" letter-spacing="1.5" filter="url(#gT)">撒马尔罕</text>
-      <text x="985" y="360" text-anchor="middle" fill="rgba(212,175,55,0.34)" font-size="6.5" letter-spacing="1.5">SAMARKAND</text>
-
-      <!-- ── 07 君士坦丁堡 · 主城 · 上标 · 终点 ── -->
-      <circle cx="1250" cy="275" fill="none" stroke="rgba(212,175,55,0.26)" stroke-width="1">
-        <animate attributeName="r" values="13;27;13" dur="4s" begin="0.3s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.38;0;0.38" dur="4s" begin="0.3s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="1250" cy="275" fill="none" stroke="rgba(212,175,55,0.16)" stroke-width="0.65">
-        <animate attributeName="r" values="8;18;8" dur="4s" begin="1.2s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.3;0;0.3" dur="4s" begin="1.2s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="1250" cy="275" r="8.5" fill="rgba(255,235,80,0.18)" stroke="#FFE566" stroke-width="1.5" filter="url(#gA)"/>
-      <circle cx="1250" cy="275" r="4.2" fill="#FFE566"/>
-      <circle cx="1250" cy="275" r="1.7" fill="white" opacity="0.92"/>
-      <line x1="1250" y1="265" x2="1250" y2="212" stroke="rgba(212,175,55,0.26)" stroke-width="0.5">
-        <animate attributeName="opacity" values="0.16;0.38;0.16" dur="4s" begin="0.3s" repeatCount="indefinite"/>
-      </line>
-      <rect x="1176" y="170" width="148" height="42" fill="rgba(4,3,2,0.88)" stroke="rgba(212,175,55,0.46)" stroke-width="0.7"/>
-      <rect x="1176" y="170" width="148" height="2" fill="rgba(212,175,55,0.72)"/>
-      <path d="M1316 170 L1324 170 L1324 178" stroke="rgba(212,175,55,0.28)" stroke-width="0.45" fill="none"/>
-      <text x="1182" y="181" fill="rgba(212,175,55,0.32)" font-size="6" letter-spacing="1">07 · TERMINUS</text>
-      <text x="1250" y="199" text-anchor="middle" fill="#D4AF37" font-size="13" font-family="serif" letter-spacing="1" font-weight="bold" filter="url(#gT)">君士坦丁堡</text>
-      <text x="1250" y="210" text-anchor="middle" fill="rgba(212,175,55,0.38)" font-size="6" letter-spacing="1.5">CONSTANTINOPLE</text>
-
-      <!-- ══ 指南针（左下）══ -->
+      <!-- 指南针（左下） -->
       <g transform="translate(65, 518)">
         <circle cx="0" cy="0" r="32" stroke="rgba(212,175,55,0.09)" stroke-width="0.55" fill="rgba(4,3,2,0.35)"/>
         <circle cx="0" cy="0" r="25" stroke="rgba(212,175,55,0.055)" stroke-width="0.35" fill="none" stroke-dasharray="2,5"/>
@@ -1790,8 +1652,8 @@ footer {
         <text x="-35" y="4" text-anchor="end" fill="rgba(212,175,55,0.3)" font-size="7" font-family="serif">西</text>
       </g>
 
-      <!-- ══ 帆船剪影（右下，呼应参考图）══ -->
-      <g transform="translate(1178, 468)" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.18)" stroke-width="0.55">
+      <!-- 帆船剪影（右下） -->
+      <g transform="translate(1178, 465)" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.18)" stroke-width="0.55">
         <path d="M0 46 Q38 52 76 46 Q66 56 38 58 Q10 56 0 46 Z"/>
         <path d="M38 46 L38 12 L66 46 Z"/>
         <path d="M38 46 L38 22 L16 46 Z"/>
@@ -1801,7 +1663,7 @@ footer {
       </g>
       <text x="1218" y="540" text-anchor="middle" fill="rgba(212,175,55,0.15)" font-size="6.5" letter-spacing="2">海上丝路</text>
 
-      <!-- ══ 信息面板（右下）══ -->
+      <!-- 信息面板（右下） -->
       <rect x="1050" y="446" width="280" height="124" fill="rgba(4,3,2,0.84)" stroke="rgba(212,175,55,0.18)" stroke-width="0.55"/>
       <rect x="1050" y="446" width="280" height="1.8" fill="rgba(212,175,55,0.4)"/>
       <text x="1064" y="462" fill="rgba(212,175,55,0.58)" font-size="7.5" letter-spacing="3">SILK ROAD · NAV SYSTEM</text>
@@ -1818,7 +1680,7 @@ footer {
       </circle>
       <text x="1304" y="538" text-anchor="end" fill="rgba(212,175,55,0.18)" font-size="5.5" letter-spacing="1">LIVE</text>
 
-      <!-- ══ 边框+四角 ══ -->
+      <!-- 边框+四角装饰 -->
       <rect x="10" y="10" width="1380" height="580" stroke="rgba(212,175,55,0.07)" stroke-width="0.55" fill="none"/>
       <path d="M10 10 L10 46 M10 10 L46 10" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
       <path d="M1390 10 L1390 46 M1390 10 L1354 10" stroke="rgba(212,175,55,0.4)" stroke-width="1.2"/>
