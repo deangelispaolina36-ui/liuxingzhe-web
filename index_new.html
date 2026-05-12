@@ -537,16 +537,39 @@ section {
    AI 旅程生成模块
    ============================================================ */
 #journey {
-  background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 100%);
+  background: var(--bg-deep);
+  position: relative;
 }
 
-/* 噪点纹理 */
+/* 背景图 */
 #journey::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: url('assets/images/hero-bg-ref.png');
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.55;
   pointer-events: none;
+  z-index: 0;
+}
+
+/* 额外叠加遮罩，顶部底部融合 */
+#journey::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(10,8,5,0.85) 0%,
+      rgba(10,8,5,0.2) 20%,
+      rgba(10,8,5,0.0) 40%,
+      rgba(10,8,5,0.0) 60%,
+      rgba(10,8,5,0.2) 80%,
+      rgba(10,8,5,0.9) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
 }
 
 .journey-layout {
@@ -556,6 +579,8 @@ section {
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   align-items: start;
+  position: relative;
+  z-index: 2;
 }
 
 /* 输入区 */
@@ -1293,7 +1318,7 @@ footer {
      AI 旅程生成模块
      ============================================================ -->
 <section id="journey">
-  <div class="section-header reveal">
+  <div class="section-header reveal" style="position:relative;z-index:2;">
     <span class="section-label">AI · JOURNEY GENERATOR</span>
     <h2 class="section-title-cn section-title">AI生成 · 你的丝路旅程</h2>
     <div class="section-divider"></div>
