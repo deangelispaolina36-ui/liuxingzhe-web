@@ -1281,6 +1281,308 @@ footer {
   .hero-ring-2 { width: 320px; height: 320px; }
   .hero-glow { width: 280px; height: 280px; }
 }
+
+/* ═══════════════════════════════════════
+   数字文明藏馆 · Museum CSS
+   ═══════════════════════════════════════ */
+
+#artifact {
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0 60px;
+  background: var(--bg-deep);
+}
+
+/* 星尘背景 */
+.museum-stardust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 展厅主体 */
+.museum-hall {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0;
+  padding: 40px 40px 0;
+  position: relative;
+  z-index: 1;
+  min-height: 520px;
+}
+
+/* ── 侧展柜 ── */
+.museum-cabinet {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 40px;
+  opacity: 0.82;
+}
+.museum-cabinet--left { margin-right: -20px; transform: translateY(30px) scale(0.88); }
+.museum-cabinet--right { margin-left: -20px; transform: translateY(30px) scale(0.88); }
+
+.cabinet-frame {
+  position: relative;
+  width: 180px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid rgba(212,175,55,0.18);
+  background: rgba(212,175,55,0.02);
+  backdrop-filter: blur(4px);
+  padding: 16px;
+}
+.cabinet-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(212,175,55,0.04) 0%, rgba(212,175,55,0) 60%);
+  pointer-events: none;
+}
+.cabinet-frame svg { width: 140px; height: 140px; position: relative; z-index: 1; }
+
+.cabinet-glow--ambient {
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 120px; height: 40px;
+  background: radial-gradient(ellipse at center, rgba(212,175,55,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cabinet-reflection {
+  position: absolute;
+  bottom: -1px; left: 8px; right: 8px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+}
+
+.cabinet-label { text-align: center; }
+.cabinet-num { font-size: 9px; letter-spacing: 3px; color: rgba(212,175,55,0.4); display: block; margin-bottom: 4px; }
+.cabinet-name { font-size: 13px; font-family: serif; color: rgba(212,175,55,0.75); letter-spacing: 2px; margin: 0 0 3px; }
+.cabinet-origin { font-size: 9px; color: rgba(212,175,55,0.3); letter-spacing: 1.5px; margin: 0; }
+
+/* ── 中央主展品 ── */
+.museum-centerpiece {
+  flex: 0 0 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  padding-bottom: 20px;
+}
+
+/* 能量环 */
+.energy-rings {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+.energy-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.15);
+  transform: translate(-50%, -50%);
+  animation: ringPulse 4s ease-in-out infinite;
+}
+.energy-ring--1 { width: 320px; height: 320px; animation-delay: 0s; border-color: rgba(212,175,55,0.12); }
+.energy-ring--2 { width: 420px; height: 420px; animation-delay: 1.2s; border-color: rgba(212,175,55,0.07); border-width: 0.5px; }
+.energy-ring--3 { width: 240px; height: 240px; animation-delay: 2.4s; border-color: rgba(212,175,55,0.18); border-style: dashed; }
+@keyframes ringPulse {
+  0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+  50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.04); }
+}
+
+/* 粒子漂浮 */
+.float-particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.particle {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.6);
+  animation: floatUp 6s ease-in-out infinite;
+}
+.p1 { left: 20%; top: 70%; animation-delay: 0s;    width: 2px; height: 2px; }
+.p2 { left: 75%; top: 65%; animation-delay: 1s;    width: 3px; height: 3px; }
+.p3 { left: 40%; top: 80%; animation-delay: 2s;    width: 2px; height: 2px; background: rgba(212,175,55,0.4); }
+.p4 { left: 60%; top: 75%; animation-delay: 3s;    width: 2px; height: 2px; }
+.p5 { left: 15%; top: 55%; animation-delay: 0.5s;  width: 1.5px; height: 1.5px; background: rgba(212,175,55,0.35); }
+.p6 { left: 85%; top: 50%; animation-delay: 2.5s;  width: 2px; height: 2px; background: rgba(212,175,55,0.45); }
+@keyframes floatUp {
+  0%   { transform: translateY(0) scale(1);   opacity: 0; }
+  20%  { opacity: 0.8; }
+  80%  { opacity: 0.5; }
+  100% { transform: translateY(-80px) scale(0.5); opacity: 0; }
+}
+
+/* 主展品框架 */
+.centerpiece-frame {
+  position: relative;
+  width: 340px;
+  border: 0.6px solid rgba(212,175,55,0.28);
+  background: rgba(212,175,55,0.025);
+  backdrop-filter: blur(6px);
+  padding: 32px 32px 16px;
+  z-index: 1;
+}
+.centerpiece-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(212,175,55,0.06) 0%, rgba(212,175,55,0) 50%);
+  pointer-events: none;
+}
+.centerpiece-frame::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent);
+  animation: frameSweep 4s ease-in-out infinite;
+}
+@keyframes frameSweep {
+  0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
+}
+.centerpiece-frame svg { width: 280px; height: 280px; margin: 0 auto; display: block; position: relative; z-index: 1; }
+
+/* 主展品底部倒影 */
+.centerpiece-reflect {
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+}
+
+.centerpiece-glow {
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 80%; height: 50px;
+  background: radial-gradient(ellipse at bottom, rgba(212,175,55,0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* 展品信息板 */
+.centerpiece-info {
+  margin-top: 24px;
+  text-align: center;
+  position: relative; z-index: 1;
+}
+.info-tag { margin-bottom: 8px; }
+.info-num {
+  font-size: 9px; letter-spacing: 3px;
+  color: rgba(212,175,55,0.45);
+  border: 0.5px solid rgba(212,175,55,0.2);
+  padding: 3px 10px;
+  display: inline-block;
+}
+.info-title {
+  font-family: serif;
+  font-size: 22px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  margin: 0 0 4px;
+  filter: drop-shadow(0 0 8px rgba(212,175,55,0.35));
+}
+.info-subtitle {
+  font-size: 9px; letter-spacing: 3px;
+  color: rgba(212,175,55,0.35);
+  margin: 0 0 12px;
+}
+.info-divider {
+  width: 40px; height: 0.5px;
+  background: rgba(212,175,55,0.3);
+  margin: 0 auto 12px;
+}
+.info-meta {
+  font-size: 10px; letter-spacing: 2px;
+  color: rgba(212,175,55,0.4);
+  margin: 0 0 8px;
+}
+.info-desc {
+  font-size: 11.5px;
+  color: rgba(200,169,110,0.6);
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* ── 文明系统入口 ── */
+.civilization-entries {
+  padding: 48px 60px 20px;
+  position: relative; z-index: 1;
+}
+.civ-entry-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.civ-entry-label span {
+  font-size: 9px; letter-spacing: 4px;
+  color: rgba(212,175,55,0.35);
+  white-space: nowrap;
+}
+.civ-entry-line {
+  flex: 1; height: 0.4px;
+  background: linear-gradient(90deg, rgba(212,175,55,0.2), transparent);
+}
+.civ-entry-grid {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.civ-entry-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 24px;
+  border: 0.5px solid rgba(212,175,55,0.14);
+  background: rgba(212,175,55,0.02);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  min-width: 110px;
+  position: relative;
+  overflow: hidden;
+}
+.civ-entry-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 0.8px;
+  background: rgba(212,175,55,0.3);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+.civ-entry-item:hover::before,
+.civ-entry-item--active::before { transform: scaleX(1); }
+.civ-entry-item:hover {
+  border-color: rgba(212,175,55,0.3);
+  background: rgba(212,175,55,0.04);
+}
+.civ-entry-item--active {
+  border-color: rgba(212,175,55,0.28);
+  background: rgba(212,175,55,0.05);
+}
+.civ-entry-icon { width: 32px; height: 32px; }
+.civ-entry-name {
+  font-size: 12px; font-family: serif;
+  color: rgba(212,175,55,0.7);
+  letter-spacing: 1px;
+}
+.civ-entry-sub {
+  font-size: 7.5px; letter-spacing: 2px;
+  color: rgba(212,175,55,0.28);
+}
+
 </style>
 </head>
 <body>
@@ -1691,126 +1993,267 @@ footer {
      文物原型模块
      ============================================================ -->
 <section id="artifact">
-  <div class="section-header reveal">
-    <span class="section-label">THE ORIGIN · ARTIFACT</span>
-    <h2 class="section-title-cn section-title">文物 · 原型传承</h2>
-    <div class="section-divider"></div>
+
+  <!-- 星尘背景层 -->
+  <div class="museum-stardust" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;pointer-events:none;">
+      <defs>
+        <radialGradient id="fogCenter" cx="50%" cy="55%" r="55%">
+          <stop offset="0%" stop-color="rgba(212,175,55,0.05)"/>
+          <stop offset="100%" stop-color="rgba(212,175,55,0)"/>
+        </radialGradient>
+        <radialGradient id="fogLeft" cx="15%" cy="60%" r="35%">
+          <stop offset="0%" stop-color="rgba(180,140,40,0.04)"/>
+          <stop offset="100%" stop-color="rgba(180,140,40,0)"/>
+        </radialGradient>
+        <radialGradient id="fogRight" cx="85%" cy="60%" r="35%">
+          <stop offset="0%" stop-color="rgba(180,140,40,0.04)"/>
+          <stop offset="100%" stop-color="rgba(180,140,40,0)"/>
+        </radialGradient>
+      </defs>
+      <!-- 光雾 -->
+      <rect width="1400" height="900" fill="url(#fogCenter)"/>
+      <rect width="1400" height="900" fill="url(#fogLeft)"/>
+      <rect width="1400" height="900" fill="url(#fogRight)"/>
+      <!-- 星尘粒子 -->
+      <circle cx="120" cy="80" r="0.8" fill="rgba(212,175,55,0.35)"/><circle cx="340" cy="45" r="0.5" fill="rgba(212,175,55,0.25)"/>
+      <circle cx="580" cy="110" r="0.7" fill="rgba(212,175,55,0.3)"/><circle cx="820" cy="60" r="0.9" fill="rgba(212,175,55,0.2)"/>
+      <circle cx="1060" cy="90" r="0.6" fill="rgba(212,175,55,0.3)"/><circle cx="1280" cy="50" r="0.8" fill="rgba(212,175,55,0.25)"/>
+      <circle cx="200" cy="200" r="0.5" fill="rgba(212,175,55,0.15)"/><circle cx="460" cy="170" r="0.7" fill="rgba(212,175,55,0.2)"/>
+      <circle cx="700" cy="140" r="0.4" fill="rgba(212,175,55,0.18)"/><circle cx="950" cy="180" r="0.6" fill="rgba(212,175,55,0.15)"/>
+      <circle cx="1150" cy="130" r="0.5" fill="rgba(212,175,55,0.22)"/><circle cx="80" cy="350" r="0.6" fill="rgba(212,175,55,0.12)"/>
+      <circle cx="1350" cy="280" r="0.7" fill="rgba(212,175,55,0.18)"/><circle cx="650" cy="820" r="0.5" fill="rgba(212,175,55,0.12)"/>
+      <circle cx="900" cy="780" r="0.8" fill="rgba(212,175,55,0.1)"/><circle cx="1200" cy="840" r="0.6" fill="rgba(212,175,55,0.12)"/>
+      <!-- 地面极光线 -->
+      <line x1="0" y1="820" x2="1400" y2="820" stroke="rgba(212,175,55,0.04)" stroke-width="0.5"/>
+      <line x1="0" y1="840" x2="1400" y2="840" stroke="rgba(212,175,55,0.025)" stroke-width="0.3"/>
+    </svg>
   </div>
 
-  <div class="artifact-layout">
-    <!-- 左侧展柜 -->
-    <div class="artifact-showcase reveal reveal-delay-1">
-      <div class="artifact-glow"></div>
+  <!-- 标题区域 -->
+  <div class="section-header reveal" style="padding-top:20px;">
+    <span class="section-label" style="font-size:9px;letter-spacing:4px;opacity:0.5;">DIGITAL CIVILIZATION MUSEUM</span>
+    <h2 class="section-title-cn section-title" style="font-size:clamp(22px,3.2vw,32px);margin:8px 0 6px;letter-spacing:6px;">数字文明藏馆</h2>
+    <div class="section-divider" style="width:50px;opacity:0.25;"></div>
+    <p class="section-sub" style="opacity:0.3;font-size:11px;letter-spacing:3px;margin-top:6px;">西夏鎏金铜牛 · 文明原型 · 数字传承</p>
+  </div>
 
-      <!-- 铜牛艺术化 CSS+SVG -->
-      <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:240px;height:240px;margin:0 auto;display:block;">
-        <defs>
-          <radialGradient id="bronzeGrad" cx="45%" cy="35%" r="60%">
-            <stop offset="0%" stop-color="#E8C840"/>
-            <stop offset="40%" stop-color="#D4AF37"/>
-            <stop offset="80%" stop-color="#A08530"/>
-            <stop offset="100%" stop-color="#6B5520"/>
-          </radialGradient>
-          <filter id="artifactGlow">
-            <feGaussianBlur stdDeviation="4" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
+  <!-- 展厅主体 -->
+  <div class="museum-hall">
 
-        <!-- 台座 -->
-        <rect x="70" y="252" width="160" height="12" rx="3" fill="rgba(212,175,55,0.2)" stroke="rgba(212,175,55,0.4)" stroke-width="0.8"/>
-        <rect x="80" y="248" width="140" height="8" rx="2" fill="rgba(212,175,55,0.15)" stroke="rgba(212,175,55,0.3)" stroke-width="0.8"/>
-
-        <!-- 底座光晕 -->
-        <ellipse cx="150" cy="258" rx="85" ry="8" fill="rgba(212,175,55,0.06)"/>
-
-        <!-- 牛身 (几何化) -->
-        <path d="M85 200 Q80 160 92 132 Q108 105 150 100 Q192 95 210 120 Q228 145 226 188 Q224 210 215 222 L190 232 L150 236 L110 234 Z"
-              fill="url(#bronzeGrad)" filter="url(#artifactGlow)" opacity="0.92"/>
-
-        <!-- 牛头 -->
-        <path d="M92 132 Q80 112 72 95 Q80 78 95 75 Q112 72 122 88 Q128 100 128 115 Q110 125 92 132 Z"
-              fill="url(#bronzeGrad)" opacity="0.88"/>
-
-        <!-- 牛角 -->
-        <path d="M78 90 Q55 68 52 48 Q68 42 77 58 Q82 75 83 88 Z" fill="rgba(232,200,64,0.75)"/>
-        <path d="M105 78 Q100 52 115 36 Q128 44 124 64 Q118 78 112 86 Z" fill="rgba(232,200,64,0.75)"/>
-
-        <!-- 牛腿 -->
-        <rect x="110" y="228" width="16" height="22" rx="4" fill="rgba(200,165,50,0.85)"/>
-        <rect x="134" y="230" width="16" height="20" rx="4" fill="rgba(200,165,50,0.80)"/>
-        <rect x="160" y="226" width="16" height="24" rx="4" fill="rgba(188,155,45,0.85)"/>
-        <rect x="183" y="224" width="14" height="26" rx="4" fill="rgba(175,140,40,0.80)"/>
-
-        <!-- 牛尾 -->
-        <path d="M218 188 Q240 172 248 155 Q240 145 232 155 Q222 168 216 192"
-              stroke="rgba(212,175,55,0.75)" stroke-width="6" fill="none" stroke-linecap="round"/>
-
-        <!-- 装饰纹路 -->
-        <path d="M112 145 Q130 140 150 143 Q170 146 188 141" stroke="rgba(255,220,100,0.4)" stroke-width="1.5" fill="none"/>
-        <path d="M108 165 Q132 160 155 163 Q178 166 195 160" stroke="rgba(255,220,100,0.35)" stroke-width="1.2" fill="none"/>
-        <path d="M110 185 Q135 180 158 183 Q182 186 200 180" stroke="rgba(255,220,100,0.3)" stroke-width="1" fill="none"/>
-
-        <!-- 眼睛 -->
-        <circle cx="86" cy="100" r="5" fill="rgba(10,8,5,0.9)"/>
-        <circle cx="86" cy="100" r="2" fill="rgba(232,200,64,0.9)"/>
-        <circle cx="87" cy="99" r="0.8" fill="rgba(255,255,255,0.4)"/>
-
-        <!-- 鼻环 -->
-        <ellipse cx="96" cy="118" rx="8" ry="3.5" stroke="rgba(232,200,64,0.9)" stroke-width="2" fill="none"/>
-
-        <!-- 额头纹样 -->
-        <path d="M88 82 L94 76 L100 82 L94 88 Z" stroke="rgba(232,200,64,0.8)" stroke-width="1" fill="rgba(232,200,64,0.2)"/>
-
-        <!-- 高光线 -->
-        <path d="M112 118 Q130 110 152 112" stroke="rgba(255,255,255,0.12)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M160 108 Q178 102 194 110" stroke="rgba(255,255,255,0.08)" stroke-width="2" fill="none" stroke-linecap="round"/>
-
-        <!-- 铜锈斑纹 (装饰) -->
-        <circle cx="155" cy="155" r="3" fill="rgba(80,160,100,0.08)"/>
-        <circle cx="178" cy="170" r="2" fill="rgba(80,160,100,0.06)"/>
-        <circle cx="130" cy="175" r="2.5" fill="rgba(80,160,100,0.07)"/>
-      </svg>
-
-      <p class="artifact-caption">西夏鎏金铜牛 · 宁夏博物馆藏</p>
-      <p class="artifact-desc-small">
-        西夏（1038—1227），党项族建立的王朝<br>
-        此铜牛以失蜡法铸造，通体鎏金<br>
-        是西夏金属工艺的最高代表
-      </p>
+    <!-- ── 左侧展柜（次要）── -->
+    <div class="museum-cabinet museum-cabinet--left reveal reveal-delay-1">
+      <div class="cabinet-frame">
+        <div class="cabinet-glow cabinet-glow--ambient"></div>
+        <!-- SVG：商周青铜器风格小件 -->
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="bronzeL" cx="40%" cy="30%" r="65%">
+              <stop offset="0%" stop-color="#D4AF37"/><stop offset="60%" stop-color="#A08530"/><stop offset="100%" stop-color="#5A4018"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="100" cy="172" rx="52" ry="6" fill="rgba(212,175,55,0.08)"/>
+          <!-- 鼎身 -->
+          <path d="M52 155 Q48 110 55 80 Q68 52 100 48 Q132 44 147 72 Q156 98 154 145 L148 158 L52 158 Z" fill="url(#bronzeL)" opacity="0.88"/>
+          <!-- 双耳 -->
+          <path d="M52 90 Q38 82 36 68 Q38 56 50 56 Q60 58 62 72 Q62 82 56 90 Z" fill="rgba(180,140,40,0.7)"/>
+          <path d="M150 88 Q164 80 166 66 Q164 54 152 54 Q142 56 140 70 Q140 80 146 88 Z" fill="rgba(180,140,40,0.7)"/>
+          <!-- 三足 -->
+          <rect x="68" y="155" width="12" height="28" rx="3" fill="rgba(160,120,35,0.8)"/>
+          <rect x="94" y="158" width="12" height="26" rx="3" fill="rgba(155,118,33,0.8)"/>
+          <rect x="120" y="155" width="12" height="28" rx="3" fill="rgba(150,115,30,0.8)"/>
+          <!-- 纹饰 -->
+          <path d="M60 100 Q80 95 100 98 Q120 101 142 96" stroke="rgba(255,220,80,0.35)" stroke-width="1.2" fill="none"/>
+          <path d="M58 120 Q80 115 100 118 Q120 121 144 116" stroke="rgba(255,220,80,0.25)" stroke-width="1" fill="none"/>
+          <path d="M62 140 Q82 136 100 138 Q120 140 140 136" stroke="rgba(255,220,80,0.2)" stroke-width="0.8" fill="none"/>
+          <!-- 盖 -->
+          <path d="M62 60 Q78 48 100 46 Q122 44 140 56 L136 68 L64 68 Z" fill="rgba(200,160,45,0.6)"/>
+          <circle cx="100" cy="44" r="6" fill="rgba(220,180,50,0.7)" stroke="rgba(255,220,80,0.4)" stroke-width="0.8"/>
+        </svg>
+        <div class="cabinet-reflection"></div>
+      </div>
+      <div class="cabinet-label">
+        <span class="cabinet-num">藏品 · I</span>
+        <p class="cabinet-name">西夏青铜礼器</p>
+        <p class="cabinet-origin">约 1038—1227 CE</p>
+      </div>
     </div>
 
-    <!-- 右侧演化时间线 -->
-    <div class="evolution-timeline reveal reveal-delay-2">
-      <h3 style="font-family:serif;font-size:24px;color:var(--text-secondary);letter-spacing:3px;margin-bottom:48px;">
-        文物 · 到 · IP 的演化
-      </h3>
-
-      <div class="evo-step">
-        <p class="evo-step-num">STEP 01</p>
-        <h4 class="evo-step-title">文物原型</h4>
-        <p class="evo-step-desc">以宁夏博物馆馆藏西夏鎏金铜牛为创作原点，还原西夏党项族的审美精神与金属铸造工艺，提炼原始造型语言。</p>
+    <!-- ── 中央主展品（核心）── -->
+    <div class="museum-centerpiece reveal">
+      <!-- 能量环 -->
+      <div class="energy-rings" aria-hidden="true">
+        <div class="energy-ring energy-ring--1"></div>
+        <div class="energy-ring energy-ring--2"></div>
+        <div class="energy-ring energy-ring--3"></div>
+      </div>
+      <!-- 粒子漂浮 -->
+      <div class="float-particles" aria-hidden="true">
+        <span class="particle p1"></span><span class="particle p2"></span>
+        <span class="particle p3"></span><span class="particle p4"></span>
+        <span class="particle p5"></span><span class="particle p6"></span>
       </div>
 
-      <div class="evo-step">
-        <p class="evo-step-num">STEP 02</p>
-        <h4 class="evo-step-title">概念草图</h4>
-        <p class="evo-step-desc">将铜牛的历史造型解构重组，融入现代潮玩审美，保留西夏纹样与鎏金工艺感，完成从文物到IP角色的概念转化。</p>
+      <div class="centerpiece-frame">
+        <div class="centerpiece-glow"></div>
+        <!-- 主展品：鎏金铜牛 SVG -->
+        <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="bronzeMain" cx="42%" cy="32%" r="62%">
+              <stop offset="0%" stop-color="#F0D060"/><stop offset="35%" stop-color="#D4AF37"/>
+              <stop offset="75%" stop-color="#A08530"/><stop offset="100%" stop-color="#6B5520"/>
+            </radialGradient>
+            <radialGradient id="baseGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(212,175,55,0.35)"/><stop offset="100%" stop-color="rgba(212,175,55,0)"/>
+            </radialGradient>
+            <filter id="mainGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="5" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- 底座光晕（地面倒影） -->
+          <ellipse cx="150" cy="274" rx="110" ry="12" fill="url(#baseGlow)"/>
+          <ellipse cx="150" cy="278" rx="80" ry="7" fill="rgba(212,175,55,0.12)"/>
+          <!-- 台座 -->
+          <rect x="62" y="255" width="176" height="14" rx="3" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.38)" stroke-width="0.7"/>
+          <rect x="74" y="250" width="152" height="8" rx="2" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.28)" stroke-width="0.6"/>
+          <!-- 牛身 -->
+          <path d="M82 198 Q76 156 90 128 Q107 100 150 95 Q193 90 212 118 Q232 142 230 186 Q228 210 218 224 L188 234 L150 238 L108 235 Z"
+                fill="url(#bronzeMain)" filter="url(#mainGlow)" opacity="0.94"/>
+          <!-- 牛头 -->
+          <path d="M90 128 Q78 108 70 90 Q78 72 94 68 Q113 65 124 82 Q130 96 130 114 Q110 122 90 128 Z"
+                fill="url(#bronzeMain)" opacity="0.9"/>
+          <!-- 牛角 -->
+          <path d="M76 84 Q52 62 48 40 Q66 34 76 52 Q82 68 82 82 Z" fill="rgba(240,208,64,0.78)"/>
+          <path d="M106 72 Q102 46 118 28 Q132 38 128 60 Q122 74 112 82 Z" fill="rgba(240,208,64,0.78)"/>
+          <!-- 牛腿 -->
+          <rect x="108" y="230" width="17" height="24" rx="4" fill="rgba(200,162,48,0.86)"/>
+          <rect x="133" y="232" width="17" height="22" rx="4" fill="rgba(196,158,45,0.82)"/>
+          <rect x="160" y="228" width="17" height="26" rx="4" fill="rgba(190,152,42,0.86)"/>
+          <rect x="184" y="226" width="15" height="28" rx="4" fill="rgba(178,142,38,0.82)"/>
+          <!-- 牛尾 -->
+          <path d="M222 184 Q246 168 254 150 Q246 140 238 150 Q227 164 220 188"
+                stroke="rgba(212,175,55,0.78)" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <!-- 纹饰 -->
+          <path d="M110 142 Q132 136 152 140 Q172 144 192 138" stroke="rgba(255,228,100,0.45)" stroke-width="1.6" fill="none"/>
+          <path d="M106 162 Q130 156 154 160 Q178 164 198 158" stroke="rgba(255,228,100,0.38)" stroke-width="1.3" fill="none"/>
+          <path d="M108 184 Q132 178 156 182 Q182 186 202 180" stroke="rgba(255,228,100,0.3)" stroke-width="1" fill="none"/>
+          <!-- 西夏纹饰（菱形） -->
+          <path d="M146 115 L155 108 L164 115 L155 122 Z" stroke="rgba(255,228,100,0.6)" stroke-width="0.8" fill="rgba(255,228,100,0.12)"/>
+          <!-- 眼睛 -->
+          <circle cx="84" cy="95" r="5.5" fill="rgba(8,6,4,0.92)"/>
+          <circle cx="84" cy="95" r="2.2" fill="rgba(240,208,64,0.92)"/>
+          <circle cx="85" cy="94" r="0.9" fill="rgba(255,255,255,0.45)"/>
+          <!-- 鼻环 -->
+          <ellipse cx="95" cy="114" rx="9" ry="4" stroke="rgba(240,208,64,0.92)" stroke-width="2.2" fill="none"/>
+          <!-- 高光 -->
+          <path d="M110 114 Q130 106 154 108" stroke="rgba(255,255,255,0.14)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          <path d="M162 104 Q180 98 198 106" stroke="rgba(255,255,255,0.09)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+        <!-- 地面倒影（CSS） -->
+        <div class="centerpiece-reflect"></div>
       </div>
 
-      <div class="evo-step">
-        <p class="evo-step-num">STEP 03</p>
-        <h4 class="evo-step-title">三维白模</h4>
-        <p class="evo-step-desc">基于草图完成三维数字建模，在保持文物神韵的基础上，加入现代设计语言，完成3D潮玩角色"鎏途"的数字原型。</p>
+      <!-- 展品信息板 -->
+      <div class="centerpiece-info">
+        <div class="info-tag">
+          <span class="info-num">藏品 · II · 镇馆之宝</span>
+        </div>
+        <h3 class="info-title">西夏鎏金铜牛</h3>
+        <p class="info-subtitle">GILT BRONZE BULL · XI XIA DYNASTY</p>
+        <div class="info-divider"></div>
+        <p class="info-meta">宁夏博物馆馆藏 · 约 1038—1227 CE</p>
+        <p class="info-desc">以失蜡法铸造，通体鎏金，为西夏金属工艺最高代表。党项族王朝遗珍，丝路文明融合之证。</p>
       </div>
+    </div>
 
-      <div class="evo-step">
-        <p class="evo-step-num">STEP 04</p>
-        <h4 class="evo-step-title">IP成品</h4>
-        <p class="evo-step-desc">最终完成"鎏途 LIUTU"数字IP，配色采用鎏金+西夏红双主色，成为西夏文化与丝路精神的当代数字守护者。</p>
+    <!-- ── 右侧展柜（次要）── -->
+    <div class="museum-cabinet museum-cabinet--right reveal reveal-delay-2">
+      <div class="cabinet-frame">
+        <div class="cabinet-glow cabinet-glow--ambient"></div>
+        <!-- SVG：西夏舍利塔风格 -->
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#E8C840"/><stop offset="50%" stop-color="#C8A030"/><stop offset="100%" stop-color="#8A6820"/>
+            </linearGradient>
+          </defs>
+          <ellipse cx="100" cy="172" rx="45" ry="5" fill="rgba(212,175,55,0.08)"/>
+          <!-- 塔基 -->
+          <rect x="60" y="152" width="80" height="14" rx="2" fill="rgba(180,140,40,0.55)" stroke="rgba(212,175,55,0.3)" stroke-width="0.6"/>
+          <rect x="70" y="144" width="60" height="12" rx="2" fill="rgba(190,150,42,0.6)" stroke="rgba(212,175,55,0.25)" stroke-width="0.6"/>
+          <!-- 塔身 -->
+          <rect x="78" y="100" width="44" height="46" rx="1" fill="url(#towerGrad)" opacity="0.85"/>
+          <rect x="84" y="86" width="32" height="16" rx="1" fill="rgba(200,160,40,0.75)"/>
+          <rect x="88" y="74" width="24" height="14" rx="1" fill="rgba(195,155,38,0.72)"/>
+          <rect x="92" y="62" width="16" height="14" rx="1" fill="rgba(188,150,36,0.7)"/>
+          <rect x="94" y="52" width="12" height="12" rx="1" fill="rgba(180,142,34,0.68)"/>
+          <!-- 塔刹 -->
+          <line x1="100" y1="52" x2="100" y2="30" stroke="rgba(212,175,55,0.7)" stroke-width="2"/>
+          <circle cx="100" cy="28" r="4" fill="rgba(212,175,55,0.8)" stroke="rgba(255,220,80,0.5)" stroke-width="0.8"/>
+          <!-- 飘带 -->
+          <path d="M96 42 Q85 38 80 30 Q84 26 90 32 Q94 38 98 44" stroke="rgba(212,175,55,0.35)" stroke-width="0.8" fill="none"/>
+          <path d="M104 42 Q115 38 120 30 Q116 26 110 32 Q106 38 102 44" stroke="rgba(212,175,55,0.35)" stroke-width="0.8" fill="none"/>
+          <!-- 纹饰 -->
+          <path d="M80 116 Q100 112 120 116" stroke="rgba(255,220,80,0.3)" stroke-width="0.8" fill="none"/>
+          <path d="M80 130 Q100 126 120 130" stroke="rgba(255,220,80,0.25)" stroke-width="0.7" fill="none"/>
+        </svg>
+        <div class="cabinet-reflection"></div>
+      </div>
+      <div class="cabinet-label">
+        <span class="cabinet-num">藏品 · III</span>
+        <p class="cabinet-name">西夏舍利石塔</p>
+        <p class="cabinet-origin">约 1038—1227 CE</p>
+      </div>
+    </div>
+
+  </div><!-- end museum-hall -->
+
+  <!-- 文明系统入口 -->
+  <div class="civilization-entries reveal">
+    <div class="civ-entry-label">
+      <span>文明档案系统</span>
+      <div class="civ-entry-line"></div>
+    </div>
+    <div class="civ-entry-grid">
+      <div class="civ-entry-item">
+        <div class="civ-entry-icon">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="rgba(212,175,55,0.5)" stroke-width="0.7"/><path d="M10 16 L22 16 M16 10 L16 22" stroke="rgba(212,175,55,0.6)" stroke-width="0.8"/><circle cx="16" cy="16" r="3" fill="rgba(212,175,55,0.2)" stroke="rgba(212,175,55,0.4)" stroke-width="0.6"/></svg>
+        </div>
+        <span class="civ-entry-name">文明档案</span>
+        <span class="civ-entry-sub">ARCHIVE</span>
+      </div>
+      <div class="civ-entry-item">
+        <div class="civ-entry-icon">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M8 24 Q16 8 24 24" stroke="rgba(212,175,55,0.5)" stroke-width="0.7" fill="none"/><circle cx="16" cy="14" r="4" stroke="rgba(212,175,55,0.45)" stroke-width="0.6" fill="rgba(212,175,55,0.08)"/><line x1="8" y1="26" x2="24" y2="26" stroke="rgba(212,175,55,0.3)" stroke-width="0.5"/></svg>
+        </div>
+        <span class="civ-entry-name">AI 故事生成</span>
+        <span class="civ-entry-sub">AI NARRATIVE</span>
+      </div>
+      <div class="civ-entry-item civ-entry-item--active">
+        <div class="civ-entry-icon">
+          <svg viewBox="0 0 32 32" fill="none"><rect x="9" y="9" width="14" height="14" stroke="rgba(212,175,55,0.6)" stroke-width="0.7" fill="rgba(212,175,55,0.06)"/><path d="M12 12 L20 20 M20 12 L12 20" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><circle cx="16" cy="16" r="2.5" fill="rgba(212,175,55,0.25)"/></svg>
+        </div>
+        <span class="civ-entry-name">数字藏品</span>
+        <span class="civ-entry-sub">DIGITAL RELIC</span>
+      </div>
+      <div class="civ-entry-item">
+        <div class="civ-entry-icon">
+          <svg viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="16" rx="10" ry="6" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="none"/><line x1="16" y1="10" x2="16" y2="22" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><circle cx="16" cy="16" r="2" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.4)" stroke-width="0.5"/></svg>
+        </div>
+        <span class="civ-entry-name">文明数据库</span>
+        <span class="civ-entry-sub">CIV DATABASE</span>
+      </div>
+      <div class="civ-entry-item">
+        <div class="civ-entry-icon">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M16 8 L20 14 L28 14 L22 19 L24 27 L16 22 L8 27 L10 19 L4 14 L12 14 Z" stroke="rgba(212,175,55,0.45)" stroke-width="0.6" fill="rgba(212,175,55,0.06)"/></svg>
+        </div>
+        <span class="civ-entry-name">共创计划</span>
+        <span class="civ-entry-sub">CO-CREATE</span>
       </div>
     </div>
   </div>
+
 </section>
 
 
