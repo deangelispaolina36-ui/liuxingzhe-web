@@ -1282,306 +1282,223 @@ footer {
   .hero-glow { width: 280px; height: 280px; }
 }
 
+
 /* ═══════════════════════════════════════
-   数字文明藏馆 · Museum CSS
+   数字文明藏馆 v2 · 参考图对齐
    ═══════════════════════════════════════ */
 
-#artifact {
-  position: relative;
-  overflow: hidden;
-  padding: 80px 0 60px;
-  background: var(--bg-deep);
+#artifact { position:relative; overflow:hidden; padding:80px 0 40px; background:var(--bg-deep); }
+.museum-stardust { position:absolute; inset:0; pointer-events:none; z-index:0; }
+
+/* 展廊横排 */
+.museum-gallery {
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:0;
+  padding:32px 60px 40px;
+  position:relative;
+  z-index:1;
 }
 
-/* 星尘背景 */
-.museum-stardust {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+/* 左右切换箭头 */
+.gallery-arrow {
+  position:absolute;
+  top:50%; transform:translateY(-50%);
+  width:40px; height:40px;
+  border:0.5px solid rgba(212,175,55,0.2);
+  background:rgba(212,175,55,0.03);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  z-index:4;
+}
+.gallery-arrow:hover { border-color:rgba(212,175,55,0.45); background:rgba(212,175,55,0.07); }
+.gallery-arrow svg { width:18px; height:18px; }
+.gallery-arrow--left  { left:20px; }
+.gallery-arrow--right { right:20px; }
+
+/* 侧展柜 */
+.gallery-case--side {
+  flex:0 0 260px;
+  transform:translateY(24px) scale(0.86);
+  opacity:0.72;
+  transition:all 0.4s ease;
+  z-index:1;
+}
+.gallery-case--side:hover { opacity:0.88; transform:translateY(20px) scale(0.87); }
+
+/* 中央主展柜 */
+.gallery-case--center {
+  flex:0 0 380px;
+  z-index:2;
+  position:relative;
+  margin:0 -10px;
 }
 
-/* 展厅主体 */
-.museum-hall {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 0;
-  padding: 40px 40px 0;
-  position: relative;
-  z-index: 1;
-  min-height: 520px;
+/* 展柜内框 */
+.gallery-case-inner {
+  display:flex; flex-direction:column; align-items:center;
+  gap:0;
+  border:0.5px solid rgba(212,175,55,0.16);
+  background:rgba(212,175,55,0.018);
+  backdrop-filter:blur(6px);
+  padding:20px 20px 24px;
+  position:relative;
+  overflow:hidden;
+}
+.gallery-case-inner::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:0.8px;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);
+  animation:sweepLine 4s ease-in-out infinite;
+}
+.gallery-case-inner--center {
+  border-color:rgba(212,175,55,0.28);
+  background:rgba(212,175,55,0.03);
+}
+.gallery-case-inner--center::before {
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.75),transparent);
+}
+@keyframes sweepLine { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* 标签 */
+.case-badge {
+  font-size:8px; letter-spacing:3px;
+  color:rgba(212,175,55,0.45);
+  border:0.5px solid rgba(212,175,55,0.2);
+  padding:3px 10px; margin-bottom:16px;
+  align-self:flex-start;
+}
+.case-badge--gold {
+  color:rgba(212,175,55,0.7);
+  border-color:rgba(212,175,55,0.35);
+  background:rgba(212,175,55,0.05);
 }
 
-/* ── 侧展柜 ── */
-.museum-cabinet {
-  flex: 0 0 220px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  position: relative;
-  z-index: 1;
-  margin-bottom: 40px;
-  opacity: 0.82;
+/* 展品区域 */
+.case-artifact-wrap {
+  position:relative;
+  display:flex; align-items:center; justify-content:center;
+  width:100%; padding:12px 0;
 }
-.museum-cabinet--left { margin-right: -20px; transform: translateY(30px) scale(0.88); }
-.museum-cabinet--right { margin-left: -20px; transform: translateY(30px) scale(0.88); }
+.case-artifact-wrap--center { padding:16px 0; }
+.case-svg { width:160px; height:176px; position:relative; z-index:1; }
+.case-svg--center { width:240px; height:240px; }
 
-.cabinet-frame {
-  position: relative;
-  width: 180px;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 0.5px solid rgba(212,175,55,0.18);
-  background: rgba(212,175,55,0.02);
-  backdrop-filter: blur(4px);
-  padding: 16px;
+/* 底座光晕 */
+.case-base-glow {
+  position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+  width:120px; height:30px;
+  background:radial-gradient(ellipse at center,rgba(212,175,55,0.14) 0%,transparent 70%);
 }
-.cabinet-frame::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(212,175,55,0.04) 0%, rgba(212,175,55,0) 60%);
-  pointer-events: none;
-}
-.cabinet-frame svg { width: 140px; height: 140px; position: relative; z-index: 1; }
-
-.cabinet-glow--ambient {
-  position: absolute;
-  bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 120px; height: 40px;
-  background: radial-gradient(ellipse at center, rgba(212,175,55,0.12) 0%, transparent 70%);
-  pointer-events: none;
+.case-base-glow--strong {
+  width:180px; height:40px;
+  background:radial-gradient(ellipse at center,rgba(212,175,55,0.22) 0%,transparent 70%);
 }
 
-.cabinet-reflection {
-  position: absolute;
-  bottom: -1px; left: 8px; right: 8px; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+/* 地面倒影线 */
+.gallery-case-inner::after {
+  content:''; position:absolute; bottom:0; left:8px; right:8px; height:0.8px;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.25),transparent);
 }
 
-.cabinet-label { text-align: center; }
-.cabinet-num { font-size: 9px; letter-spacing: 3px; color: rgba(212,175,55,0.4); display: block; margin-bottom: 4px; }
-.cabinet-name { font-size: 13px; font-family: serif; color: rgba(212,175,55,0.75); letter-spacing: 2px; margin: 0 0 3px; }
-.cabinet-origin { font-size: 9px; color: rgba(212,175,55,0.3); letter-spacing: 1.5px; margin: 0; }
+/* 信息区 */
+.case-info {
+  width:100%; padding-top:16px;
+  border-top:0.4px solid rgba(212,175,55,0.1);
+  display:flex; flex-direction:column; gap:8px;
+}
+.case-info--center { align-items:center; text-align:center; }
+.case-series {
+  font-family:serif; font-size:14px;
+  color:rgba(212,175,55,0.82); letter-spacing:2px; margin:0;
+}
+.case-series--center { font-size:17px; letter-spacing:3px; filter:drop-shadow(0 0 6px rgba(212,175,55,0.3)); }
+.case-desc {
+  font-size:11px; color:rgba(200,169,110,0.55);
+  line-height:1.7; margin:0; letter-spacing:0.3px;
+}
+.case-desc--center { font-size:12px; color:rgba(200,169,110,0.62); }
+.case-cta {
+  font-size:10px; letter-spacing:2px;
+  color:rgba(212,175,55,0.5);
+  text-decoration:none;
+  transition:color 0.3s;
+  margin-top:4px;
+  display:inline-block;
+}
+.case-cta:hover { color:rgba(212,175,55,0.9); }
+.case-cta--gold { color:rgba(212,175,55,0.7); font-size:11px; }
+.case-cta--gold:hover { color:#D4AF37; }
 
-/* ── 中央主展品 ── */
-.museum-centerpiece {
-  flex: 0 0 420px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  z-index: 2;
-  padding-bottom: 20px;
-}
+/* 能量环（中央展柜专用） */
+.energy-rings { position:absolute; top:42%; left:50%; transform:translate(-50%,-50%); pointer-events:none; z-index:0; }
+.energy-ring { position:absolute; border-radius:50%; border:0.6px solid rgba(212,175,55,0.12); transform:translate(-50%,-50%); animation:ringPulse 4s ease-in-out infinite; }
+.energy-ring--1 { width:280px; height:280px; animation-delay:0s; }
+.energy-ring--2 { width:360px; height:360px; animation-delay:1.3s; border-width:0.4px; border-color:rgba(212,175,55,0.07); }
+.energy-ring--3 { width:210px; height:210px; animation-delay:2.6s; border-style:dashed; border-color:rgba(212,175,55,0.15); }
+@keyframes ringPulse { 0%,100%{opacity:0.35;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.04)} }
 
-/* 能量环 */
-.energy-rings {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 0;
-}
-.energy-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(212,175,55,0.15);
-  transform: translate(-50%, -50%);
-  animation: ringPulse 4s ease-in-out infinite;
-}
-.energy-ring--1 { width: 320px; height: 320px; animation-delay: 0s; border-color: rgba(212,175,55,0.12); }
-.energy-ring--2 { width: 420px; height: 420px; animation-delay: 1.2s; border-color: rgba(212,175,55,0.07); border-width: 0.5px; }
-.energy-ring--3 { width: 240px; height: 240px; animation-delay: 2.4s; border-color: rgba(212,175,55,0.18); border-style: dashed; }
-@keyframes ringPulse {
-  0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
-  50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.04); }
-}
+/* 漂浮粒子 */
+.float-particles { position:absolute; inset:0; pointer-events:none; z-index:0; }
+.particle { position:absolute; width:2.5px; height:2.5px; border-radius:50%; background:rgba(212,175,55,0.55); animation:floatUp 6s ease-in-out infinite; }
+.p1{left:18%;top:72%;animation-delay:0s;width:2px;height:2px;}
+.p2{left:78%;top:68%;animation-delay:1.1s;}
+.p3{left:38%;top:82%;animation-delay:2.2s;background:rgba(212,175,55,0.38);}
+.p4{left:62%;top:78%;animation-delay:3.3s;width:2px;height:2px;}
+@keyframes floatUp { 0%{transform:translateY(0) scale(1);opacity:0} 20%{opacity:0.75} 80%{opacity:0.4} 100%{transform:translateY(-70px) scale(0.4);opacity:0} }
 
-/* 粒子漂浮 */
-.float-particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-.particle {
-  position: absolute;
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: rgba(212,175,55,0.6);
-  animation: floatUp 6s ease-in-out infinite;
+/* ── 底部文明系统入口 ── */
+.civ-system-bar {
+  padding:0 60px 32px;
+  position:relative; z-index:1;
 }
-.p1 { left: 20%; top: 70%; animation-delay: 0s;    width: 2px; height: 2px; }
-.p2 { left: 75%; top: 65%; animation-delay: 1s;    width: 3px; height: 3px; }
-.p3 { left: 40%; top: 80%; animation-delay: 2s;    width: 2px; height: 2px; background: rgba(212,175,55,0.4); }
-.p4 { left: 60%; top: 75%; animation-delay: 3s;    width: 2px; height: 2px; }
-.p5 { left: 15%; top: 55%; animation-delay: 0.5s;  width: 1.5px; height: 1.5px; background: rgba(212,175,55,0.35); }
-.p6 { left: 85%; top: 50%; animation-delay: 2.5s;  width: 2px; height: 2px; background: rgba(212,175,55,0.45); }
-@keyframes floatUp {
-  0%   { transform: translateY(0) scale(1);   opacity: 0; }
-  20%  { opacity: 0.8; }
-  80%  { opacity: 0.5; }
-  100% { transform: translateY(-80px) scale(0.5); opacity: 0; }
+.civ-system-divider {
+  display:flex; align-items:center; gap:16px;
+  margin-bottom:24px;
+  padding-top:12px;
+  border-top:0.4px solid rgba(212,175,55,0.1);
 }
-
-/* 主展品框架 */
-.centerpiece-frame {
-  position: relative;
-  width: 340px;
-  border: 0.6px solid rgba(212,175,55,0.28);
-  background: rgba(212,175,55,0.025);
-  backdrop-filter: blur(6px);
-  padding: 32px 32px 16px;
-  z-index: 1;
+.civ-system-label {
+  font-size:8.5px; letter-spacing:4px;
+  color:rgba(212,175,55,0.3);
+  white-space:nowrap;
 }
-.centerpiece-frame::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(212,175,55,0.06) 0%, rgba(212,175,55,0) 50%);
-  pointer-events: none;
+.civ-system-grid {
+  display:flex; gap:8px; justify-content:center; flex-wrap:wrap;
 }
-.centerpiece-frame::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 1.5px;
-  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent);
-  animation: frameSweep 4s ease-in-out infinite;
+.civ-sys-item {
+  flex:1; min-width:130px; max-width:180px;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  padding:18px 14px 16px;
+  border:0.4px solid rgba(212,175,55,0.12);
+  background:rgba(212,175,55,0.016);
+  cursor:pointer; transition:all 0.35s ease;
+  position:relative;
 }
-@keyframes frameSweep {
-  0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
+.civ-sys-item::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:0.6px;
+  background:rgba(212,175,55,0.35);
+  transform:scaleX(0); transition:transform 0.35s ease;
 }
-.centerpiece-frame svg { width: 280px; height: 280px; margin: 0 auto; display: block; position: relative; z-index: 1; }
-
-/* 主展品底部倒影 */
-.centerpiece-reflect {
-  position: absolute;
-  bottom: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+.civ-sys-item:hover::after, .civ-sys-item--active::after { transform:scaleX(1); }
+.civ-sys-item:hover { border-color:rgba(212,175,55,0.25); background:rgba(212,175,55,0.04); }
+.civ-sys-item--active { border-color:rgba(212,175,55,0.22); background:rgba(212,175,55,0.035); }
+.civ-sys-icon { width:40px; height:40px; }
+.civ-sys-name { font-size:12px; font-family:serif; color:rgba(212,175,55,0.72); letter-spacing:1.5px; text-align:center; }
+.civ-sys-sub { font-size:9.5px; color:rgba(212,175,55,0.3); letter-spacing:0.5px; text-align:center; line-height:1.5; }
+.civ-system-footer {
+  text-align:center; margin-top:24px;
+  font-size:11px; letter-spacing:4px;
+  color:rgba(212,175,55,0.28);
 }
 
-.centerpiece-glow {
-  position: absolute;
-  bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 80%; height: 50px;
-  background: radial-gradient(ellipse at bottom, rgba(212,175,55,0.16) 0%, transparent 70%);
-  pointer-events: none;
-}
+/* 旧CSS清理：覆盖旧的museum-hall等（如存在）*/
+.museum-hall { display:none; }
+.museum-cabinet { display:none; }
+.museum-centerpiece { display:none; }
+.civilization-entries { display:none; }
 
-/* 展品信息板 */
-.centerpiece-info {
-  margin-top: 24px;
-  text-align: center;
-  position: relative; z-index: 1;
-}
-.info-tag { margin-bottom: 8px; }
-.info-num {
-  font-size: 9px; letter-spacing: 3px;
-  color: rgba(212,175,55,0.45);
-  border: 0.5px solid rgba(212,175,55,0.2);
-  padding: 3px 10px;
-  display: inline-block;
-}
-.info-title {
-  font-family: serif;
-  font-size: 22px;
-  color: var(--gold);
-  letter-spacing: 4px;
-  margin: 0 0 4px;
-  filter: drop-shadow(0 0 8px rgba(212,175,55,0.35));
-}
-.info-subtitle {
-  font-size: 9px; letter-spacing: 3px;
-  color: rgba(212,175,55,0.35);
-  margin: 0 0 12px;
-}
-.info-divider {
-  width: 40px; height: 0.5px;
-  background: rgba(212,175,55,0.3);
-  margin: 0 auto 12px;
-}
-.info-meta {
-  font-size: 10px; letter-spacing: 2px;
-  color: rgba(212,175,55,0.4);
-  margin: 0 0 8px;
-}
-.info-desc {
-  font-size: 11.5px;
-  color: rgba(200,169,110,0.6);
-  line-height: 1.8;
-  letter-spacing: 0.5px;
-  max-width: 280px;
-  margin: 0 auto;
-}
-
-/* ── 文明系统入口 ── */
-.civilization-entries {
-  padding: 48px 60px 20px;
-  position: relative; z-index: 1;
-}
-.civ-entry-label {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 28px;
-}
-.civ-entry-label span {
-  font-size: 9px; letter-spacing: 4px;
-  color: rgba(212,175,55,0.35);
-  white-space: nowrap;
-}
-.civ-entry-line {
-  flex: 1; height: 0.4px;
-  background: linear-gradient(90deg, rgba(212,175,55,0.2), transparent);
-}
-.civ-entry-grid {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.civ-entry-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 18px 24px;
-  border: 0.5px solid rgba(212,175,55,0.14);
-  background: rgba(212,175,55,0.02);
-  cursor: pointer;
-  transition: all 0.4s ease;
-  min-width: 110px;
-  position: relative;
-  overflow: hidden;
-}
-.civ-entry-item::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 0.8px;
-  background: rgba(212,175,55,0.3);
-  transform: scaleX(0);
-  transition: transform 0.4s ease;
-}
-.civ-entry-item:hover::before,
-.civ-entry-item--active::before { transform: scaleX(1); }
-.civ-entry-item:hover {
-  border-color: rgba(212,175,55,0.3);
-  background: rgba(212,175,55,0.04);
-}
-.civ-entry-item--active {
-  border-color: rgba(212,175,55,0.28);
-  background: rgba(212,175,55,0.05);
-}
-.civ-entry-icon { width: 32px; height: 32px; }
-.civ-entry-name {
-  font-size: 12px; font-family: serif;
-  color: rgba(212,175,55,0.7);
-  letter-spacing: 1px;
-}
-.civ-entry-sub {
-  font-size: 7.5px; letter-spacing: 2px;
-  color: rgba(212,175,55,0.28);
-}
 
 </style>
 </head>
@@ -1994,267 +1911,287 @@ footer {
      ============================================================ -->
 <section id="artifact">
 
-  <!-- 星尘背景层 -->
+  <!-- 星尘背景 -->
   <div class="museum-stardust" aria-hidden="true">
-    <svg width="100%" height="100%" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;pointer-events:none;">
+    <svg width="100%" height="100%" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"
+         style="position:absolute;inset:0;pointer-events:none;">
       <defs>
-        <radialGradient id="fogCenter" cx="50%" cy="55%" r="55%">
-          <stop offset="0%" stop-color="rgba(212,175,55,0.05)"/>
+        <radialGradient id="fogC" cx="50%" cy="50%" r="55%">
+          <stop offset="0%" stop-color="rgba(212,175,55,0.06)"/>
           <stop offset="100%" stop-color="rgba(212,175,55,0)"/>
         </radialGradient>
-        <radialGradient id="fogLeft" cx="15%" cy="60%" r="35%">
-          <stop offset="0%" stop-color="rgba(180,140,40,0.04)"/>
-          <stop offset="100%" stop-color="rgba(180,140,40,0)"/>
-        </radialGradient>
-        <radialGradient id="fogRight" cx="85%" cy="60%" r="35%">
-          <stop offset="0%" stop-color="rgba(180,140,40,0.04)"/>
-          <stop offset="100%" stop-color="rgba(180,140,40,0)"/>
-        </radialGradient>
       </defs>
-      <!-- 光雾 -->
-      <rect width="1400" height="900" fill="url(#fogCenter)"/>
-      <rect width="1400" height="900" fill="url(#fogLeft)"/>
-      <rect width="1400" height="900" fill="url(#fogRight)"/>
-      <!-- 星尘粒子 -->
-      <circle cx="120" cy="80" r="0.8" fill="rgba(212,175,55,0.35)"/><circle cx="340" cy="45" r="0.5" fill="rgba(212,175,55,0.25)"/>
-      <circle cx="580" cy="110" r="0.7" fill="rgba(212,175,55,0.3)"/><circle cx="820" cy="60" r="0.9" fill="rgba(212,175,55,0.2)"/>
-      <circle cx="1060" cy="90" r="0.6" fill="rgba(212,175,55,0.3)"/><circle cx="1280" cy="50" r="0.8" fill="rgba(212,175,55,0.25)"/>
-      <circle cx="200" cy="200" r="0.5" fill="rgba(212,175,55,0.15)"/><circle cx="460" cy="170" r="0.7" fill="rgba(212,175,55,0.2)"/>
-      <circle cx="700" cy="140" r="0.4" fill="rgba(212,175,55,0.18)"/><circle cx="950" cy="180" r="0.6" fill="rgba(212,175,55,0.15)"/>
-      <circle cx="1150" cy="130" r="0.5" fill="rgba(212,175,55,0.22)"/><circle cx="80" cy="350" r="0.6" fill="rgba(212,175,55,0.12)"/>
-      <circle cx="1350" cy="280" r="0.7" fill="rgba(212,175,55,0.18)"/><circle cx="650" cy="820" r="0.5" fill="rgba(212,175,55,0.12)"/>
-      <circle cx="900" cy="780" r="0.8" fill="rgba(212,175,55,0.1)"/><circle cx="1200" cy="840" r="0.6" fill="rgba(212,175,55,0.12)"/>
-      <!-- 地面极光线 -->
-      <line x1="0" y1="820" x2="1400" y2="820" stroke="rgba(212,175,55,0.04)" stroke-width="0.5"/>
-      <line x1="0" y1="840" x2="1400" y2="840" stroke="rgba(212,175,55,0.025)" stroke-width="0.3"/>
+      <rect width="1400" height="900" fill="url(#fogC)"/>
+      <circle cx="120" cy="80" r="0.8" fill="rgba(212,175,55,0.3)"/><circle cx="340" cy="45" r="0.5" fill="rgba(212,175,55,0.22)"/>
+      <circle cx="580" cy="110" r="0.7" fill="rgba(212,175,55,0.28)"/><circle cx="820" cy="55" r="0.9" fill="rgba(212,175,55,0.18)"/>
+      <circle cx="1060" cy="90" r="0.6" fill="rgba(212,175,55,0.26)"/><circle cx="1280" cy="50" r="0.8" fill="rgba(212,175,55,0.22)"/>
+      <circle cx="200" cy="200" r="0.5" fill="rgba(212,175,55,0.14)"/><circle cx="460" cy="170" r="0.7" fill="rgba(212,175,55,0.18)"/>
+      <circle cx="700" cy="140" r="0.4" fill="rgba(212,175,55,0.16)"/><circle cx="950" cy="180" r="0.6" fill="rgba(212,175,55,0.14)"/>
+      <circle cx="1150" cy="130" r="0.5" fill="rgba(212,175,55,0.2)"/> <circle cx="80"  cy="350" r="0.6" fill="rgba(212,175,55,0.1)"/>
+      <circle cx="1350" cy="280" r="0.7" fill="rgba(212,175,55,0.16)"/><circle cx="1370" cy="450" r="0.5" fill="rgba(212,175,55,0.1)"/>
+      <circle cx="650" cy="820" r="0.5" fill="rgba(212,175,55,0.1)"/> <circle cx="900" cy="780" r="0.7" fill="rgba(212,175,55,0.09)"/>
+      <!-- 地平线极光 -->
+      <line x1="0" y1="860" x2="1400" y2="860" stroke="rgba(212,175,55,0.05)" stroke-width="0.5"/>
     </svg>
   </div>
 
-  <!-- 标题区域 -->
-  <div class="section-header reveal" style="padding-top:20px;">
-    <span class="section-label" style="font-size:9px;letter-spacing:4px;opacity:0.5;">DIGITAL CIVILIZATION MUSEUM</span>
-    <h2 class="section-title-cn section-title" style="font-size:clamp(22px,3.2vw,32px);margin:8px 0 6px;letter-spacing:6px;">数字文明藏馆</h2>
-    <div class="section-divider" style="width:50px;opacity:0.25;"></div>
-    <p class="section-sub" style="opacity:0.3;font-size:11px;letter-spacing:3px;margin-top:6px;">西夏鎏金铜牛 · 文明原型 · 数字传承</p>
+  <!-- ── 标题区 ── -->
+  <div class="section-header reveal" style="padding-top:16px;">
+    <span class="section-label" style="font-size:9px;letter-spacing:4px;opacity:0.45;">CULTURAL COLLECTION</span>
+    <h2 class="section-title-cn section-title" style="font-size:clamp(22px,3vw,30px);margin:8px 0 6px;letter-spacing:6px;">数字文明藏馆</h2>
+    <div class="section-divider" style="width:50px;opacity:0.22;"></div>
+    <p class="section-sub" style="opacity:0.28;font-size:11px;letter-spacing:2.5px;margin-top:6px;">文明因交流而多彩 · 创意因共鸣而永恒</p>
   </div>
 
-  <!-- 展厅主体 -->
-  <div class="museum-hall">
+  <!-- ── 三展柜横排 ── -->
+  <div class="museum-gallery">
 
-    <!-- ── 左侧展柜（次要）── -->
-    <div class="museum-cabinet museum-cabinet--left reveal reveal-delay-1">
-      <div class="cabinet-frame">
-        <div class="cabinet-glow cabinet-glow--ambient"></div>
-        <!-- SVG：商周青铜器风格小件 -->
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="bronzeL" cx="40%" cy="30%" r="65%">
-              <stop offset="0%" stop-color="#D4AF37"/><stop offset="60%" stop-color="#A08530"/><stop offset="100%" stop-color="#5A4018"/>
-            </radialGradient>
-          </defs>
-          <ellipse cx="100" cy="172" rx="52" ry="6" fill="rgba(212,175,55,0.08)"/>
-          <!-- 鼎身 -->
-          <path d="M52 155 Q48 110 55 80 Q68 52 100 48 Q132 44 147 72 Q156 98 154 145 L148 158 L52 158 Z" fill="url(#bronzeL)" opacity="0.88"/>
-          <!-- 双耳 -->
-          <path d="M52 90 Q38 82 36 68 Q38 56 50 56 Q60 58 62 72 Q62 82 56 90 Z" fill="rgba(180,140,40,0.7)"/>
-          <path d="M150 88 Q164 80 166 66 Q164 54 152 54 Q142 56 140 70 Q140 80 146 88 Z" fill="rgba(180,140,40,0.7)"/>
-          <!-- 三足 -->
-          <rect x="68" y="155" width="12" height="28" rx="3" fill="rgba(160,120,35,0.8)"/>
-          <rect x="94" y="158" width="12" height="26" rx="3" fill="rgba(155,118,33,0.8)"/>
-          <rect x="120" y="155" width="12" height="28" rx="3" fill="rgba(150,115,30,0.8)"/>
-          <!-- 纹饰 -->
-          <path d="M60 100 Q80 95 100 98 Q120 101 142 96" stroke="rgba(255,220,80,0.35)" stroke-width="1.2" fill="none"/>
-          <path d="M58 120 Q80 115 100 118 Q120 121 144 116" stroke="rgba(255,220,80,0.25)" stroke-width="1" fill="none"/>
-          <path d="M62 140 Q82 136 100 138 Q120 140 140 136" stroke="rgba(255,220,80,0.2)" stroke-width="0.8" fill="none"/>
-          <!-- 盖 -->
-          <path d="M62 60 Q78 48 100 46 Q122 44 140 56 L136 68 L64 68 Z" fill="rgba(200,160,45,0.6)"/>
-          <circle cx="100" cy="44" r="6" fill="rgba(220,180,50,0.7)" stroke="rgba(255,220,80,0.4)" stroke-width="0.8"/>
-        </svg>
-        <div class="cabinet-reflection"></div>
-      </div>
-      <div class="cabinet-label">
-        <span class="cabinet-num">藏品 · I</span>
-        <p class="cabinet-name">西夏青铜礼器</p>
-        <p class="cabinet-origin">约 1038—1227 CE</p>
+    <!-- 左右切换箭头 -->
+    <button class="gallery-arrow gallery-arrow--left" aria-label="上一件">
+      <svg viewBox="0 0 24 24" fill="none"><polyline points="15 18 9 12 15 6" stroke="rgba(212,175,55,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="gallery-arrow gallery-arrow--right" aria-label="下一件">
+      <svg viewBox="0 0 24 24" fill="none"><polyline points="9 18 15 12 9 6" stroke="rgba(212,175,55,0.6)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <!-- 展柜1：旅行家系列（左，次要） -->
+    <div class="gallery-case gallery-case--side reveal reveal-delay-1">
+      <div class="gallery-case-inner">
+        <!-- 顶部标签 -->
+        <div class="case-badge">LIMITED EDITION</div>
+        <!-- 展品SVG -->
+        <div class="case-artifact-wrap">
+          <div class="case-base-glow"></div>
+          <svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="case-svg">
+            <defs>
+              <radialGradient id="rabG1" cx="45%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="#E8C840"/><stop offset="55%" stop-color="#B8921E"/><stop offset="100%" stop-color="#6B4E0A"/>
+              </radialGradient>
+              <filter id="rabGlow1"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <!-- 底台 -->
+            <ellipse cx="100" cy="192" rx="55" ry="7" fill="rgba(212,175,55,0.1)"/>
+            <rect x="52" y="184" width="96" height="10" rx="2" fill="rgba(212,175,55,0.14)" stroke="rgba(212,175,55,0.3)" stroke-width="0.6"/>
+            <!-- 身体（旅行者潮玩形象：圆润体型） -->
+            <ellipse cx="100" cy="130" rx="46" ry="52" fill="url(#rabG1)" filter="url(#rabGlow1)" opacity="0.9"/>
+            <!-- 头部 -->
+            <ellipse cx="100" cy="72" rx="38" ry="36" fill="url(#rabG1)" opacity="0.92"/>
+            <!-- 耳朵 -->
+            <path d="M76 44 Q70 12 78 4 Q86 0 90 10 Q92 26 88 44 Z" fill="rgba(220,178,40,0.82)"/>
+            <path d="M124 44 Q130 12 122 4 Q114 0 110 10 Q108 26 112 44 Z" fill="rgba(220,178,40,0.82)"/>
+            <!-- 耳内 -->
+            <path d="M79 40 Q76 18 81 10 Q85 6 87 14 Q88 28 86 40 Z" fill="rgba(200,100,80,0.3)"/>
+            <path d="M121 40 Q124 18 119 10 Q115 6 113 14 Q112 28 114 40 Z" fill="rgba(200,100,80,0.3)"/>
+            <!-- 眼睛 -->
+            <circle cx="87" cy="68" r="6.5" fill="rgba(8,6,3,0.9)"/><circle cx="87" cy="68" r="2.8" fill="rgba(232,200,64,0.85)"/><circle cx="88" cy="67" r="1" fill="white" opacity="0.6"/>
+            <circle cx="113" cy="68" r="6.5" fill="rgba(8,6,3,0.9)"/><circle cx="113" cy="68" r="2.8" fill="rgba(232,200,64,0.85)"/><circle cx="114" cy="67" r="1" fill="white" opacity="0.6"/>
+            <!-- 鼻子+嘴 -->
+            <ellipse cx="100" cy="80" rx="4" ry="2.5" fill="rgba(180,130,30,0.7)"/>
+            <path d="M97 83 Q100 87 103 83" stroke="rgba(180,130,30,0.5)" stroke-width="1" fill="none"/>
+            <!-- 背包（旅行者标志） -->
+            <rect x="118" y="100" width="28" height="36" rx="4" fill="rgba(180,140,35,0.65)" stroke="rgba(212,175,55,0.4)" stroke-width="0.8"/>
+            <rect x="122" y="108" width="20" height="12" rx="2" fill="rgba(140,105,25,0.5)"/>
+            <path d="M126 100 Q132 92 138 100" stroke="rgba(212,175,55,0.5)" stroke-width="1.2" fill="none"/>
+            <!-- 手臂 -->
+            <path d="M54 118 Q40 125 38 140 Q44 148 54 142 Q58 132 60 120 Z" fill="rgba(200,162,42,0.75)"/>
+            <path d="M146 118 Q160 125 162 140 Q156 148 146 142 Q142 132 140 120 Z" fill="rgba(200,162,42,0.75)"/>
+            <!-- 腿 -->
+            <rect x="78" y="174" width="18" height="14" rx="4" fill="rgba(180,142,35,0.8)"/>
+            <rect x="104" y="174" width="18" height="14" rx="4" fill="rgba(175,138,32,0.8)"/>
+            <!-- 丝路徽章 -->
+            <circle cx="100" cy="130" r="14" fill="rgba(212,175,55,0.1)" stroke="rgba(212,175,55,0.4)" stroke-width="0.8"/>
+            <path d="M94 130 L106 130 M100 124 L100 136" stroke="rgba(212,175,55,0.6)" stroke-width="1" stroke-linecap="round"/>
+            <!-- 装饰西夏纹 -->
+            <path d="M68 115 Q100 108 132 115" stroke="rgba(255,220,80,0.3)" stroke-width="1" fill="none"/>
+            <path d="M72 150 Q100 143 128 150" stroke="rgba(255,220,80,0.25)" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <!-- 信息 -->
+        <div class="case-info">
+          <h3 class="case-series">丝路行者 · 旅行家系列</h3>
+          <p class="case-desc">以丝路旅行为灵感的数字艺术形象，传承游牧文化与探索精神</p>
+          <a class="case-cta" href="#">探索更多 →</a>
+        </div>
       </div>
     </div>
 
-    <!-- ── 中央主展品（核心）── -->
-    <div class="museum-centerpiece reveal">
+    <!-- 展柜2：文明臻藏（中央主展，更大） -->
+    <div class="gallery-case gallery-case--center reveal">
       <!-- 能量环 -->
       <div class="energy-rings" aria-hidden="true">
         <div class="energy-ring energy-ring--1"></div>
         <div class="energy-ring energy-ring--2"></div>
         <div class="energy-ring energy-ring--3"></div>
       </div>
-      <!-- 粒子漂浮 -->
+      <!-- 粒子 -->
       <div class="float-particles" aria-hidden="true">
         <span class="particle p1"></span><span class="particle p2"></span>
         <span class="particle p3"></span><span class="particle p4"></span>
-        <span class="particle p5"></span><span class="particle p6"></span>
       </div>
-
-      <div class="centerpiece-frame">
-        <div class="centerpiece-glow"></div>
-        <!-- 主展品：鎏金铜牛 SVG -->
-        <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="bronzeMain" cx="42%" cy="32%" r="62%">
-              <stop offset="0%" stop-color="#F0D060"/><stop offset="35%" stop-color="#D4AF37"/>
-              <stop offset="75%" stop-color="#A08530"/><stop offset="100%" stop-color="#6B5520"/>
-            </radialGradient>
-            <radialGradient id="baseGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="rgba(212,175,55,0.35)"/><stop offset="100%" stop-color="rgba(212,175,55,0)"/>
-            </radialGradient>
-            <filter id="mainGlow" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="5" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <!-- 底座光晕（地面倒影） -->
-          <ellipse cx="150" cy="274" rx="110" ry="12" fill="url(#baseGlow)"/>
-          <ellipse cx="150" cy="278" rx="80" ry="7" fill="rgba(212,175,55,0.12)"/>
-          <!-- 台座 -->
-          <rect x="62" y="255" width="176" height="14" rx="3" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.38)" stroke-width="0.7"/>
-          <rect x="74" y="250" width="152" height="8" rx="2" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.28)" stroke-width="0.6"/>
-          <!-- 牛身 -->
-          <path d="M82 198 Q76 156 90 128 Q107 100 150 95 Q193 90 212 118 Q232 142 230 186 Q228 210 218 224 L188 234 L150 238 L108 235 Z"
-                fill="url(#bronzeMain)" filter="url(#mainGlow)" opacity="0.94"/>
-          <!-- 牛头 -->
-          <path d="M90 128 Q78 108 70 90 Q78 72 94 68 Q113 65 124 82 Q130 96 130 114 Q110 122 90 128 Z"
-                fill="url(#bronzeMain)" opacity="0.9"/>
-          <!-- 牛角 -->
-          <path d="M76 84 Q52 62 48 40 Q66 34 76 52 Q82 68 82 82 Z" fill="rgba(240,208,64,0.78)"/>
-          <path d="M106 72 Q102 46 118 28 Q132 38 128 60 Q122 74 112 82 Z" fill="rgba(240,208,64,0.78)"/>
-          <!-- 牛腿 -->
-          <rect x="108" y="230" width="17" height="24" rx="4" fill="rgba(200,162,48,0.86)"/>
-          <rect x="133" y="232" width="17" height="22" rx="4" fill="rgba(196,158,45,0.82)"/>
-          <rect x="160" y="228" width="17" height="26" rx="4" fill="rgba(190,152,42,0.86)"/>
-          <rect x="184" y="226" width="15" height="28" rx="4" fill="rgba(178,142,38,0.82)"/>
-          <!-- 牛尾 -->
-          <path d="M222 184 Q246 168 254 150 Q246 140 238 150 Q227 164 220 188"
-                stroke="rgba(212,175,55,0.78)" stroke-width="7" fill="none" stroke-linecap="round"/>
-          <!-- 纹饰 -->
-          <path d="M110 142 Q132 136 152 140 Q172 144 192 138" stroke="rgba(255,228,100,0.45)" stroke-width="1.6" fill="none"/>
-          <path d="M106 162 Q130 156 154 160 Q178 164 198 158" stroke="rgba(255,228,100,0.38)" stroke-width="1.3" fill="none"/>
-          <path d="M108 184 Q132 178 156 182 Q182 186 202 180" stroke="rgba(255,228,100,0.3)" stroke-width="1" fill="none"/>
-          <!-- 西夏纹饰（菱形） -->
-          <path d="M146 115 L155 108 L164 115 L155 122 Z" stroke="rgba(255,228,100,0.6)" stroke-width="0.8" fill="rgba(255,228,100,0.12)"/>
-          <!-- 眼睛 -->
-          <circle cx="84" cy="95" r="5.5" fill="rgba(8,6,4,0.92)"/>
-          <circle cx="84" cy="95" r="2.2" fill="rgba(240,208,64,0.92)"/>
-          <circle cx="85" cy="94" r="0.9" fill="rgba(255,255,255,0.45)"/>
-          <!-- 鼻环 -->
-          <ellipse cx="95" cy="114" rx="9" ry="4" stroke="rgba(240,208,64,0.92)" stroke-width="2.2" fill="none"/>
-          <!-- 高光 -->
-          <path d="M110 114 Q130 106 154 108" stroke="rgba(255,255,255,0.14)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-          <path d="M162 104 Q180 98 198 106" stroke="rgba(255,255,255,0.09)" stroke-width="2" fill="none" stroke-linecap="round"/>
-        </svg>
-        <!-- 地面倒影（CSS） -->
-        <div class="centerpiece-reflect"></div>
-      </div>
-
-      <!-- 展品信息板 -->
-      <div class="centerpiece-info">
-        <div class="info-tag">
-          <span class="info-num">藏品 · II · 镇馆之宝</span>
+      <div class="gallery-case-inner gallery-case-inner--center">
+        <div class="case-badge case-badge--gold">MASTERPIECE</div>
+        <div class="case-artifact-wrap case-artifact-wrap--center">
+          <div class="case-base-glow case-base-glow--strong"></div>
+          <!-- 铜牛SVG（主展品，最大） -->
+          <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="case-svg case-svg--center">
+            <defs>
+              <radialGradient id="bronzeCenter" cx="42%" cy="32%" r="62%">
+                <stop offset="0%" stop-color="#F0D060"/><stop offset="35%" stop-color="#D4AF37"/>
+                <stop offset="75%" stop-color="#A08530"/><stop offset="100%" stop-color="#6B5520"/>
+              </radialGradient>
+              <radialGradient id="baseGC" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="rgba(212,175,55,0.4)"/><stop offset="100%" stop-color="rgba(212,175,55,0)"/>
+              </radialGradient>
+              <filter id="mainGlowC" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="5" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <ellipse cx="150" cy="276" rx="115" ry="13" fill="url(#baseGC)"/>
+            <ellipse cx="150" cy="280" rx="82" ry="7" fill="rgba(212,175,55,0.14)"/>
+            <rect x="60" y="257" width="180" height="14" rx="3" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.38)" stroke-width="0.7"/>
+            <rect x="72" y="252" width="156" height="8" rx="2" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.28)" stroke-width="0.6"/>
+            <path d="M82 198 Q76 156 90 128 Q107 100 150 95 Q193 90 212 118 Q232 142 230 186 Q228 210 218 224 L188 234 L150 238 L108 235 Z" fill="url(#bronzeCenter)" filter="url(#mainGlowC)" opacity="0.94"/>
+            <path d="M90 128 Q78 108 70 90 Q78 72 94 68 Q113 65 124 82 Q130 96 130 114 Q110 122 90 128 Z" fill="url(#bronzeCenter)" opacity="0.9"/>
+            <path d="M76 84 Q52 62 48 40 Q66 34 76 52 Q82 68 82 82 Z" fill="rgba(240,208,64,0.78)"/>
+            <path d="M106 72 Q102 46 118 28 Q132 38 128 60 Q122 74 112 82 Z" fill="rgba(240,208,64,0.78)"/>
+            <rect x="108" y="230" width="17" height="24" rx="4" fill="rgba(200,162,48,0.86)"/>
+            <rect x="133" y="232" width="17" height="22" rx="4" fill="rgba(196,158,45,0.82)"/>
+            <rect x="160" y="228" width="17" height="26" rx="4" fill="rgba(190,152,42,0.86)"/>
+            <rect x="184" y="226" width="15" height="28" rx="4" fill="rgba(178,142,38,0.82)"/>
+            <path d="M222 184 Q246 168 254 150 Q246 140 238 150 Q227 164 220 188" stroke="rgba(212,175,55,0.78)" stroke-width="7" fill="none" stroke-linecap="round"/>
+            <path d="M110 142 Q132 136 152 140 Q172 144 192 138" stroke="rgba(255,228,100,0.45)" stroke-width="1.6" fill="none"/>
+            <path d="M106 162 Q130 156 154 160 Q178 164 198 158" stroke="rgba(255,228,100,0.38)" stroke-width="1.3" fill="none"/>
+            <path d="M108 184 Q132 178 156 182 Q182 186 202 180" stroke="rgba(255,228,100,0.3)" stroke-width="1" fill="none"/>
+            <path d="M146 115 L155 108 L164 115 L155 122 Z" stroke="rgba(255,228,100,0.6)" stroke-width="0.8" fill="rgba(255,228,100,0.12)"/>
+            <circle cx="84" cy="95" r="5.5" fill="rgba(8,6,4,0.92)"/><circle cx="84" cy="95" r="2.2" fill="rgba(240,208,64,0.92)"/><circle cx="85" cy="94" r="0.9" fill="rgba(255,255,255,0.45)"/>
+            <ellipse cx="95" cy="114" rx="9" ry="4" stroke="rgba(240,208,64,0.92)" stroke-width="2.2" fill="none"/>
+            <path d="M110 114 Q130 106 154 108" stroke="rgba(255,255,255,0.14)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          </svg>
         </div>
-        <h3 class="info-title">西夏鎏金铜牛</h3>
-        <p class="info-subtitle">GILT BRONZE BULL · XI XIA DYNASTY</p>
-        <div class="info-divider"></div>
-        <p class="info-meta">宁夏博物馆馆藏 · 约 1038—1227 CE</p>
-        <p class="info-desc">以失蜡法铸造，通体鎏金，为西夏金属工艺最高代表。党项族王朝遗珍，丝路文明融合之证。</p>
+        <div class="case-info case-info--center">
+          <h3 class="case-series case-series--center">丝路文明 · 文创臻藏</h3>
+          <p class="case-desc case-desc--center">甄选丝路文明元素，以西夏鎏金铜牛为原型<br>致敬历史，启迪未来</p>
+          <a class="case-cta case-cta--gold" href="#">探索更多 →</a>
+        </div>
       </div>
     </div>
 
-    <!-- ── 右侧展柜（次要）── -->
-    <div class="museum-cabinet museum-cabinet--right reveal reveal-delay-2">
-      <div class="cabinet-frame">
-        <div class="cabinet-glow cabinet-glow--ambient"></div>
-        <!-- SVG：西夏舍利塔风格 -->
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#E8C840"/><stop offset="50%" stop-color="#C8A030"/><stop offset="100%" stop-color="#8A6820"/>
-            </linearGradient>
-          </defs>
-          <ellipse cx="100" cy="172" rx="45" ry="5" fill="rgba(212,175,55,0.08)"/>
-          <!-- 塔基 -->
-          <rect x="60" y="152" width="80" height="14" rx="2" fill="rgba(180,140,40,0.55)" stroke="rgba(212,175,55,0.3)" stroke-width="0.6"/>
-          <rect x="70" y="144" width="60" height="12" rx="2" fill="rgba(190,150,42,0.6)" stroke="rgba(212,175,55,0.25)" stroke-width="0.6"/>
-          <!-- 塔身 -->
-          <rect x="78" y="100" width="44" height="46" rx="1" fill="url(#towerGrad)" opacity="0.85"/>
-          <rect x="84" y="86" width="32" height="16" rx="1" fill="rgba(200,160,40,0.75)"/>
-          <rect x="88" y="74" width="24" height="14" rx="1" fill="rgba(195,155,38,0.72)"/>
-          <rect x="92" y="62" width="16" height="14" rx="1" fill="rgba(188,150,36,0.7)"/>
-          <rect x="94" y="52" width="12" height="12" rx="1" fill="rgba(180,142,34,0.68)"/>
-          <!-- 塔刹 -->
-          <line x1="100" y1="52" x2="100" y2="30" stroke="rgba(212,175,55,0.7)" stroke-width="2"/>
-          <circle cx="100" cy="28" r="4" fill="rgba(212,175,55,0.8)" stroke="rgba(255,220,80,0.5)" stroke-width="0.8"/>
-          <!-- 飘带 -->
-          <path d="M96 42 Q85 38 80 30 Q84 26 90 32 Q94 38 98 44" stroke="rgba(212,175,55,0.35)" stroke-width="0.8" fill="none"/>
-          <path d="M104 42 Q115 38 120 30 Q116 26 110 32 Q106 38 102 44" stroke="rgba(212,175,55,0.35)" stroke-width="0.8" fill="none"/>
-          <!-- 纹饰 -->
-          <path d="M80 116 Q100 112 120 116" stroke="rgba(255,220,80,0.3)" stroke-width="0.8" fill="none"/>
-          <path d="M80 130 Q100 126 120 130" stroke="rgba(255,220,80,0.25)" stroke-width="0.7" fill="none"/>
-        </svg>
-        <div class="cabinet-reflection"></div>
-      </div>
-      <div class="cabinet-label">
-        <span class="cabinet-num">藏品 · III</span>
-        <p class="cabinet-name">西夏舍利石塔</p>
-        <p class="cabinet-origin">约 1038—1227 CE</p>
+    <!-- 展柜3：原创IP系列（右，次要） -->
+    <div class="gallery-case gallery-case--side reveal reveal-delay-2">
+      <div class="gallery-case-inner">
+        <div class="case-badge">CULTURAL IP</div>
+        <div class="case-artifact-wrap">
+          <div class="case-base-glow"></div>
+          <svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="case-svg">
+            <defs>
+              <radialGradient id="rabG2" cx="48%" cy="32%" r="62%">
+                <stop offset="0%" stop-color="#DCA830"/><stop offset="50%" stop-color="#A07828"/><stop offset="100%" stop-color="#5A4010"/>
+              </radialGradient>
+              <filter id="rabGlow2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <ellipse cx="100" cy="192" rx="52" ry="7" fill="rgba(212,175,55,0.1)"/>
+            <rect x="54" y="184" width="92" height="10" rx="2" fill="rgba(212,175,55,0.12)" stroke="rgba(212,175,55,0.28)" stroke-width="0.6"/>
+            <!-- 身体（更修长，IP风格） -->
+            <ellipse cx="100" cy="132" rx="42" ry="50" fill="url(#rabG2)" filter="url(#rabGlow2)" opacity="0.88"/>
+            <!-- 头 -->
+            <ellipse cx="100" cy="72" rx="36" ry="34" fill="url(#rabG2)" opacity="0.9"/>
+            <!-- 耳（细长，IP感） -->
+            <path d="M80 42 Q76 8 84 2 Q90 -2 92 8 Q93 24 90 42 Z" fill="rgba(200,160,36,0.8)"/>
+            <path d="M120 42 Q124 8 116 2 Q110 -2 108 8 Q107 24 110 42 Z" fill="rgba(200,160,36,0.8)"/>
+            <!-- 耳内 -->
+            <path d="M82 38 Q80 14 83 8 Q86 4 87 12 Q88 26 87 38 Z" fill="rgba(190,90,70,0.28)"/>
+            <path d="M118 38 Q120 14 117 8 Q114 4 113 12 Q112 26 113 38 Z" fill="rgba(190,90,70,0.28)"/>
+            <!-- 眼（更大，IP感） -->
+            <circle cx="86" cy="67" r="7.5" fill="rgba(6,5,3,0.92)"/><circle cx="86" cy="67" r="3.5" fill="rgba(225,185,55,0.88)"/><circle cx="87.5" cy="65.5" r="1.2" fill="white" opacity="0.7"/>
+            <circle cx="114" cy="67" r="7.5" fill="rgba(6,5,3,0.92)"/><circle cx="114" cy="67" r="3.5" fill="rgba(225,185,55,0.88)"/><circle cx="115.5" cy="65.5" r="1.2" fill="white" opacity="0.7"/>
+            <!-- 表情 -->
+            <ellipse cx="100" cy="79" rx="3.5" ry="2" fill="rgba(170,120,25,0.65)"/>
+            <path d="M96 82 Q100 86 104 82" stroke="rgba(170,120,25,0.5)" stroke-width="1.2" fill="none"/>
+            <!-- 手 -->
+            <path d="M58 118 Q44 126 42 142 Q48 150 58 143 Q62 132 62 118 Z" fill="rgba(188,148,38,0.72)"/>
+            <path d="M142 118 Q156 126 158 142 Q152 150 142 143 Q138 132 138 118 Z" fill="rgba(188,148,38,0.72)"/>
+            <!-- 腿 -->
+            <rect x="80" y="174" width="16" height="14" rx="4" fill="rgba(172,134,32,0.78)"/>
+            <rect x="104" y="174" width="16" height="14" rx="4" fill="rgba(168,130,30,0.78)"/>
+            <!-- 西夏徽印（胸口） -->
+            <path d="M90 118 L100 110 L110 118 L106 130 L94 130 Z" stroke="rgba(212,175,55,0.55)" stroke-width="0.8" fill="rgba(212,175,55,0.12)"/>
+            <circle cx="100" cy="120" r="3" fill="rgba(212,175,55,0.25)"/>
+            <!-- 纹饰 -->
+            <path d="M66 110 Q100 104 134 110" stroke="rgba(255,215,75,0.28)" stroke-width="0.9" fill="none"/>
+            <path d="M70 148 Q100 142 130 148" stroke="rgba(255,215,75,0.22)" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="case-info">
+          <h3 class="case-series">丝路奇遇 · 原创IP系列</h3>
+          <p class="case-desc">用现代视角重塑丝路文明符号，传承与创新的数字守护者</p>
+          <a class="case-cta" href="#">探索更多 →</a>
+        </div>
       </div>
     </div>
 
-  </div><!-- end museum-hall -->
+  </div><!-- end museum-gallery -->
 
-  <!-- 文明系统入口 -->
-  <div class="civilization-entries reveal">
-    <div class="civ-entry-label">
-      <span>文明档案系统</span>
-      <div class="civ-entry-line"></div>
+  <!-- ── 底部文明系统入口（6模块）── -->
+  <div class="civ-system-bar reveal">
+    <div class="civ-system-divider">
+      <span class="civ-system-label">文明系统入口</span>
     </div>
-    <div class="civ-entry-grid">
-      <div class="civ-entry-item">
-        <div class="civ-entry-icon">
-          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="rgba(212,175,55,0.5)" stroke-width="0.7"/><path d="M10 16 L22 16 M16 10 L16 22" stroke="rgba(212,175,55,0.6)" stroke-width="0.8"/><circle cx="16" cy="16" r="3" fill="rgba(212,175,55,0.2)" stroke="rgba(212,175,55,0.4)" stroke-width="0.6"/></svg>
+    <div class="civ-system-grid">
+
+      <div class="civ-sys-item">
+        <div class="civ-sys-icon">
+          <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="rgba(212,175,55,0.45)" stroke-width="0.7"/><path d="M10 20 Q20 8 30 20 Q20 32 10 20 Z" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="rgba(212,175,55,0.06)"/><circle cx="20" cy="20" r="3" fill="rgba(212,175,55,0.2)" stroke="rgba(212,175,55,0.45)" stroke-width="0.6"/></svg>
         </div>
-        <span class="civ-entry-name">文明档案</span>
-        <span class="civ-entry-sub">ARCHIVE</span>
+        <span class="civ-sys-name">丝路数字地图</span>
+        <span class="civ-sys-sub">探索历史路径 体验文明脉络</span>
       </div>
-      <div class="civ-entry-item">
-        <div class="civ-entry-icon">
-          <svg viewBox="0 0 32 32" fill="none"><path d="M8 24 Q16 8 24 24" stroke="rgba(212,175,55,0.5)" stroke-width="0.7" fill="none"/><circle cx="16" cy="14" r="4" stroke="rgba(212,175,55,0.45)" stroke-width="0.6" fill="rgba(212,175,55,0.08)"/><line x1="8" y1="26" x2="24" y2="26" stroke="rgba(212,175,55,0.3)" stroke-width="0.5"/></svg>
+
+      <div class="civ-sys-item">
+        <div class="civ-sys-icon">
+          <svg viewBox="0 0 40 40" fill="none"><rect x="10" y="12" width="20" height="16" rx="1.5" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="rgba(212,175,55,0.04)"/><line x1="14" y1="18" x2="26" y2="18" stroke="rgba(212,175,55,0.4)" stroke-width="0.6"/><line x1="14" y1="22" x2="22" y2="22" stroke="rgba(212,175,55,0.3)" stroke-width="0.5"/><circle cx="28" cy="28" r="6" stroke="rgba(212,175,55,0.4)" stroke-width="0.6" fill="rgba(212,175,55,0.08)"/><path d="M26 28 Q28 24 30 28" stroke="rgba(212,175,55,0.5)" stroke-width="0.7" fill="none"/></svg>
         </div>
-        <span class="civ-entry-name">AI 故事生成</span>
-        <span class="civ-entry-sub">AI NARRATIVE</span>
+        <span class="civ-sys-name">AI 故事典藏</span>
+        <span class="civ-sys-sub">AI生成丝路传奇 文明叙事空间</span>
       </div>
-      <div class="civ-entry-item civ-entry-item--active">
-        <div class="civ-entry-icon">
-          <svg viewBox="0 0 32 32" fill="none"><rect x="9" y="9" width="14" height="14" stroke="rgba(212,175,55,0.6)" stroke-width="0.7" fill="rgba(212,175,55,0.06)"/><path d="M12 12 L20 20 M20 12 L12 20" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><circle cx="16" cy="16" r="2.5" fill="rgba(212,175,55,0.25)"/></svg>
+
+      <div class="civ-sys-item civ-sys-item--active">
+        <div class="civ-sys-icon">
+          <svg viewBox="0 0 40 40" fill="none"><rect x="12" y="10" width="16" height="20" rx="1" stroke="rgba(212,175,55,0.55)" stroke-width="0.7" fill="rgba(212,175,55,0.06)"/><line x1="15" y1="16" x2="25" y2="16" stroke="rgba(212,175,55,0.4)" stroke-width="0.5"/><line x1="15" y1="20" x2="23" y2="20" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><circle cx="20" cy="27" r="3.5" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.5)" stroke-width="0.6"/></svg>
         </div>
-        <span class="civ-entry-name">数字藏品</span>
-        <span class="civ-entry-sub">DIGITAL RELIC</span>
+        <span class="civ-sys-name">数字藏品</span>
+        <span class="civ-sys-sub">文明器物的数字化存续</span>
       </div>
-      <div class="civ-entry-item">
-        <div class="civ-entry-icon">
-          <svg viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="16" rx="10" ry="6" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="none"/><line x1="16" y1="10" x2="16" y2="22" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><circle cx="16" cy="16" r="2" fill="rgba(212,175,55,0.18)" stroke="rgba(212,175,55,0.4)" stroke-width="0.5"/></svg>
+
+      <div class="civ-sys-item">
+        <div class="civ-sys-icon">
+          <svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="20" rx="12" ry="8" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="none"/><line x1="20" y1="12" x2="20" y2="28" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><line x1="8" y1="20" x2="32" y2="20" stroke="rgba(212,175,55,0.35)" stroke-width="0.5"/><circle cx="20" cy="20" r="2.5" fill="rgba(212,175,55,0.2)" stroke="rgba(212,175,55,0.45)" stroke-width="0.5"/></svg>
         </div>
-        <span class="civ-entry-name">文明数据库</span>
-        <span class="civ-entry-sub">CIV DATABASE</span>
+        <span class="civ-sys-name">文明数据库</span>
+        <span class="civ-sys-sub">丝路文明知识图谱索引</span>
       </div>
-      <div class="civ-entry-item">
-        <div class="civ-entry-icon">
-          <svg viewBox="0 0 32 32" fill="none"><path d="M16 8 L20 14 L28 14 L22 19 L24 27 L16 22 L8 27 L10 19 L4 14 L12 14 Z" stroke="rgba(212,175,55,0.45)" stroke-width="0.6" fill="rgba(212,175,55,0.06)"/></svg>
+
+      <div class="civ-sys-item">
+        <div class="civ-sys-icon">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M20 10 L24 17 L32 17 L26 22 L28 30 L20 25 L12 30 L14 22 L8 17 L16 17 Z" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="rgba(212,175,55,0.06)"/></svg>
         </div>
-        <span class="civ-entry-name">共创计划</span>
-        <span class="civ-entry-sub">CO-CREATE</span>
+        <span class="civ-sys-name">共创计划</span>
+        <span class="civ-sys-sub">参与文明的数字再创造</span>
       </div>
+
+      <div class="civ-sys-item">
+        <div class="civ-sys-icon">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M12 28 Q20 12 28 28" stroke="rgba(212,175,55,0.45)" stroke-width="0.7" fill="none"/><path d="M16 22 Q20 16 24 22" stroke="rgba(212,175,55,0.35)" stroke-width="0.6" fill="rgba(212,175,55,0.06)"/><line x1="12" y1="30" x2="28" y2="30" stroke="rgba(212,175,55,0.3)" stroke-width="0.5"/></svg>
+        </div>
+        <span class="civ-sys-name">文明档案</span>
+        <span class="civ-sys-sub">记录每一段文明的印记</span>
+      </div>
+
     </div>
+    <p class="civ-system-footer">让丝路文明在数字时代焕发新生</p>
   </div>
 
-</section>
+</section></section>
 
 
 <!-- ============================================================
