@@ -39,13 +39,19 @@
     inset 0 -96px 96px rgba(8,6,4,.88);
 }
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
-html { scroll-behavior:smooth; font-size:16px }
+html {
+  scroll-behavior:smooth;
+  scroll-padding-top:78px;
+  font-size:16px;
+}
 body {
   background:var(--bg);
   color:var(--text);
   font-family:'Inter',sans-serif;
   line-height:1.7;
   overflow-x:hidden;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
 }
 body::before {
   content:'';
@@ -87,6 +93,7 @@ body::after {
 img { display:block; max-width:100% }
 a { color:inherit; text-decoration:none }
 button { font-family:inherit; cursor:pointer }
+button, a, input { -webkit-tap-highlight-color:transparent }
 
 body > * { position:relative; z-index:2 }
 
@@ -131,18 +138,18 @@ body > * { position:relative; z-index:2 }
 .nav-brand {
   display:flex; align-items:center; gap:10px;
 }
-.nav-bull {
-  width:58px; height:58px;
+.nav-logo {
+  width:124px; height:58px;
   display:flex; align-items:center; justify-content:center;
   position:relative;
-  overflow:visible;
+  overflow:hidden;
 }
-.nav-bull img {
+.nav-logo img {
   width:100%;
   height:100%;
   object-fit:contain;
   object-position:center;
-  filter:drop-shadow(0 0 12px rgba(200,168,75,.28)) saturate(1.02) contrast(1.04);
+  filter:drop-shadow(0 0 12px rgba(200,168,75,.26)) saturate(1.05) contrast(1.05);
 }
 .nav-name { font-family:'Noto Serif SC',serif; font-size:17px; font-weight:600; color:var(--gold); letter-spacing:.12em }
 .nav-name-en { font-family:'Playfair Display',serif; font-size:10px; font-style:italic; color:var(--gold-mute); letter-spacing:.22em; margin-top:1px }
@@ -181,6 +188,29 @@ body > * { position:relative; z-index:2 }
   transition:all .3s;
 }
 .nav-btn:hover { background:var(--gold); color:var(--bg) }
+
+.mobile-tabs {
+  display:none;
+  position:fixed;
+  left:12px; right:12px; bottom:12px;
+  z-index:920;
+  padding:8px;
+  border:1px solid rgba(200,168,75,.18);
+  background:rgba(8,6,4,.84);
+  backdrop-filter:blur(18px) saturate(1.2);
+  box-shadow:0 18px 50px rgba(0,0,0,.34);
+}
+.mobile-tabs a {
+  min-height:42px;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--text-2);
+  font-size:11px;
+  letter-spacing:.08em;
+}
+.mobile-tabs a.is-active {
+  color:var(--gold);
+  background:rgba(200,168,75,.08);
+}
 
 /* ─── §1 HERO ─── */
 #hero {
@@ -332,6 +362,7 @@ section {
   position:relative;
   box-shadow:var(--museum-vignette);
   isolation:isolate;
+  overflow-anchor:none;
 }
 section + section { margin-top:-36px }
 section + section > * { position:relative; z-index:1 }
@@ -1358,12 +1389,49 @@ footer {
   .mini-grid { grid-template-columns:repeat(2,1fr) }
 }
 @media (max-width: 768px) {
-  #nav { padding:0 24px }
+  html { scroll-padding-top:64px }
+  body { padding-bottom:76px }
+  #nav { height:58px; padding:0 18px }
+  .nav-logo { width:92px; height:46px }
   .nav-links { display:none }
-  section { padding:64px 24px }
-  #hero { padding:0 24px }
+  .nav-btn { padding:7px 14px; font-size:11px }
+  .mobile-tabs {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    bottom:max(10px, env(safe-area-inset-bottom));
+  }
+  section { padding:72px 22px }
+  section + section { margin-top:-22px }
+  .sec-title { font-size:clamp(24px, 8vw, 34px); letter-spacing:.04em }
+  .sec-sub { font-size:13px }
+  #hero {
+    min-height:92vh;
+    padding:0 22px;
+    align-items:flex-end;
+    padding-bottom:108px;
+  }
+  .hero-bg img { object-position:center top }
+  .hero-bg::after {
+    background:
+      linear-gradient(to bottom, rgba(8,6,4,.2), rgba(8,6,4,.68) 42%, rgba(8,6,4,.96) 100%),
+      radial-gradient(circle at 52% 34%, transparent 0%, rgba(8,6,4,.38) 60%);
+  }
+  .hero-content {
+    max-width:100%;
+    padding-top:64px;
+  }
+  .hero-title-cn { font-size:clamp(56px, 22vw, 86px); letter-spacing:.08em }
+  .hero-title-en { font-size:clamp(28px, 10vw, 44px) }
+  .hero-desc { max-width:100%; font-size:13px }
+  .hero-cta {
+    width:100%;
+    min-height:48px;
+  }
+  .hero-cta-note { display:block; text-align:center }
+  .hero-scroll { display:none }
   .artifact-grid { grid-template-columns:1fr; gap:40px }
   .showcase { padding:18px }
+  .showcase-img-wrap { aspect-ratio:1/1 }
   .showcase-caption { align-items:flex-start; flex-direction:column; gap:4px }
   .artifact-body { font-size:16px }
   .artifact-flow { padding:22px 18px }
@@ -1373,15 +1441,133 @@ footer {
   .evo-step:not(:last-child)::after { display:none }
   .artifact-breakdown { grid-template-columns:1fr; gap:10px }
   .culture-grid { grid-template-columns:1fr }
-  .merch-grid { grid-template-columns:repeat(2,1fr) }
+  .aigc-timeline { padding:28px 20px }
+  .merch-grid { grid-template-columns:1fr }
+  .merch-card--wide { grid-column:auto }
+  .merch-img--wide { max-height:none }
+  .merch-card--wide .merch-info > div { grid-template-columns:1fr !important; gap:22px !important }
+  .merch-process-row { grid-template-columns:48px 1fr }
+  #silkroad { padding-top:72px }
+  .map-inner { padding:0 22px }
+  .map-img-full {
+    margin:0 -22px;
+    width:calc(100% + 44px);
+    overflow:hidden;
+  }
+  .map-img-full img {
+    min-height:260px;
+    object-fit:cover;
+    object-position:center;
+  }
   .timeline-row { grid-template-columns:1fr 1fr; gap:20px }
   .tl-item:not(:last-child)::after { display:none }
   footer { flex-direction:column; gap:8px; text-align:center }
   .hero-dots { display:none }
-  .map-stats { flex-wrap:wrap; gap:12px }
+  .map-stats {
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+  }
+  .map-stat {
+    min-width:0;
+    padding:10px 8px;
+  }
+  .map-stat-num { font-size:18px }
+  .chip-row { grid-template-columns:repeat(2, minmax(0, 1fr)); gap:8px }
+  .chip { min-height:54px; display:flex; flex-direction:column; align-items:center; justify-content:center }
+  .mini-grid { grid-template-columns:1fr; gap:8px }
+  .mini-card {
+    min-height:74px;
+    display:grid;
+    grid-template-columns:34px 1fr;
+    text-align:left;
+    column-gap:12px;
+    align-items:center;
+  }
+  .mini-card-icon { margin:0; grid-row:1 / span 2; text-align:center }
+  .mini-card-desc { font-size:11px }
+  .name-row { flex-direction:column; align-items:stretch; gap:10px }
+  .name-input { max-width:none; min-height:44px }
+  .step-actions { flex-direction:column; align-items:stretch }
+  .btn-next, .btn-generate, .btn-back { width:100%; min-height:46px }
+  #journey-card { margin-top:34px }
+  .jcard-header {
+    padding:22px 18px;
+    flex-direction:column;
+    gap:14px;
+  }
+  .jcard-meta {
+    width:100%;
+    text-align:left;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px 12px;
+  }
+  .jcard-body { padding:22px 18px }
+  #jc-narrative { font-size:13px; line-height:1.9 }
+  .liuguang-chat { margin:0 18px 22px }
+  .liuguang-chat-head {
+    align-items:flex-start;
+    flex-direction:column;
+    gap:8px;
+  }
+  .chat-log { max-height:300px; padding:14px }
+  .chat-msg { max-width:100%; font-size:12px }
+  .chat-suggestions { padding:0 14px 14px }
   .chat-input-row { grid-template-columns:1fr }
   .chat-send { min-height:40px }
+  .jcard-footer {
+    padding:16px 18px;
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .btn-card { min-height:42px }
+  #ending { padding:62px 22px 54px }
+  .ending-quote { letter-spacing:.06em }
+  footer { padding:16px 22px }
   #merchandise::after { opacity:.035; background-size:92vw auto }
+}
+@media (max-width: 420px) {
+  #nav { padding:0 14px }
+  .nav-logo { width:80px; height:42px }
+  .nav-btn { padding:7px 10px; letter-spacing:.04em }
+  section { padding-left:18px; padding-right:18px }
+  .mobile-tabs { left:8px; right:8px; padding:6px }
+  .mobile-tabs a { min-height:40px; font-size:10px }
+  .chip-row { grid-template-columns:1fr }
+  .map-stats { grid-template-columns:1fr }
+  .jcard-meta { grid-template-columns:1fr }
+  .chat-chip { flex:1 1 calc(50% - 8px); text-align:center }
+}
+@media (hover: none) and (pointer: coarse) {
+  body::before { opacity:.42 }
+  body::after { opacity:.08; animation-duration:42s }
+  .ambient-veil { opacity:.26 }
+  .hero-bg img { animation-duration:26s }
+  .showcase::before,
+  #artifact::before,
+  #ending::before { animation-duration:18s }
+  .chip:hover,
+  .mini-card:hover,
+  .evo-step:hover,
+  .feature-card:hover,
+  .culture-card:hover,
+  .merch-card:hover,
+  .map-stat:hover,
+  .map-img-full:hover img {
+    transform:none;
+  }
+  .chat-chip::after,
+  .chat-send::after,
+  .btn-card::after,
+  .btn-next::after,
+  .btn-generate::after,
+  .btn-back::after,
+  .nav-btn::after,
+  .hero-cta::after,
+  .ending-cta::after {
+    display:none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1400,8 +1586,8 @@ footer {
 <!-- ═══ 导航 ═══ -->
 <nav id="nav">
   <a href="#hero" class="nav-brand">
-    <div class="nav-bull">
-      <img src="assets/images/logo-nav.png" alt="鎏途 LIUTU">
+    <div class="nav-logo">
+      <img src="assets/images/logo-header.png?v=2" alt="鎏途 LIUTU">
     </div>
   </a>
   <ul class="nav-links">
@@ -1413,6 +1599,12 @@ footer {
   </ul>
   <button class="nav-btn" onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'})">开启旅程</button>
 </nav>
+<div class="mobile-tabs" aria-label="移动端快速导航">
+  <a href="#artifact">本源</a>
+  <a href="#merchandise">文创</a>
+  <a href="#silkroad">地图</a>
+  <a href="#journey">旅程</a>
+</div>
 
 <!-- ═══ §1 封面 ═══ -->
 <section id="hero">
@@ -2047,7 +2239,7 @@ function showToast(msg) {
 const nav = $('#nav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50), { passive:true });
 
-const navLinks = $$('.nav-links a');
+const navLinks = $$('.nav-links a, .mobile-tabs a');
 const navSections = navLinks
   .map(a => ({ a, section: $(a.getAttribute('href')) }))
   .filter(item => item.section);
@@ -2055,8 +2247,9 @@ const navSpy = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     navLinks.forEach(a => a.classList.remove('is-active'));
-    const current = navSections.find(item => item.section === entry.target);
-    if (current) current.a.classList.add('is-active');
+    navSections
+      .filter(item => item.section === entry.target)
+      .forEach(item => item.a.classList.add('is-active'));
   });
 }, { threshold:.32, rootMargin:'-24% 0px -52% 0px' });
 navSections.forEach(item => navSpy.observe(item.section));
