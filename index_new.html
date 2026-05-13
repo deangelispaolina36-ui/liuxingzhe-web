@@ -132,7 +132,20 @@ body > * { position:relative; z-index:2 }
   display:flex; align-items:center; gap:10px;
 }
 .nav-bull {
-  width:32px; height:32px; opacity:.9;
+  width:104px; height:42px;
+  overflow:hidden;
+  position:relative;
+  border:1px solid rgba(200,168,75,.18);
+  background:rgba(8,6,4,.32);
+  box-shadow:inset 0 0 20px rgba(200,168,75,.08);
+}
+.nav-bull img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transform:scale(3.4);
+  filter:saturate(.95) contrast(1.05);
 }
 .nav-name { font-family:'Noto Serif SC',serif; font-size:17px; font-weight:600; color:var(--gold); letter-spacing:.12em }
 .nav-name-en { font-family:'Playfair Display',serif; font-size:10px; font-style:italic; color:var(--gold-mute); letter-spacing:.22em; margin-top:1px }
@@ -1246,6 +1259,29 @@ section + section > * { position:relative; z-index:1 }
   color:var(--sand-lt); margin-bottom:6px; letter-spacing:.06em;
 }
 .merch-craft { font-size:12px; color:var(--text-2); line-height:1.6; margin-bottom:10px }
+.merch-desc {
+  font-size:13px;
+  color:var(--sand);
+  line-height:1.75;
+  margin-bottom:14px;
+}
+.merch-process {
+  display:grid;
+  gap:8px;
+  margin-bottom:14px;
+}
+.merch-process-row {
+  display:grid;
+  grid-template-columns:58px 1fr;
+  gap:10px;
+  font-size:12px;
+  line-height:1.7;
+  color:var(--text-2);
+}
+.merch-process-row span {
+  color:var(--gold-mute);
+  letter-spacing:.12em;
+}
 .merch-specs {
   display:flex; flex-wrap:wrap; gap:5px;
 }
@@ -1367,17 +1403,8 @@ footer {
 <!-- ═══ 导航 ═══ -->
 <nav id="nav">
   <a href="#hero" class="nav-brand">
-    <svg class="nav-bull" viewBox="0 0 32 32" fill="none">
-      <ellipse cx="16" cy="18" rx="10" ry="8" stroke="var(--gold)" stroke-width="1.2"/>
-      <path d="M8 14 Q6 10 4 8" stroke="var(--gold)" stroke-width="1.2" stroke-linecap="round"/>
-      <path d="M24 14 Q26 10 28 8" stroke="var(--gold)" stroke-width="1.2" stroke-linecap="round"/>
-      <circle cx="12" cy="17" r="1.2" fill="var(--gold)" opacity=".7"/>
-      <circle cx="20" cy="17" r="1.2" fill="var(--gold)" opacity=".7"/>
-      <rect x="13" y="13" width="6" height="4" rx="1" stroke="var(--gold)" stroke-width=".8" opacity=".5"/>
-    </svg>
-    <div>
-      <div class="nav-name">鎏途</div>
-      <div class="nav-name-en">LIUTU</div>
+    <div class="nav-bull">
+      <img src="assets/images/logo.png" alt="鎏途 LIUTU">
     </div>
   </a>
   <ul class="nav-links">
@@ -1603,7 +1630,7 @@ footer {
     <span class="sec-label">Cultural Creative Products</span>
     <h2 class="sec-title">从数字到实体</h2>
     <div class="gold-line"></div>
-    <p class="sec-sub">四件文创产品，从ZBrush模型到手工上色成品，每一件都扎根于文物研究</p>
+    <p class="sec-sub">四件文创作品从文物研究出发，经过角色设定、三维建模、打样制作与手工修饰，完成从数字形象到实体陪伴物的转化。</p>
   </div>
 
   <div class="merch-grid">
@@ -1615,7 +1642,11 @@ footer {
       <div class="merch-badge">情绪陪伴</div>
       <div class="merch-info">
         <div class="merch-name">鎏光疗愈玩偶</div>
-        <div class="merch-craft">短毛绒材质，约20cm。以鎏金铜牛「守护」寓意为核心，走情绪陪伴路线。奶白米金配色，金色绣线手工刺绣额头装饰与蹄部细节，头顶绒球与金色蝴蝶结是鎏金工艺的柔性转译。</div>
+        <div class="merch-desc">以鎏金铜牛“守护”的寓意为核心，把厚重文物转译为可以拥抱的情绪陪伴 IP。</div>
+        <div class="merch-process">
+          <div class="merch-process-row"><span>创作</span><div>先提炼牛角、圆润脸型与金色光泽，再弱化文物的庄重感，形成奶白米金的亲和形象。</div></div>
+          <div class="merch-process-row"><span>工艺</span><div>采用短毛绒材质，额头装饰、蹄部细节以金色绣线表现，头顶绒球与蝴蝶结呼应鎏金工艺。</div></div>
+        </div>
         <div class="merch-specs">
           <span class="merch-spec">短毛绒</span>
           <span class="merch-spec">约20cm</span>
@@ -1633,7 +1664,11 @@ footer {
       <div class="merch-badge">文化叙事</div>
       <div class="merch-info">
         <div class="merch-name">鎏途文化行者手办</div>
-        <div class="merch-craft">光敏树脂3D打印，约10cm，层高0.05mm。孔雀绿头巾条纹 + 沙色袍身 + 陶土红围巾，几何纹样用ZBrush Alpha笔刷逐层压印。鎏金效果先喷底漆再金粉点涂，模拟文物包浆质感。</div>
+        <div class="merch-desc">鎏途承担文化叙事功能，是带着用户进入丝路场景的“文明行者”。</div>
+        <div class="merch-process">
+          <div class="merch-process-row"><span>创作</span><div>在铜牛原型上加入头巾、卷轴、行囊等丝路符号，让“承载”从文物属性转化为旅行叙事。</div></div>
+          <div class="merch-process-row"><span>工艺</span><div>ZBrush 建模后使用光敏树脂打印，孔雀绿、沙色、陶土红分层上色，金粉点涂模拟铜牛包浆。</div></div>
+        </div>
         <div class="merch-specs">
           <span class="merch-spec">光敏树脂</span>
           <span class="merch-spec">约10cm</span>
@@ -1653,7 +1688,11 @@ footer {
           <div>
             <div class="merch-badge" style="position:static;display:inline-block;margin-bottom:8px">随行挂件</div>
             <div class="merch-name">本体挂件</div>
-            <div class="merch-craft">在手办基础上缩比，层高降至0.03mm保证细节精度，金属开口环连接。约6.5cm，可作钥匙扣或包饰。</div>
+            <div class="merch-desc">把鎏途从展陈手办压缩成日常随身物，让文化 IP 可以被携带。</div>
+            <div class="merch-process">
+              <div class="merch-process-row"><span>创作</span><div>保留牛角、头巾、挎包等核心识别点，减少复杂体块，适配钥匙扣和包饰使用场景。</div></div>
+              <div class="merch-process-row"><span>工艺</span><div>在手办模型基础上缩比重整，打印层高降至 0.03mm，后期打磨、补色并连接金属开口环。</div></div>
+            </div>
             <div class="merch-specs" style="margin-top:8px">
               <span class="merch-spec">0.03mm层高</span>
               <span class="merch-spec">约6.5cm</span>
@@ -1662,7 +1701,11 @@ footer {
           <div>
             <div class="merch-badge" style="position:static;display:inline-block;margin-bottom:8px">丝路主题</div>
             <div class="merch-name">丝路组合挂件</div>
-            <div class="merch-craft">五件组合：鎏途本体 + 丝路金币 + 丝路卷轴 + 骆驼吊坠 + 流苏挂饰，金属编绳串联，约13.5cm。</div>
+            <div class="merch-desc">以“旅程纪念物”为概念，把丝路上的物象拆成一组可组合的移动展品。</div>
+            <div class="merch-process">
+              <div class="merch-process-row"><span>创作</span><div>选取金币、卷轴、骆驼、流苏等符号，与鎏途本体形成一条微型丝路路线。</div></div>
+              <div class="merch-process-row"><span>工艺</span><div>多部件分别建模打样，金属编绳串联，局部金色涂装统一视觉，形成约 13.5cm 的组合挂饰。</div></div>
+            </div>
             <div class="merch-specs" style="margin-top:8px">
               <span class="merch-spec">五件组合</span>
               <span class="merch-spec">约13.5cm</span>
