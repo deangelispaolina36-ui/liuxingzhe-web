@@ -787,7 +787,7 @@ section + section > * { position:relative; z-index:1 }
   margin:0 -80px;          /* 突破 padding 出血到边缘 */
   width:calc(100% + 160px);
   position:relative;
-  filter:drop-shadow(0 28px 60px rgba(0,0,0,.45));
+  box-shadow:0 22px 46px rgba(0,0,0,.34);
 }
 .map-img-full::before {
   content:'';
@@ -799,11 +799,7 @@ section + section > * { position:relative; z-index:1 }
   width:100%;
   height:auto;             /* 保持原始比例，不变形不模糊 */
   display:block;
-  transition:transform .8s ease, filter .8s ease;
-}
-.map-img-full:hover img {
-  transform:scale(1.015);
-  filter:saturate(1.08) contrast(1.05);
+  transition:opacity .3s ease;
 }
 
 .map-stats {
@@ -816,15 +812,13 @@ section + section > * { position:relative; z-index:1 }
   padding:12px 18px;
   border:1px solid rgba(200,168,75,.12);
   background:rgba(22,19,14,.45);
-  backdrop-filter:blur(8px);
   position:relative;
   overflow:hidden;
-  transition:transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+  transition:border-color .22s ease, background .22s ease;
 }
 .map-stat:hover {
-  transform:translateY(-3px);
   border-color:rgba(200,168,75,.32);
-  box-shadow:0 18px 42px rgba(0,0,0,.22);
+  background:rgba(22,19,14,.62);
 }
 .map-stat-num { font-family:'Noto Serif SC',serif; font-size:22px; color:var(--gold); letter-spacing:.06em }
 .map-stat-lbl { font-size:10px; letter-spacing:.14em; color:var(--text-3); margin-top:3px }
@@ -1380,7 +1374,6 @@ footer {
 #artifact,
 #culture,
 #merchandise,
-#silkroad,
 #journey {
   --section-bg-pos: center center;
   background:
@@ -1391,13 +1384,11 @@ footer {
 #artifact { --section-bg-pos:center 10% }
 #culture { --section-bg-pos:center 30% }
 #merchandise { --section-bg-pos:center 55% }
-#silkroad { --section-bg-pos:center 74% }
 #journey { --section-bg-pos:center 96% }
 
 #artifact::before,
 #culture::before,
 #merchandise::before,
-#silkroad::before,
 #journey::before {
   content:'';
   position:absolute; inset:0; z-index:0; pointer-events:none;
@@ -1413,7 +1404,6 @@ footer {
 #artifact::after,
 #culture::after,
 #merchandise::after,
-#silkroad::after,
 #journey::after {
   content:'';
   position:absolute; inset:0; z-index:0; pointer-events:none;
@@ -1577,7 +1567,6 @@ footer {
   #artifact::before,
   #culture::before,
   #merchandise::before,
-  #silkroad::before,
   #journey::before {
     background-size:auto 116%;
     opacity:.68;
@@ -1586,7 +1575,6 @@ footer {
   #artifact { --section-bg-pos:center 8% }
   #culture { --section-bg-pos:center 28% }
   #merchandise { --section-bg-pos:center 52% }
-  #silkroad { --section-bg-pos:center 72% }
   #journey { --section-bg-pos:center 94% }
 }
 @media (max-width: 420px) {
@@ -1615,8 +1603,7 @@ footer {
   .feature-card:hover,
   .culture-card:hover,
   .merch-card:hover,
-  .map-stat:hover,
-  .map-img-full:hover img {
+  .map-stat:hover {
     transform:none;
   }
   .chat-chip::after,
