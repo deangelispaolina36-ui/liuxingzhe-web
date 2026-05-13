@@ -1376,6 +1376,54 @@ footer {
 .footer-copy { font-size:11px; color:var(--text-3); letter-spacing:.06em }
 .footer-note { font-size:11px; color:var(--text-3); letter-spacing:.04em }
 
+/* ─── 中间页面统一丝路背景：封面与尾页除外 ─── */
+#artifact,
+#culture,
+#merchandise,
+#silkroad,
+#journey {
+  --section-bg-pos: center center;
+  background:
+    linear-gradient(to bottom, rgba(8,6,4,.96), rgba(10,8,5,.68) 22%, rgba(10,8,5,.68) 76%, rgba(8,6,4,.96)),
+    radial-gradient(circle at 32% 28%, rgba(200,168,75,.1), transparent 30vw),
+    #080604;
+}
+#artifact { --section-bg-pos:center 10% }
+#culture { --section-bg-pos:center 30% }
+#merchandise { --section-bg-pos:center 55% }
+#silkroad { --section-bg-pos:center 74% }
+#journey { --section-bg-pos:center 96% }
+
+#artifact::before,
+#culture::before,
+#merchandise::before,
+#silkroad::before,
+#journey::before {
+  content:'';
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    linear-gradient(rgba(8,6,4,.28), rgba(8,6,4,.54)),
+    url('assets/images/section-bg.png');
+  background-size:cover;
+  background-position:var(--section-bg-pos);
+  opacity:.74;
+  filter:saturate(.9) contrast(1.06);
+  transform:translateY(calc(var(--scroll-y) * -.018));
+}
+#artifact::after,
+#culture::after,
+#merchandise::after,
+#silkroad::after,
+#journey::after {
+  content:'';
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    linear-gradient(to bottom, rgba(8,6,4,.98) 0%, rgba(8,6,4,.55) 13%, rgba(8,6,4,.22) 42%, rgba(8,6,4,.34) 72%, rgba(8,6,4,.98) 100%),
+    radial-gradient(circle at var(--mx) var(--my), rgba(223,192,106,.11), transparent 24vw),
+    repeating-linear-gradient(45deg, transparent 0, transparent 28px, rgba(200,168,75,.018) 28px, rgba(200,168,75,.018) 29px);
+  opacity:.96;
+}
+
 /* ─── 响应式 ─── */
 @media (max-width: 1024px) {
   section { padding:80px 40px }
@@ -1526,6 +1574,20 @@ footer {
   .ending-quote { letter-spacing:.06em }
   footer { padding:16px 22px }
   #merchandise::after { opacity:.035; background-size:92vw auto }
+  #artifact::before,
+  #culture::before,
+  #merchandise::before,
+  #silkroad::before,
+  #journey::before {
+    background-size:auto 116%;
+    opacity:.68;
+    transform:none;
+  }
+  #artifact { --section-bg-pos:center 8% }
+  #culture { --section-bg-pos:center 28% }
+  #merchandise { --section-bg-pos:center 52% }
+  #silkroad { --section-bg-pos:center 72% }
+  #journey { --section-bg-pos:center 94% }
 }
 @media (max-width: 420px) {
   #nav { padding:0 14px }
