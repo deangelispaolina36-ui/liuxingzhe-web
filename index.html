@@ -34,6 +34,9 @@
   --mx:        50%;
   --my:        42%;
   --scroll-y:  0px;
+  --museum-vignette:
+    inset 0 96px 96px rgba(8,6,4,.86),
+    inset 0 -96px 96px rgba(8,6,4,.88);
 }
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
 html { scroll-behavior:smooth; font-size:16px }
@@ -66,6 +69,17 @@ body::after {
   opacity:.13;
   animation:dustDrift 28s linear infinite;
 }
+.ambient-veil {
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    linear-gradient(to bottom, rgba(8,6,4,.74), transparent 18%, transparent 78%, rgba(8,6,4,.8)),
+    radial-gradient(circle at var(--mx) var(--my), rgba(223,192,106,.1), transparent 22vw);
+  mix-blend-mode:screen;
+  opacity:.42;
+}
 ::-webkit-scrollbar { width:3px }
 ::-webkit-scrollbar-track { background:var(--bg) }
 ::-webkit-scrollbar-thumb { background:var(--gold-lo); border-radius:2px }
@@ -74,7 +88,7 @@ img { display:block; max-width:100% }
 a { color:inherit; text-decoration:none }
 button { font-family:inherit; cursor:pointer }
 
-body > * { position:relative; z-index:1 }
+body > * { position:relative; z-index:2 }
 
 @keyframes dustDrift { to { background-position:260px -180px, -180px 260px } }
 @keyframes slowZoom { 0%{transform:scale(1)} 100%{transform:scale(1.06)} }
@@ -123,8 +137,30 @@ body > * { position:relative; z-index:1 }
 .nav-name { font-family:'Noto Serif SC',serif; font-size:17px; font-weight:600; color:var(--gold); letter-spacing:.12em }
 .nav-name-en { font-family:'Playfair Display',serif; font-size:10px; font-style:italic; color:var(--gold-mute); letter-spacing:.22em; margin-top:1px }
 .nav-links { display:flex; align-items:center; gap:28px; list-style:none }
-.nav-links a { font-size:12px; letter-spacing:.08em; color:var(--text-2); transition:color .25s }
-.nav-links a:hover { color:var(--gold) }
+.nav-links a {
+  font-size:12px; letter-spacing:.08em; color:var(--text-2);
+  transition:color .25s, text-shadow .25s;
+  position:relative;
+}
+.nav-links a::after {
+  content:'';
+  position:absolute; left:0; right:0; bottom:-10px;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity:0;
+  transform:scaleX(.45);
+  transition:opacity .25s, transform .25s;
+}
+.nav-links a:hover,
+.nav-links a.is-active {
+  color:var(--gold);
+  text-shadow:0 0 18px rgba(200,168,75,.22);
+}
+.nav-links a:hover::after,
+.nav-links a.is-active::after {
+  opacity:1;
+  transform:scaleX(1);
+}
 .nav-btn {
   padding:8px 22px;
   border:1px solid var(--border-hi);
@@ -281,7 +317,14 @@ body > * { position:relative; z-index:1 }
 @keyframes scrollLine { 0%{transform:scaleY(0); transform-origin:top} 50%{transform:scaleY(1); transform-origin:top} 51%{transform-origin:bottom} 100%{transform:scaleY(0); transform-origin:bottom} }
 
 /* ─── 通用 section 样式 ─── */
-section { padding:110px 80px; position:relative }
+section {
+  padding:110px 80px;
+  position:relative;
+  box-shadow:var(--museum-vignette);
+  isolation:isolate;
+}
+section + section { margin-top:-36px }
+section + section > * { position:relative; z-index:1 }
 .sec-label {
   display:block; font-size:10px; letter-spacing:.28em;
   color:var(--gold-mute); text-transform:uppercase; margin-bottom:14px;
@@ -388,9 +431,31 @@ section { padding:110px 80px; position:relative }
   border:1px solid var(--border);
   background:rgba(22,19,14,.7);
   text-align:center;
+  position:relative;
   transition:transform .25s, border-color .25s, background .25s, box-shadow .25s; cursor:pointer;
 }
-.chip:hover { border-color:var(--gold-mute); background:rgba(200,168,75,.06); transform:translateY(-3px) }
+.chip::before,
+.mini-card::before,
+.evo-step::before,
+.feature-card::before,
+.culture-card::after,
+.merch-card::after,
+.map-stat::before {
+  content:'';
+  position:absolute; inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(223,192,106,.14), transparent 46%);
+  opacity:0;
+  transition:opacity .28s ease;
+}
+.chip:hover { border-color:var(--gold-mute); background:rgba(200,168,75,.06); transform:translateY(-3px); box-shadow:0 16px 36px rgba(0,0,0,.2) }
+.chip:hover::before,
+.mini-card:hover::before,
+.evo-step:hover::before,
+.feature-card:hover::before,
+.culture-card:hover::after,
+.merch-card:hover::after,
+.map-stat:hover::before { opacity:1 }
 .chip.is-selected { border-color:var(--gold); background:rgba(200,168,75,.1); box-shadow:0 0 0 1px rgba(200,168,75,.18), 0 14px 32px rgba(0,0,0,.18) }
 .chip-name { font-size:13px; color:var(--text); font-family:'Noto Serif SC',serif; margin-bottom:2px }
 .chip.is-selected .chip-name { color:var(--gold) }
@@ -405,9 +470,10 @@ section { padding:110px 80px; position:relative }
   border:1px solid var(--border);
   background:rgba(22,19,14,.7);
   text-align:center; cursor:pointer;
+  position:relative; overflow:hidden;
   transition:transform .25s, border-color .25s, background .25s, box-shadow .25s;
 }
-.mini-card:hover { border-color:var(--gold-mute); transform:translateY(-4px) }
+.mini-card:hover { border-color:var(--gold-mute); transform:translateY(-4px); box-shadow:0 18px 40px rgba(0,0,0,.22) }
 .mini-card.is-selected { border-color:var(--gold); background:rgba(200,168,75,.08); box-shadow:0 16px 38px rgba(0,0,0,.22) }
 .mini-card-icon { font-size:22px; margin-bottom:8px }
 .mini-card-name { font-size:13px; color:var(--text); font-family:'Noto Serif SC',serif; margin-bottom:4px }
@@ -710,6 +776,14 @@ section { padding:110px 80px; position:relative }
   border:1px solid rgba(200,168,75,.12);
   background:rgba(22,19,14,.45);
   backdrop-filter:blur(8px);
+  position:relative;
+  overflow:hidden;
+  transition:transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+}
+.map-stat:hover {
+  transform:translateY(-3px);
+  border-color:rgba(200,168,75,.32);
+  box-shadow:0 18px 42px rgba(0,0,0,.22);
 }
 .map-stat-num { font-family:'Noto Serif SC',serif; font-size:22px; color:var(--gold); letter-spacing:.06em }
 .map-stat-lbl { font-size:10px; letter-spacing:.14em; color:var(--text-3); margin-top:3px }
@@ -902,8 +976,15 @@ section { padding:110px 80px; position:relative }
   min-height:112px;
   padding:18px 12px 14px;
   position:relative;
+  overflow:hidden;
   background:linear-gradient(180deg, rgba(234,216,176,.045), rgba(8,6,4,.42));
   border:1px solid rgba(200,168,75,.12);
+  transition:transform .28s ease, border-color .28s ease, background .28s ease;
+}
+.evo-step:hover {
+  transform:translateY(-4px);
+  border-color:rgba(200,168,75,.3);
+  background:linear-gradient(180deg, rgba(234,216,176,.075), rgba(8,6,4,.5));
 }
 .evo-step:not(:last-child)::after {
   content:'';
@@ -942,6 +1023,8 @@ section { padding:110px 80px; position:relative }
   background:rgba(16,13,8,.62);
   border-top:1px solid rgba(200,168,75,.2);
   min-height:154px;
+  position:relative;
+  overflow:hidden;
   transition:transform .28s ease, background .28s ease;
 }
 .feature-card:hover {
@@ -1279,6 +1362,7 @@ footer {
 </style>
 </head>
 <body>
+<div class="ambient-veil" aria-hidden="true"></div>
 
 <!-- ═══ 导航 ═══ -->
 <nav id="nav">
@@ -1902,6 +1986,14 @@ function initAtmosphere() {
   window.addEventListener('scroll', () => {
     root.style.setProperty('--scroll-y', `${Math.min(scrollY, 720)}px`);
   }, { passive:true });
+
+  $$('.chip, .mini-card, .evo-step, .feature-card, .culture-card, .merch-card, .map-stat').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      const rect = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${((e.clientX - rect.left) / rect.width) * 100}%`);
+      el.style.setProperty('--my', `${((e.clientY - rect.top) / rect.height) * 100}%`);
+    }, { passive:true });
+  });
 }
 
 function showToast(msg) {
@@ -1914,6 +2006,20 @@ function showToast(msg) {
 /* ── 导航滚动效果 ── */
 const nav = $('#nav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50), { passive:true });
+
+const navLinks = $$('.nav-links a');
+const navSections = navLinks
+  .map(a => ({ a, section: $(a.getAttribute('href')) }))
+  .filter(item => item.section);
+const navSpy = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    navLinks.forEach(a => a.classList.remove('is-active'));
+    const current = navSections.find(item => item.section === entry.target);
+    if (current) current.a.classList.add('is-active');
+  });
+}, { threshold:.32, rootMargin:'-24% 0px -52% 0px' });
+navSections.forEach(item => navSpy.observe(item.section));
 
 /* ── 滚入动画 ── */
 const io = new IntersectionObserver(entries => {
