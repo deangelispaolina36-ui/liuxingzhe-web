@@ -1173,10 +1173,10 @@ section { padding:110px 80px; position:relative }
 
 /* ─── §7 结尾 ─── */
 #ending {
-  min-height:60vh;
+  min-height:auto;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   text-align:center;
-  padding:100px 80px;
+  padding:72px 80px 64px;
   background:var(--bg);
   position:relative; overflow:hidden;
 }
@@ -1193,56 +1193,38 @@ section { padding:110px 80px; position:relative }
   content:'';
   position:absolute; inset:0; z-index:0; pointer-events:none;
   background:
-    repeating-linear-gradient(45deg, transparent 0, transparent 24px, rgba(200,168,75,.03) 24px, rgba(200,168,75,.03) 25px),
-    repeating-linear-gradient(-45deg, transparent 0, transparent 24px, rgba(200,168,75,.02) 24px, rgba(200,168,75,.02) 25px);
-  opacity:.8;
+    linear-gradient(90deg, transparent, rgba(200,168,75,.16), transparent);
+  height:1px;
+  bottom:auto;
+  opacity:.65;
 }
 #ending > * { position:relative; z-index:1 }
-.ending-bg-pattern {
-  position:absolute; inset:0; opacity:.03;
-}
 .ending-quote {
   font-family:'Noto Serif SC',serif;
-  font-size:clamp(16px, 2vw, 22px);
-  color:var(--sand);
-  letter-spacing:.22em; line-height:2;
-  margin-bottom:10px;
+  font-size:clamp(20px, 2.4vw, 30px);
+  color:var(--sand-lt);
+  letter-spacing:.14em; line-height:1.9;
+  margin-bottom:0;
 }
 .ending-quote-en {
   font-family:'Playfair Display',serif; font-style:italic;
-  font-size:14px; color:var(--text-3); letter-spacing:.14em; margin-bottom:40px;
+  font-size:14px; color:var(--text-3); letter-spacing:.14em; margin-top:12px; margin-bottom:32px;
 }
 .ending-cta {
   padding:14px 40px;
   border:1px solid var(--border-hi);
   background:transparent; color:var(--gold);
   font-size:13px; letter-spacing:.14em;
-  transition:all .3s; margin-bottom:60px;
+  transition:all .3s;
 }
 .ending-cta:hover { background:var(--gold); color:var(--bg) }
 
-/* 毕设信息 */
-.ending-info {
-  width:100%; max-width:640px;
-  padding:28px 36px;
-  border:1px solid var(--border);
-  background:var(--bg-card); margin-bottom:36px;
-}
-.ending-info-title {
-  font-family:'Noto Serif SC',serif; font-size:12px;
-  color:var(--gold-mute); letter-spacing:.2em; margin-bottom:16px;
-}
-.ending-info-grid {
-  display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; text-align:left;
-}
-.ending-info-row { font-size:12px; color:var(--text-2) }
-.ending-info-row span { color:var(--text-3); margin-right:8px }
-
 /* 页脚 */
 footer {
-  padding:24px 80px;
+  padding:18px 80px;
   border-top:1px solid var(--border);
   display:flex; align-items:center; justify-content:space-between;
+  background:#070604;
 }
 .footer-copy { font-size:11px; color:var(--text-3); letter-spacing:.06em }
 .footer-note { font-size:11px; color:var(--text-3); letter-spacing:.04em }
@@ -1278,7 +1260,6 @@ footer {
   .merch-grid { grid-template-columns:repeat(2,1fr) }
   .timeline-row { grid-template-columns:1fr 1fr; gap:20px }
   .tl-item:not(:last-child)::after { display:none }
-  .ending-info-grid { grid-template-columns:1fr }
   footer { flex-direction:column; gap:8px; text-align:center }
   .hero-dots { display:none }
   .map-stats { flex-wrap:wrap; gap:12px }
@@ -1823,46 +1804,19 @@ footer {
 
 <!-- ??? ?7 ?? ??? -->
 <section id="ending">
-  <svg class="ending-bg-pattern" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <pattern id="endpat" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-        <rect x="5" y="5" width="10" height="10" fill="none" stroke="var(--gold)" stroke-width=".5" transform="rotate(45 10 10)"/>
-      </pattern>
-    </defs>
-    <rect width="100" height="100" fill="url(#endpat)"/>
-  </svg>
-
-  <p class="ending-quote fade-up">丝路上，每个行者都有一段只属于自己的旅程</p>
+  <p class="ending-quote fade-up">丝路上，每个行者都有一段只属于自己的旅程。</p>
   <p class="ending-quote-en fade-up d1">On the Silk Road, every traveler carries a story uniquely their own.</p>
 
   <button class="ending-cta fade-up d2"
     onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'})">
     ✦ &nbsp;开启我的丝路旅程
   </button>
-
-  <!-- 毕设信息 -->
-  <div class="ending-info fade-up d3">
-    <div class="ending-info-title">GRADUATION PROJECT · 毕业设计信息</div>
-    <div class="ending-info-grid">
-      <div class="ending-info-row"><span>题目</span>西夏文物数字化文创开发</div>
-      <div class="ending-info-row"><span>学院</span>宁夏大学新闻传播学院</div>
-      <div class="ending-info-row"><span>专业</span>广告学 · 2022级</div>
-      <div class="ending-info-row"><span>指导</span>赵雅洁老师</div>
-      <div class="ending-info-row"><span>学生</span>王泰然</div>
-      <div class="ending-info-row"><span>年份</span>2026届</div>
-    </div>
-  </div>
-
-  <p class="fade-up" style="font-size:12px;color:var(--text-3);letter-spacing:.1em;line-height:2">
-    西夏鎏金铜牛藏于宁夏博物馆 · 致谢宁夏文化遗产<br>
-    本网页 Demo 由 DeepSeek AI 提供内容生成支持
-  </p>
 </section>
 
 <!-- ═══ 页脚 ═══ -->
 <footer>
-  <div class="footer-copy">© 2026 鎏途 LIUTU · 西夏文化数字IP · 宁夏大学毕业设计</div>
-  <div class="footer-note">西夏鎏金铜牛 · 宁夏博物馆藏 · AIGC + 3D建模 + 实体制作</div>
+  <div class="footer-copy">© 2026 鎏途 LIUTU · 西夏文化数字IP</div>
+  <div class="footer-note">西夏鎏金铜牛 · 宁夏博物馆藏</div>
 </footer>
 
 <div id="toast" hidden></div>
@@ -1899,7 +1853,7 @@ const SYSTEM_PROMPT = `你是「鎏光」，鎏途网站里的可爱丝路向导
 - 常见人物：粟特商人、取经僧、色目人、回鹘商队
 
 【叙事风格要求】
-- 生成内容要适合毕业设计现场展示，篇幅充实，画面感强，不能像简介或摘要
+- 生成内容要适合现场展示，篇幅充实，画面感强，不能像简介或摘要
 - 具体有细节，带游历感和历史感：至少写出2座沿途城市、1个具体人物、1件交换或冲突事件、1个感官细节
 - 正文采用第一视角陪伴式叙事：鎏光作为“我”，带着用户“你”一起走；段落之间可用自然换行
 - 正文采用三段式节奏：启程与身份、途中遭遇、抵达后的回望
@@ -2243,7 +2197,7 @@ async function copyText(mode) {
     r.narrative, '',
     '── 鎏光手记 ──',
     r.cultural_egg, '',
-    '鎏途 LIUTU · 西夏文化数字IP · 毕业设计'
+    '鎏途 LIUTU · 西夏文化数字IP'
   ].join('\n');
 
   try {
